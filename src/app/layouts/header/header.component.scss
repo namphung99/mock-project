@@ -1,22 +1,33 @@
-h5 {
-  cursor: pointer;
+header {
+  padding: 1rem 6rem;
+  h5 {
+    cursor: pointer;
+  }
 }
 
 .header__right {
   ul {
     list-style: none;
+    height: 35px;
     li {
-      padding: 0 20px;
+      padding: 0 15px;
+      color: #a29f9f;
+      cursor: pointer;
       a {
         text-decoration: none;
-        color: #a29f9f;
       }
-      a:hover {
-        color: #373737;
-      }
-      .active {
-        color: #373737;
-      }
+    }
+    li:hover {
+      color: #373737;
+    }
+    .active {
+      color: #373737;
+    }
+    img{
+      border-radius: 50%;
+      width: 35px;
+      height: 35px;
+      object-fit: cover;
     }
   }
 }
