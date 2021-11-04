@@ -8,12 +8,12 @@ import { HeaderComponent } from './layouts/header/header.component';
 import { FooterComponent } from './layouts/footer/footer.component';
 import { LoginComponent } from './feature-modules/login/login.component';
 import { RegisterComponent } from './feature-modules/register/register.component';
-import { CreateArticleComponent } from './feature-modules/create-article/create-article.component';
 import { ReactiveFormsModule } from '@angular/forms';
 import { ProfileComponent } from './feature-modules/profile/profile.component';
 import { FavoritesComponent } from './feature-modules/favorites/favorites.component';
 import { EditProfileComponent } from './feature-modules/edit-profile/edit-profile.component';
 import { ListArticleComponent } from './share-modules/list-article/list-article.component';
+import { ModalArticleComponent } from './feature-modules/modal-article/modal-article.component';
 
 @NgModule({
   declarations: [
@@ -22,11 +22,11 @@ import { ListArticleComponent } from './share-modules/list-article/list-article.
     FooterComponent,
     LoginComponent,
     RegisterComponent,
-    CreateArticleComponent,
     ProfileComponent,
     FavoritesComponent,
     EditProfileComponent,
-    ListArticleComponent
+    ListArticleComponent,
+    ModalArticleComponent
   ],
   imports: [
     BrowserModule,

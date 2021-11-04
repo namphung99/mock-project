@@ -1,13 +1,21 @@
 import { NgModule } from '@angular/core';
 import { RouterModule, Routes } from '@angular/router';
-import { CreateArticleComponent } from './feature-modules/create-article/create-article.component';
 import { HomeComponent } from './feature-modules/home/home.component';
 import { LoginComponent } from './feature-modules/login/login.component';
+import { ModalArticleComponent } from './feature-modules/modal-article/modal-article.component';
 import { ProfileComponent } from './feature-modules/profile/profile.component';
 import { RegisterComponent } from './feature-modules/register/register.component';
 
 const routes: Routes = [
-
+  {
+    path:"",
+    redirectTo:"home",
+    pathMatch:"full"
+  },
+  {
+    path:"home",
+    component: HomeComponent,
+  },
   {
     path:"login",
     component: LoginComponent,
@@ -18,16 +26,12 @@ const routes: Routes = [
   },
   {
     path:"articles",
-    component: CreateArticleComponent,
+    component: ModalArticleComponent,
   },
   {
     path:":username",
     component:ProfileComponent,
   },
-  {
-    path:"home",
-    component: HomeComponent,
-  }
 ];
 
 @NgModule({
