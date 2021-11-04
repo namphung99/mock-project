@@ -1,0 +1,22 @@
+h5 {
+  cursor: pointer;
+}
+
+.header__right {
+  ul {
+    list-style: none;
+    li {
+      padding: 0 20px;
+      a {
+        text-decoration: none;
+        color: #a29f9f;
+      }
+      a:hover {
+        color: #373737;
+      }
+      .active {
+        color: #373737;
+      }
+    }
+  }
+}

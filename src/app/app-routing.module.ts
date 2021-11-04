@@ -21,13 +21,12 @@ const routes: Routes = [
     component: CreateArticleComponent,
   },
   {
-    path:"/:username",
+    path:":username",
     component:ProfileComponent,
   },
   {
-    path:"",
+    path:"home",
     component: HomeComponent,
-
   }
 ];
 

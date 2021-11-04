@@ -8,7 +8,6 @@ import { HeaderComponent } from './layouts/header/header.component';
 import { FooterComponent } from './layouts/footer/footer.component';
 import { LoginComponent } from './feature-modules/login/login.component';
 import { RegisterComponent } from './feature-modules/register/register.component';
-import { ArticleComponent } from './share-modules/article/article.component';
 import { CreateArticleComponent } from './feature-modules/create-article/create-article.component';
 import { ReactiveFormsModule } from '@angular/forms';
 import { ProfileComponent } from './feature-modules/profile/profile.component';
@@ -23,7 +22,6 @@ import { ListArticleComponent } from './share-modules/list-article/list-article.
     FooterComponent,
     LoginComponent,
     RegisterComponent,
-    ArticleComponent,
     CreateArticleComponent,
     ProfileComponent,
     FavoritesComponent,
