@@ -13,6 +13,8 @@ import { CreateArticleComponent } from './feature-modules/create-article/create-
 import { ReactiveFormsModule } from '@angular/forms';
 import { ProfileComponent } from './feature-modules/profile/profile.component';
 import { FavoritesComponent } from './feature-modules/favorites/favorites.component';
+import { EditProfileComponent } from './feature-modules/edit-profile/edit-profile.component';
+import { ListArticleComponent } from './share-modules/list-article/list-article.component';
 
 @NgModule({
   declarations: [
@@ -24,7 +26,9 @@ import { FavoritesComponent } from './feature-modules/favorites/favorites.compon
     ArticleComponent,
     CreateArticleComponent,
     ProfileComponent,
-    FavoritesComponent
+    FavoritesComponent,
+    EditProfileComponent,
+    ListArticleComponent
   ],
   imports: [
     BrowserModule,
