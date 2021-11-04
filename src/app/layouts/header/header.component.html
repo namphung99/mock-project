@@ -1,10 +1,43 @@
-<header class="d-flex justify-content-around py-3 bg-light align-items-center">
-  <h5 class="m-0">Coxude</h5>
+<header class="d-flex justify-content-between bg-light align-items-center">
+  <h5 class="m-0 text-success font-weight-bold" routerLink="/home">Coxude</h5>
   <div class="header__right">
-    <ul class="d-flex align-items-center m-0">
-      <li><a routerLink="/home" routerLinkActive="active">Home</a></li>
-      <li><a routerLink="/login" routerLinkActive="active">Sign in</a></li>
-      <li><a routerLink="/register" routerLinkActive="active">Sign up</a></li>
-    </ul>
+    <ng-container *ngIf="token;else isLogin">
+      <ul class="d-flex align-items-center m-0">
+        <li routerLink="/home" routerLinkActive="active">
+          <i class="fas fa-home pr-2"></i>
+          <a>Home</a>
+        </li>
+        <li routerLink="/login" routerLinkActive="active">
+          <i class="fas fa-sign-in-alt pr-2"></i>
+          <a>Sign in</a>
+        </li>
+        <li routerLink="/register" routerLinkActive="active">
+          <i class="fas fa-plus pr-2"></i>
+          <a>Sign up</a>
+        </li>
+      </ul>
+    </ng-container>
+
+    <ng-template #isLogin>
+      <ul class="d-flex align-items-center m-0">
+        <li routerLink="/home" routerLinkActive="active">
+          <i class="fas fa-home pr-2"></i>
+          <a>Home</a>
+        </li>
+        <li routerLink="/login" routerLinkActive="active">
+          <i class="fas fa-sign-in-alt pr-2"></i>
+          <a>New Article</a>
+        </li>
+        <li id="dropdownMenuButton" data-toggle="dropdown" ngbDropdown>
+          <img src={{imgUrl}} alt="avatar" type="button" id="dropdownMenuButton" ngbDropdownToggle>
+          <div ngbDropdownMenu class="dropdown" aria-labelledby="dropdownMenuButton">
+            <a ngbDropdownItem class="dropdown-item" [routerLink]="">Setting</a>
+            <a ngbDropdownItem class="dropdown-item" [routerLink]="">View profile</a>
+            <a ngbDropdownItem class="dropdown-item">Logout</a>
+          </div>
+        </li>
+      </ul>
+    </ng-template>
   </div>
+
 </header>
