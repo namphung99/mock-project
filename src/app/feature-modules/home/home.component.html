@@ -1,1 +1,41 @@
-<p>home works!</p>
+<div class="container">
+  <div class="row home-wrapper">
+    <div class="col-lg-8">
+      <div class="home-content">
+        <ng-container *ngIf = "token">
+          <div class="add-article-box">
+            <img [src]="imgUrl" alt="avatar">
+            <div class="description">
+              <p>Hey Nam, Please share posts with everyone!!!</p>
+            </div>
+          </div>
+        </ng-container>
+
+        <ul class="control">
+          <li class="active">Global article</li>
+          <ng-container *ngIf= "token">
+            <li>
+              Your article</li>
+          </ng-container>
+        </ul>
+      </div>
+    </div>
+
+    <div class="col-lg-4">
+      <div class="has-tag">
+        <h5 class = "has-tag__title">Has tag </h5>
+        <div class="has-tag__content">
+          <p> angular</p>
+          <p> javascript</p>
+          <p> HTML</p>
+          <p> angular</p>
+          <p> javascript</p>
+          <p> HTML</p>
+          <p> angular</p>
+          <p> javascript</p>
+          <p> HTML</p>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
