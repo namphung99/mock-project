@@ -1,12 +1,49 @@
-<div class="modal-header">
-    <h4 class="modal-title">Hi there!</h4>
-    <!-- <button type="button" class="close" aria-label="Close" (click)="activeModal.dismiss('Cross click')">
-        <span aria-hidden="true">&times;</span>
-    </button> -->
-</div>
-<div class="modal-body">
-    <p>Hello, ban</p>
-</div>
-<div class="modal-footer">
-    <!-- <button type="button" class="btn btn-outline-dark" (click)="activeModal.close('Close click')">Close</button> -->
-</div>
+<section>
+  <div class="modal-header d-flex align-items-center py-2">
+    <h4 class="modal-title text-center">Create new Article</h4>
+    <button type="button" class="close rounded-circle mr-1" aria-label="Close" (click)="onClose()">
+      <span aria-hidden="true">&times;</span>
+    </button>
+  </div>
+  <div class="modal-body">
+    <form [formGroup]="articleGroup">
+      <div class="form-group">
+        <label for="exampleInputTitle">Article Title</label>
+        <input type="email" class="form-control" id="exampleInputTitle" formControlName="title">
+        <span class="text-danger"
+          *ngIf="articleGroup.controls.title.errors?.required && articleGroup.controls.title.dirty">
+          Name is required
+        </span>
+      </div>
+      <div class="form-group">
+        <label for="exampleInputDescription">Article Description</label>
+        <input type="text" class="form-control" id="exampleInputDescription" formControlName="description">
+      </div>
+      <span class="text-danger"
+        *ngIf="articleGroup.controls.description.errors?.required && articleGroup.controls.description.dirty">
+        Name is required
+      </span>
+
+      <div class="form-group">
+        <label for="exampleInputBody">Article Body</label>
+        <textarea class="form-control" id="exampleInputBody" rows="4" formControlName="body">
+        </textarea>
+      </div>
+      <span class="text-danger"
+        *ngIf="articleGroup.controls.body.errors?.required && articleGroup.controls.body.dirty">
+        Name is required
+      </span>
+      <div class="form-group">
+        <label for="exampleInputTagList">Article Tag List</label>
+        <input type="text" class="form-control" id="exampleInputTagList" formControlName="tagList">
+      </div>
+      <span class="text-danger"
+        *ngIf="articleGroup.controls.tagList.errors?.required && articleGroup.controls.tagList.dirty">
+        Name is required
+      </span>
+    </form>
+  </div>
+  <div class="modal-footer py-2">
+    <button type="submit" class="btn btn-primary" (click)="onSubmit()">Submit</button>
+  </div>
+</section>

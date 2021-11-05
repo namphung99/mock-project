@@ -1,5 +1,7 @@
 import { Component, OnInit } from '@angular/core';
-import { NgbModal } from '@ng-bootstrap/ng-bootstrap';
+import { FormBuilder, FormGroup, Validators } from '@angular/forms';
+import { NgbActiveModal } from '@ng-bootstrap/ng-bootstrap';
+import { Article } from 'src/app/shares/interfaces/article.interface';
 
 @Component({
   selector: 'app-modal-article',
@@ -7,9 +9,34 @@ import { NgbModal } from '@ng-bootstrap/ng-bootstrap';
   styleUrls: ['./modal-article.component.scss']
 })
 export class ModalArticleComponent implements OnInit {
+  public articleGroup: FormGroup;
+  public article: Article = {
+    title: "",
+    description: "",
+    body: "",
+    tagList: "",
+  };
 
-  constructor(private modalService: NgbModal) { }
+  constructor(
+    public fb: FormBuilder,
+    private activeModal: NgbActiveModal
+  ) {
+    this.articleGroup = this.fb.group({
+      title: ['', Validators.required],
+      description: ['', Validators.required],
+      body: ['', Validators.required],
+      tagList: ['', Validators.required]
+    })
+  }
 
   ngOnInit(): void {
+  }
+
+  onSubmit() {
+    this.activeModal.close()
+  }
+
+  onClose() {
+    this.activeModal.close()
   }
 }
