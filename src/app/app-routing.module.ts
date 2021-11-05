@@ -1,10 +1,7 @@
 import { NgModule } from '@angular/core';
 import { RouterModule, Routes } from '@angular/router';
-import { HomeComponent } from './feature-modules/home/home.component';
 import { ModalArticleComponent } from './feature-modules/modal-article/modal-article.component';
-import { LoginComponent } from './feature-modules/Auth/login/login.component';
 import { ProfileComponent } from './feature-modules/profile/profile.component';
-import { RegisterComponent } from './feature-modules/Auth/register/register.component';
 
 const routes: Routes = [
   {
@@ -13,21 +10,19 @@ const routes: Routes = [
     pathMatch:"full"
   },
   {
-    path:"home",
-    component: HomeComponent,
-  },
-  {
     path: '',
-    redirectTo: "home",
+    redirectTo: "login",
     pathMatch: 'full',
   },
   {
     path:"login",
-    component: LoginComponent,
+    loadChildren: () => import("./feature-modules/Auth/login/login.module")
+    .then(response => response.LoginModule)
   },
   {
     path:"register",
-    component: RegisterComponent,
+    loadChildren: () => import("./feature-modules/Auth/register/register.module")
+    .then(response => response.RegisterModule)
   },
   {
     path:"articles",
