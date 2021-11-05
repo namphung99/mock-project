@@ -1,10 +1,10 @@
 import { NgModule } from '@angular/core';
 import { RouterModule, Routes } from '@angular/router';
 import { HomeComponent } from './feature-modules/home/home.component';
-import { LoginComponent } from './feature-modules/login/login.component';
 import { ModalArticleComponent } from './feature-modules/modal-article/modal-article.component';
+import { LoginComponent } from './feature-modules/Auth/login/login.component';
 import { ProfileComponent } from './feature-modules/profile/profile.component';
-import { RegisterComponent } from './feature-modules/register/register.component';
+import { RegisterComponent } from './feature-modules/Auth/register/register.component';
 
 const routes: Routes = [
   {
@@ -15,6 +15,11 @@ const routes: Routes = [
   {
     path:"home",
     component: HomeComponent,
+  },
+  {
+    path: '',
+    redirectTo: "home",
+    pathMatch: 'full',
   },
   {
     path:"login",
@@ -29,9 +34,14 @@ const routes: Routes = [
     component: ModalArticleComponent,
   },
   {
-    path:":username",
+    path:"profile/:username",
     component:ProfileComponent,
   },
+  {
+    path:"home",
+    loadChildren: () => import("./feature-modules/home/home.module")
+    .then(response => response.HomeModule)
+  }
 ];
 
 @NgModule({

@@ -12,9 +12,4 @@ export class ModalArticleComponent implements OnInit {
 
   ngOnInit(): void {
   }
-  // open() {
-  //   const modalRef = this.modalService.open(NgbdModalContent);
-  //   modalRef.componentInstance.name = 'World';
-  // }
-
 }
