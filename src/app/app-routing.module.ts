@@ -1,7 +1,6 @@
 import { NgModule } from '@angular/core';
 import { RouterModule, Routes } from '@angular/router';
 import { CreateArticleComponent } from './feature-modules/create-article/create-article.component';
-import { ProfileComponent } from './feature-modules/profile/profile.component';
 
 const routes: Routes = [
 
@@ -26,7 +25,13 @@ const routes: Routes = [
   },
   {
     path:"profile/:username",
-    component:ProfileComponent,
+    loadChildren: () => import("./feature-modules/profile-manage/profile/profile.module")
+    .then(response => response.ProfileModule)
+  },
+  {
+    path:"setting",
+    loadChildren: () => import("./feature-modules/profile-manage/edit-profile/edit-profile.module")
+    .then(response => response.EditProfileModule)
   },
   {
     path:"home",
