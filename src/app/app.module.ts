@@ -11,7 +11,6 @@ import { CreateArticleComponent } from './feature-modules/create-article/create-
 import { ProfileComponent } from './feature-modules/profile/profile.component';
 import { FavoritesComponent } from './feature-modules/favorites/favorites.component';
 import { EditProfileComponent } from './feature-modules/edit-profile/edit-profile.component';
-import { ListArticleComponent } from './share-modules/list-article/list-article.component';
 import { CommonModule } from '@angular/common';
 import { HttpClientModule, HTTP_INTERCEPTORS } from '@angular/common/http';
 import { AuthInterceptor } from './interceptors/auth.interceptor';
@@ -26,7 +25,6 @@ import { LoginGuard } from './guards/auth.guard';
     ProfileComponent,
     FavoritesComponent,
     EditProfileComponent,
-    ListArticleComponent,
   ],
   imports: [
     CommonModule,
