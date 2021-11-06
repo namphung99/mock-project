@@ -13,6 +13,8 @@ import { EditProfileComponent } from './feature-modules/edit-profile/edit-profil
 import { ListArticleComponent } from './share-modules/list-article/list-article.component';
 import { ModalArticleComponent } from './feature-modules/modal-article/modal-article.component';
 import { CommonModule } from '@angular/common';
+import { HttpClientModule, HTTP_INTERCEPTORS } from '@angular/common/http';
+import { AuthInterceptor } from './interceptors/auth.interceptor';
 
 @NgModule({
   declarations: [
@@ -31,8 +33,11 @@ import { CommonModule } from '@angular/common';
     AppRoutingModule,
     NgbModule,
     ReactiveFormsModule,
+    HttpClientModule,
   ],
-  providers: [],
+  providers: [
+    { provide: HTTP_INTERCEPTORS, useClass: AuthInterceptor, multi: true },
+  ],
   bootstrap: [AppComponent]
 })
 export class AppModule { }

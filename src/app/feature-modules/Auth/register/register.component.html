@@ -40,6 +40,19 @@
         <li *ngIf="checkRequired('password')">Password is required</li>
       </ul>
     </div>
+    <div class="form-group">
+      <label>Confirm password</label>
+      <input
+        type="password"
+        class="form-control"
+        placeholder="Password"
+        formControlName = "confirmPassword"
+      >
+      <ul class="text-danger"
+      *ngIf = "checkConditionInvalid('confirmPassword')">
+        <li *ngIf="checkRequired('confirmPassword')">Confirm password is required</li>
+      </ul>
+    </div>
 
     <p>
       You have account? |
