@@ -6,12 +6,13 @@ import { Component, OnInit } from '@angular/core';
   styleUrls: ['./home.component.scss']
 })
 export class HomeComponent implements OnInit {
-  public token: string = "1";
+  public token!: any;
   public imgUrl:string="https://luv.vn/wp-content/uploads/2021/08/hinh-anh-gai-xinh-11.jpg"
   constructor() { }
 
   ngOnInit(): void {
-    console.log(this.token.length)
+    this.token = localStorage.getItem('token')
+    console.log(this.token)
   }
 
 }
