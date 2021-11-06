@@ -15,6 +15,7 @@ import { ListArticleComponent } from './share-modules/list-article/list-article.
 import { CommonModule } from '@angular/common';
 import { HttpClientModule, HTTP_INTERCEPTORS } from '@angular/common/http';
 import { AuthInterceptor } from './interceptors/auth.interceptor';
+import { LoginGuard } from './guards/auth.guard';
 
 @NgModule({
   declarations: [
@@ -37,6 +38,7 @@ import { AuthInterceptor } from './interceptors/auth.interceptor';
   ],
   providers: [
     { provide: HTTP_INTERCEPTORS, useClass: AuthInterceptor, multi: true },
+    LoginGuard
   ],
   bootstrap: [AppComponent]
 })

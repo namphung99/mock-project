@@ -10,8 +10,8 @@
       >
 
       <ul class="text-danger"
-      *ngIf = "checkConditionInvalid('username')">
-        <li *ngIf="checkRequired('username')">Username is required</li>
+      *ngIf = "checkConditionInvalid('username',registerForm)">
+        <li *ngIf= "checkRequired('username',registerForm)">Username is required</li>
       </ul>
     </div>
     <div class="form-group">
@@ -22,9 +22,9 @@
         formControlName = "email"
       >
       <ul class="text-danger"
-      *ngIf = "checkConditionInvalid('email')">
-        <li *ngIf="checkRequired('email')">Email is required</li>
-        <li *ngIf="checkPattern('email')"> {{registerForm.get('email')?.value}} is not a valid email</li>
+      *ngIf = "checkConditionInvalid('email',registerForm)">
+        <li *ngIf="checkRequired('email', registerForm)">Email is required</li>
+        <li *ngIf="checkPattern('email', registerForm)"> {{registerForm.get('email')?.value}} is not a valid email</li>
       </ul>
     </div>
     <div class="form-group">
@@ -36,8 +36,8 @@
         formControlName = "password"
       >
       <ul class="text-danger"
-      *ngIf = "checkConditionInvalid('password')">
-        <li *ngIf="checkRequired('password')">Password is required</li>
+      *ngIf = "checkConditionInvalid('password',registerForm)">
+        <li *ngIf="checkRequired('password', registerForm)">Password is required</li>
       </ul>
     </div>
     <div class="form-group">
@@ -49,8 +49,8 @@
         formControlName = "confirmPassword"
       >
       <ul class="text-danger"
-      *ngIf = "checkConditionInvalid('confirmPassword')">
-        <li *ngIf="checkRequired('confirmPassword')">Confirm password is required</li>
+      *ngIf = "checkConditionInvalid('confirmPassword',registerForm)">
+        <li *ngIf="checkRequired('confirmPassword', registerForm)">Confirm password is required</li>
       </ul>
     </div>
 
