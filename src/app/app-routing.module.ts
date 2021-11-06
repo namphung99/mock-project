@@ -1,5 +1,6 @@
+import { LoginGuard } from './guards/auth.guard';
 import { NgModule } from '@angular/core';
-import { RouterModule, Routes } from '@angular/router';
+import { RouterModule, Routes} from '@angular/router';
 import { CreateArticleComponent } from './feature-modules/create-article/create-article.component';
 import { ProfileComponent } from './feature-modules/profile/profile.component';
 
@@ -7,11 +8,12 @@ const routes: Routes = [
 
   {
     path: '',
-    redirectTo: "login",
+    redirectTo: "home",
     pathMatch: 'full',
   },
   {
     path:"login",
+    canActivate:[LoginGuard],
     loadChildren: () => import("./feature-modules/Auth/login/login.module")
     .then(response => response.LoginModule)
   },

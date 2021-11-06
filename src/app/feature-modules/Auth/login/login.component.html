@@ -3,6 +3,7 @@
   <form
     [formGroup]= "loginForm"
   >
+  <p class="login-failed text-danger" *ngIf="isLogin&&loginInvalid">Email or password invalid</p>
     <div class="form-group">
       <label>Email address</label>
       <input
@@ -12,9 +13,9 @@
         formControlName = "email"
       >
       <ul class="text-danger"
-        *ngIf = "checkConditionInvalid('email')">
-          <li *ngIf="checkRequired('email')">Email is required</li>
-          <li *ngIf="checkPattern('email')"> {{loginForm.get('email')?.value}} is not a valid email</li>
+        *ngIf = "checkConditionInvalid('email', loginForm)">
+          <li *ngIf="checkRequired('email', loginForm)">Email is required</li>
+          <li *ngIf="checkPattern('email', loginForm)"> {{loginForm.get('email')?.value}} is not a valid email</li>
       </ul>
     </div>
     <div class="form-group">
@@ -27,8 +28,8 @@
       >
 
       <ul class="text-danger"
-        *ngIf = "checkConditionInvalid('password')">
-          <li *ngIf="checkRequired('password')">Password is required</li>
+        *ngIf = "checkConditionInvalid('password', loginForm)">
+          <li *ngIf="checkRequired('password', loginForm)">Password is required</li>
       </ul>
     </div>
 
