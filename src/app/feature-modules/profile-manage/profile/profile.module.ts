@@ -3,8 +3,6 @@ import { CommonModule } from '@angular/common';
 import { ProfileComponent } from './profile.component';
 import { RouterModule } from '@angular/router';
 
-
-
 @NgModule({
   declarations: [ProfileComponent],
   imports: [
@@ -12,10 +10,10 @@ import { RouterModule } from '@angular/router';
       {
         path: '',
         component: ProfileComponent,
-      }
+      },
     ]),
-    CommonModule
+    CommonModule,
   ],
-  exports: [ProfileComponent]
+  exports: [ProfileComponent],
 })
-export class ProfileModule { }
+export class ProfileModule {}
