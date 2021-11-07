@@ -2,42 +2,56 @@ import { LoginGuard } from './guards/auth.guard';
 import { NgModule } from '@angular/core';
 import { RouterModule, Routes } from '@angular/router';
 import { ModalArticleComponent } from './feature-modules/modal-article/modal-article.component';
-import { ProfileComponent } from './feature-modules/profile/profile.component';
 
 const routes: Routes = [
   {
     path: '',
-    redirectTo: "home",
+    redirectTo: 'login',
     pathMatch: 'full',
   },
   {
-    path:"login",
-    canActivate:[LoginGuard],
-    loadChildren: () => import("./feature-modules/Auth/login/login.module")
-    .then(response => response.LoginModule)
+    path: 'login',
+    loadChildren: () =>
+      import('./feature-modules/Auth/login/login.module').then(
+        (response) => response.LoginModule
+      ),
   },
   {
-    path:"register",
-    loadChildren: () => import("./feature-modules/Auth/register/register.module")
-    .then(response => response.RegisterModule)
+    path: 'register',
+    loadChildren: () =>
+      import('./feature-modules/Auth/register/register.module').then(
+        (response) => response.RegisterModule
+      ),
   },
   {
     path:"articles",
     component: ModalArticleComponent,
   },
   {
-    path:"profile/:username",
-    component:ProfileComponent,
+    path: 'profile/:username',
+    loadChildren: () =>
+      import('./feature-modules/profile-manage/profile/profile.module').then(
+        (response) => response.ProfileModule
+      ),
   },
   {
-    path:"home",
-    loadChildren: () => import("./feature-modules/home/home.module")
-    .then(response => response.HomeModule)
-  }
+    path: 'setting',
+    loadChildren: () =>
+      import(
+        './feature-modules/profile-manage/edit-profile/edit-profile.module'
+      ).then((response) => response.EditProfileModule),
+  },
+  {
+    path: 'home',
+    loadChildren: () =>
+      import('./feature-modules/home/home.module').then(
+        (response) => response.HomeModule
+      ),
+  },
 ];
 
 @NgModule({
   imports: [RouterModule.forRoot(routes)],
-  exports: [RouterModule]
+  exports: [RouterModule],
 })
-export class AppRoutingModule { }
+export class AppRoutingModule {}

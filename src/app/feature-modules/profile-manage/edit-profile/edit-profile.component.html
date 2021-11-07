@@ -1,0 +1,36 @@
+<h2 class="text-center">Your Account</h2>
+
+<form [formGroup]="profileForm" class="container px-lg-5">
+  <label for="avatar-image">Avatar: </label>
+    <input id="avatar-image" type="text" class="form-control" placeholder="Enter link avatar photo" formControlName="avatarUrl" />
+
+  <label for="username" class="d-flex justify-content-between">Username:</label>
+    <input id="username" type="text" class="form-control" placeholder="Ex: abc123" formControlName="username" />
+    <div *ngIf="profileForm.get('username')?.invalid && profileForm.get('username')?.touched">
+      <div class="text-danger" *ngIf="profileForm.get('username')?.errors?.required">* Username is required</div>
+    </div>
+
+  <label for="bio">Bio: </label>
+    <textarea id="bio" cols="30" rows="2" class="form-control" placeholder="Ex: This is a beautiful website"></textarea>
+
+  <label for="email" class="d-flex justify-content-between">Email:</label>
+    <input id="email" type="text" class="form-control" placeholder="Ex: abc123@gmail.com" formControlName="email" />
+    <div *ngIf="profileForm.get('email')?.invalid && profileForm.get('email')?.touched">
+      <div *ngIf="profileForm.get('email')?.errors?.required" class="text-danger">* Email is required</div>
+      <div *ngIf="profileForm.get('email')?.errors?.pattern" class="text-danger">* {{ profileForm.get("email")?.value }} is not match email</div>
+    </div>
+
+  <label for="old-password">Current password: </label>
+    <input id="old-password" type="password" class="form-control" placeholder="Enter current password" formControlName="oldPassword" />
+
+  <label for="password">Password: </label>
+    <input id="password" type="password" class="form-control" placeholder="Enter password" formControlName="password" />
+
+  <label for="confirm-password">Confirm Password: </label>
+    <input id="confirm-password" type="password" class="form-control" placeholder="Confirm password" formControlName="confirmPassword" /> {{ profileForm.status | json }}
+  
+  <div class="text-right py-3">
+    <button class="btn btn-success mx-2" type="submit" (click)="handleFormSubmission($event)" *ngIf="profileForm.status">Update</button>
+    <button class="btn bg-danger text-white" type="reset">Cancel</button>
+  </div>
+</form>
