@@ -1,3 +1,25 @@
-<p>
-  article-detail works!
-</p>
+<div class="p-3 mb-2 bg-dark text-white bg-opacity-75">
+  <div class="container">
+    <h1>{{article.title}}</h1>
+    <div class="d-flex justify-content-between">
+      <div class="d-flex">
+        <img src="{{article.avatar}}" alt="avatar">
+        <div class="d-flex flex-column">
+          <span>{{article.username}}</span>
+          <span class="text-muted">{{article.publishedDate}}</span>
+        </div>
+      </div>
+
+      <div>
+        <button class="btn btn-follow"><i class="fas fa-plus"></i> Follow {{article.username}}</button>
+        <button class="btn btn-favorite"><i class="fas fa-heart"></i> Favorite Articles ({{article.like}})</button>
+      </div>
+    </div>
+  </div>
+</div>
+
+<div class="container">
+  <p class="pt-3 pb-5">{{article.body}}</p>
+  <hr>
+  <p class="text-center"><a href="#">Sign in</a> or <a href="#">Sign up</a> to add comments on this article.</p>
+</div>
