@@ -32,7 +32,7 @@
       </ul>
       <div class="form-group">
         <label for="exampleInputTagList">Article Tag List</label>
-        <input type="text" class="form-control" id="exampleInputTagList" formControlName="tagList">
+        <input type="text" class="form-control" id="exampleInputTagList" formControlName="tagList" title="Each tag is separated by a ;">
       </div>
       <ul class="text-danger" *ngIf="checkConditionInvalid('tagList', articleGroup)">
         <li *ngIf="checkRequired('tagList', articleGroup)">Tag List is required</li>
