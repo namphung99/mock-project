@@ -1,7 +1,7 @@
 <header class="d-flex justify-content-between bg-light align-items-center">
   <h5 class="m-0 text-success font-weight-bold" routerLink="/home">Coxude</h5>
   <div class="header__right">
-    <ng-container *ngIf="!isLogin;else login">
+    <ng-container *ngIf= "!isLoggedIn;else login">
       <ul class="d-flex align-items-center m-0">
         <li routerLink="/home" routerLinkActive="active">
           <i class="fas fa-home pr-2"></i>
@@ -31,9 +31,12 @@
         <li id="dropdownMenuButton" data-toggle="dropdown" ngbDropdown>
           <img src={{imgUrl}} alt="avatar" type="button" id="dropdownMenuButton" ngbDropdownToggle>
           <div ngbDropdownMenu class="dropdown" aria-labelledby="dropdownMenuButton">
-            <a ngbDropdownItem class="dropdown-item" routerLink="">Setting</a>
-            <a ngbDropdownItem class="dropdown-item" routerLink="">View profile</a>
-            <a ngbDropdownItem class="dropdown-item">Logout</a>
+            <a ngbDropdownItem class="dropdown-item" [routerLink]="">Setting</a>
+            <a ngbDropdownItem class="dropdown-item" [routerLink]="">View profile</a>
+            <a
+              ngbDropdownItem class="dropdown-item"
+              (click)="onLogout()"
+            >Logout</a>
           </div>
         </li>
       </ul>

@@ -1,3 +1,4 @@
+import { LoginGuard } from './guards/auth.guard';
 import { NgModule } from '@angular/core';
 import { RouterModule, Routes } from '@angular/router';
 import { ModalArticleComponent } from './feature-modules/modal-article/modal-article.component';
@@ -5,17 +6,13 @@ import { ProfileComponent } from './feature-modules/profile/profile.component';
 
 const routes: Routes = [
   {
-    path:"",
-    redirectTo:"home",
-    pathMatch:"full"
-  },
-  {
     path: '',
-    redirectTo: "login",
+    redirectTo: "home",
     pathMatch: 'full',
   },
   {
     path:"login",
+    canActivate:[LoginGuard],
     loadChildren: () => import("./feature-modules/Auth/login/login.module")
     .then(response => response.LoginModule)
   },
