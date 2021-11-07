@@ -3,7 +3,7 @@
     <div class="col-lg-8">
       <div class="home-content">
         <ng-container *ngIf = "token">
-          <div class="add-article-box">
+          <div class="add-article-box" (click)="open()">
             <img [src]="imgUrl" alt="avatar">
             <div class="description">
               <p>Hey Nam, Please share posts with everyone!!!</p>

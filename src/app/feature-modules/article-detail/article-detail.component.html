@@ -18,8 +18,27 @@
   </div>
 </div>
 
-<div class="container">
-  <p class="pt-3 pb-5">{{article.body}}</p>
+<div class="container py-3">
+  {{article.body}}
   <hr>
-  <p class="text-center"><a href="#">Sign in</a> or <a href="#">Sign up</a> to add comments on this article.</p>
+</div>
+
+<div class="container">
+  <div class="textarea-container">
+    <textarea rows="3" class="p-3" placeholder="Write comments" #comment></textarea>
+    <button class="btn btn-success" (click)="addComment(comment.value); comment.value=''">Post</button>
+  </div>
+</div>
+
+<div *ngIf="article.comments[0]!==''">
+  <div class="container py-2 d-flex my-2 w-75 rounded border border-1" *ngFor="let comment of article.comments">
+    <div class="d-flex">
+      <img src="{{article.avatar}}" alt="avatar">
+      <div class="d-flex flex-column">
+        <span>{{article.username}}</span>
+        <span class="text-muted">{{article.publishedDate}}</span>
+      </div>
+    </div>
+    <p class="px-5">{{comment}}</p>
+  </div>
 </div>
