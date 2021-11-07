@@ -27,31 +27,35 @@
         <li *ngIf="checkPattern('email', registerForm)"> {{registerForm.get('email')?.value}} is not a valid email</li>
       </ul>
     </div>
-    <div class="form-group">
-      <label>Password</label>
-      <input
-        type="password"
-        class="form-control"
-        placeholder="Password"
-        formControlName = "password"
-      >
-      <ul class="text-danger"
-      *ngIf = "checkConditionInvalid('password',registerForm)">
-        <li *ngIf="checkRequired('password', registerForm)">Password is required</li>
-      </ul>
-    </div>
-    <div class="form-group">
-      <label>Confirm password</label>
-      <input
-        type="password"
-        class="form-control"
-        placeholder="Password"
-        formControlName = "confirmPassword"
-      >
-      <ul class="text-danger"
-      *ngIf = "checkConditionInvalid('confirmPassword',registerForm)">
-        <li *ngIf="checkRequired('confirmPassword', registerForm)">Confirm password is required</li>
-      </ul>
+    <div formGroupName = "pw">
+      <div class="form-group">
+        <label>Password</label>
+        <input
+          type="password"
+          class="form-control"
+          placeholder="Password"
+          formControlName = "password"
+        >
+        <ul class="text-danger"
+        *ngIf = "checkConditionInvalid('pw',registerForm)">
+          <li *ngIf="checkRequiredGR(registerForm, 'pw', 'password')">Password is required</li>
+        </ul>
+      </div>
+      <div class="form-group">
+        <label>Confirm password</label>
+        <input
+          type="password"
+          class="form-control"
+          placeholder="Password"
+          formControlName = "confirmPassword"
+          [class.not-equals] = "checkComparePassword(registerForm, 'pw')"
+        >
+        <ul class="text-danger"
+          *ngIf = "checkConditionInvalid('pw',registerForm)">
+          <li *ngIf="checkComparePassword(registerForm, 'pw')">Password not match</li>
+          <li *ngIf="checkRequiredGR(registerForm, 'pw', 'confirmPassword')">Confirm password is required</li>
+        </ul>
+      </div>
     </div>
 
     <p>
@@ -62,6 +66,7 @@
       type="submit"
       class="btn"
       [disabled] = "registerForm.invalid"
+      (click)="onSubmit()"
     >Submit</button>
   </form>
 </div>

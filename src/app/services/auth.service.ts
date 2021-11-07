@@ -1,4 +1,4 @@
-import { UserLogin } from '../shares/interfaces/user.interface';
+import { UserLogin, UserRegistration } from '../shares/interfaces/user.interface';
 import { baseUrl } from '../constants/index.constant';
 import { HttpClient } from '@angular/common/http';
 import { EventEmitter, Injectable } from '@angular/core';
@@ -29,8 +29,13 @@ export class AuthService {
   }
 
   login(user : UserLogin){
-    const url = baseUrl;
-    return this.http.post(`${url}/api/users/login`, user)
+    const url = `${baseUrl}/api/users/login`;
+    return this.http.post(url, user)
+  }
+
+  registration(user: UserRegistration ){
+    const url = `${baseUrl}/api/users`;
+    return this.http.post<any>(url, user);
   }
 
   logUserIn(user : any){
