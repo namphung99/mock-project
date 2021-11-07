@@ -1,17 +1,20 @@
 @use "../../styles/color" as color;
-section{
-    .close{
-        background-color: #e4e6eb;
-        padding: 10px 15px;
-        outline: none;
+section {
+  .close {
+    background-color: #e4e6eb;
+    padding: 10px 15px;
+    outline: none;
+  }
+  .modal-footer {
+    button {
+      outline: none;
+      background-color: color.$primary-color;
     }
-    .modal-footer{
-        button{
-            outline: none;
-            background-color: color.$primary-color;
-        }
-        button:hover{
-            background-color: color.$primary-color-hover;
-        }
+    button:hover {
+      background-color: color.$primary-color-hover;
     }
+  }
+  .form-control.ng-invalid.ng-dirty {
+    border: 1px solid red;
+  }
 }

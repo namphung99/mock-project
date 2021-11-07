@@ -44,6 +44,6 @@
     </form>
   </div>
   <div class="modal-footer py-2">
-    <button type="submit" class="btn btn-primary" (click)="onSubmit()">Submit</button>
+    <button type="submit" class="btn btn-primary" [disabled] = "articleGroup.invalid" (click)="onSubmit()">Submit</button>
   </div>
 </section>

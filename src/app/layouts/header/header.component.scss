@@ -1,5 +1,5 @@
 header {
-  padding: 1rem 6rem;
+  padding: 1rem 1rem;
   h5 {
     cursor: pointer;
   }
@@ -14,6 +14,7 @@ header {
       color: #a29f9f;
       cursor: pointer;
       a {
+        display: none;
         text-decoration: none;
       }
     }
@@ -28,6 +29,21 @@ header {
       width: 35px;
       height: 35px;
       object-fit: cover;
+    }
+  }
+}
+
+@media only screen and (min-width: 576px){
+  header {
+    padding: 1rem 6rem;
+  }
+  .header__right {
+    ul {
+      li {
+        a {
+          display: inline-block;
+        }
+      }
     }
   }
 }
