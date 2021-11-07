@@ -1,6 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { Router } from '@angular/router';
+import { ToastrService } from 'ngx-toastr';
 import { regexEmail } from 'src/app/constants/index.constant';
 import { AuthService } from 'src/app/services/auth.service';
 import * as Validations from '../../../shares/Custom-Validator/handleValidator';
@@ -15,13 +16,12 @@ export class LoginComponent implements OnInit {
   checkConditionInvalid = Validations.checkConditionInvalid;
   checkRequired = Validations.checkRequired;
   checkPattern = Validations.checkPattern;
-  loginInvalid: boolean = false;
-  isLogin: boolean = false;
   loginForm!: FormGroup;
   constructor(
     private fb: FormBuilder,
     private authService: AuthService,
     private router: Router,
+    private toastr: ToastrService
   ) { }
 
   ngOnInit(): void {
@@ -32,7 +32,6 @@ export class LoginComponent implements OnInit {
   }
 
   onSubmit(){
-    this.isLogin = true;
     const user = {
       user : {
         ...this.loginForm.value,
@@ -44,9 +43,17 @@ export class LoginComponent implements OnInit {
       this.authService.logUserIn(response);
       console.log(response)
       this.router.navigate(['/home']);
+
+      this.toastr.success('', 'Login Success', {
+        timeOut: 3000,
+        progressBar: true
+      });
     },
     error => {
-      this.loginInvalid = true;
+      this.toastr.error('Email or password incorrect!', 'Login Fail', {
+        timeOut: 3000,
+        progressBar: true
+      });
     })
   }
 }
