@@ -6,15 +6,14 @@ import { ModalArticleComponent } from './feature-modules/modal-article/modal-art
 const routes: Routes = [
   {
     path: '',
-    redirectTo: 'login',
+    redirectTo: "home",
     pathMatch: 'full',
   },
   {
-    path: 'login',
-    loadChildren: () =>
-      import('./feature-modules/Auth/login/login.module').then(
-        (response) => response.LoginModule
-      ),
+    path:"login",
+    canActivate:[LoginGuard],
+    loadChildren: () => import("./feature-modules/Auth/login/login.module")
+    .then(response => response.LoginModule)
   },
   {
     path: 'register',
