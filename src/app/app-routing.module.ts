@@ -1,4 +1,4 @@
-import { LoginGuard } from './guards/auth.guard';
+import { AuthGuard } from './guards/auth.guard';
 import { NgModule } from '@angular/core';
 import { RouterModule, Routes } from '@angular/router';
 import { ModalArticleComponent } from './feature-modules/modal-article/modal-article.component';
@@ -12,12 +12,13 @@ const routes: Routes = [
   },
   {
     path:"login",
-    canActivate:[LoginGuard],
+    canActivate:[AuthGuard],
     loadChildren: () => import("./feature-modules/Auth/login/login.module")
     .then(response => response.LoginModule)
   },
   {
     path:"register",
+    canActivate:[AuthGuard],
     loadChildren: () => import("./feature-modules/Auth/register/register.module")
     .then(response => response.RegisterModule)
   },
