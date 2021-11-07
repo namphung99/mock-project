@@ -1,11 +1,10 @@
 import { LoginGuard } from './guards/auth.guard';
 import { NgModule } from '@angular/core';
-import { RouterModule, Routes} from '@angular/router';
-import { CreateArticleComponent } from './feature-modules/create-article/create-article.component';
+import { RouterModule, Routes } from '@angular/router';
+import { ModalArticleComponent } from './feature-modules/modal-article/modal-article.component';
 import { ProfileComponent } from './feature-modules/profile/profile.component';
 
 const routes: Routes = [
-
   {
     path: '',
     redirectTo: "home",
@@ -24,7 +23,7 @@ const routes: Routes = [
   },
   {
     path:"articles",
-    component: CreateArticleComponent,
+    component: ModalArticleComponent,
   },
   {
     path:"profile/:username",

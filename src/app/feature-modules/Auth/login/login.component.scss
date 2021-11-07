@@ -36,20 +36,6 @@ h1{
   }
 }
 
-.form-control.ng-invalid.ng-touched{
-  border: 1px solid red;
-}
-
-ul.text-danger {
-  padding-left: 0;
-  padding-top: 6px;
-
-  li{
-    list-style-type: none;
-    font-size: 14px;
-  }
-}
-
 .login-failed{
   text-align: center;
   font-weight: bold;

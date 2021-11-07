@@ -1,4 +1,18 @@
 /* You can add global styles to this file, and also import other style files */
 
 /* Importing Bootstrap SCSS file. */
-@import '~bootstrap/scss/bootstrap';
+@import "~bootstrap/scss/bootstrap";
+
+.form-control.ng-invalid.ng-touched {
+  border: 1px solid red;
+}
+
+ul.text-danger {
+  padding-left: 0;
+  padding-top: 6px;
+
+  li {
+    list-style-type: none;
+    font-size: 14px;
+  }
+}

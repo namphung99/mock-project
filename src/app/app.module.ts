@@ -7,11 +7,11 @@ import { AppComponent } from './app.component';
 import { NgbModule } from '@ng-bootstrap/ng-bootstrap';
 import { HeaderComponent } from './layouts/header/header.component';
 import { FooterComponent } from './layouts/footer/footer.component';
-import { CreateArticleComponent } from './feature-modules/create-article/create-article.component';
 import { ProfileComponent } from './feature-modules/profile/profile.component';
 import { FavoritesComponent } from './feature-modules/favorites/favorites.component';
 import { EditProfileComponent } from './feature-modules/edit-profile/edit-profile.component';
 import { ListArticleComponent } from './share-modules/list-article/list-article.component';
+import { ModalArticleComponent } from './feature-modules/modal-article/modal-article.component';
 import { CommonModule } from '@angular/common';
 import { HttpClientModule, HTTP_INTERCEPTORS } from '@angular/common/http';
 import { AuthInterceptor } from './interceptors/auth.interceptor';
@@ -22,11 +22,11 @@ import { LoginGuard } from './guards/auth.guard';
     AppComponent,
     HeaderComponent,
     FooterComponent,
-    CreateArticleComponent,
     ProfileComponent,
     FavoritesComponent,
     EditProfileComponent,
     ListArticleComponent,
+    ModalArticleComponent
   ],
   imports: [
     CommonModule,
