@@ -1,3 +1,4 @@
+import { UserService } from './../../services/user.service';
 import { Component, OnInit } from '@angular/core';
 import { Router } from '@angular/router';
 import { AuthService } from 'src/app/services/auth.service';
@@ -10,10 +11,12 @@ import { AuthService } from 'src/app/services/auth.service';
 export class HeaderComponent implements OnInit {
   public isLoggedIn: boolean = false;
   token: any;
+  username?: any;
   public imgUrl:string="https://luv.vn/wp-content/uploads/2021/08/hinh-anh-gai-xinh-11.jpg";
   constructor(
     private authService: AuthService,
     private router: Router,
+    private userService: UserService
   ) { }
 
   ngOnInit(): void {
@@ -22,6 +25,9 @@ export class HeaderComponent implements OnInit {
       this.isLoggedIn = response
       console.log(response)
     })
+    this.userService.getUsernameFromCurrentUser().subscribe(username => {
+      this.username = username;
+    });
   }
 
   onLogout(){

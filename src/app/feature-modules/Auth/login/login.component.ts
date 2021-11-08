@@ -1,3 +1,4 @@
+import { UIService } from 'src/app/services/ui.service';
 import { Component, OnInit } from '@angular/core';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { Router } from '@angular/router';
@@ -21,7 +22,8 @@ export class LoginComponent implements OnInit {
     private fb: FormBuilder,
     private authService: AuthService,
     private router: Router,
-    private toastr: ToastrService
+    private toastr: ToastrService,
+    private uiService: UIService
   ) { }
 
   ngOnInit(): void {
@@ -32,28 +34,29 @@ export class LoginComponent implements OnInit {
   }
 
   onSubmit(){
+    // toggle spinner
+    this.uiService.emitSpinner.emit(true);
     const user = {
       user : {
         ...this.loginForm.value,
       }
     }
-
-    this.authService.login(user)
-    .subscribe(response => {
-      this.authService.logUserIn(response);
-      console.log(response)
-      this.router.navigate(['/home']);
-
-      this.toastr.success('', 'Login Success', {
-        timeOut: 3000,
-        progressBar: true
-      });
-    },
-    error => {
-      this.toastr.error('Email or password incorrect!', 'Login Fail', {
-        timeOut: 3000,
-        progressBar: true
-      });
-    })
+    // delay call API
+    setTimeout(() => {
+      this.authService.login(user)
+      .subscribe(response => {
+        this.uiService.emitSpinner.emit(false);
+        this.authService.logUserIn(response);
+        this.router.navigate(['/home']);
+        this.toastr.success('', 'Login Success', {
+          timeOut: 3000,
+          progressBar: true
+        });
+      },
+      error => {
+        this.uiService.emitSpinner.emit(false);
+        this.toastr.error('Email or password incorrect!', 'Login Fail');
+      })
+    }, 500)
   }
 }
