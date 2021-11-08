@@ -66,9 +66,7 @@ export class RegisterComponent implements OnInit {
     }
     this.authService.registration(user)
     .subscribe(response => {
-
-      localStorage.setItem('token',response?.user.token);
-      this.authService.emitIsLogin.emit(true);
+      this.authService.logUserIn(response)
       this.toastr.success('', 'Register success', {
         timeOut: 3000,
         progressBar: true
