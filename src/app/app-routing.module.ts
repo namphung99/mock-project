@@ -29,7 +29,12 @@ const routes: Routes = [
     path:"home",
     loadChildren: () => import("./feature-modules/home/home.module")
     .then(response => response.HomeModule)
-  }
+  },
+  {
+    path:"article-detail",
+    loadChildren: () => import("./feature-modules/article-detail/article-detail.module")
+    .then(response => response.ArticleDetailModule)
+  },
 ];
 
 @NgModule({
