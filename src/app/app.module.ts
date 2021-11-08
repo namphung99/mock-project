@@ -11,7 +11,6 @@ import { ToastrModule } from 'ngx-toastr';
 import { HeaderComponent } from './layouts/header/header.component';
 import { FooterComponent } from './layouts/footer/footer.component';
 import { FavoritesComponent } from './feature-modules/favorites/favorites.component';
-import { ListArticleComponent } from './share-modules/list-article/list-article.component';
 import { ModalArticleComponent } from './feature-modules/modal-article/modal-article.component';
 import { CommonModule } from '@angular/common';
 import { HttpClientModule, HTTP_INTERCEPTORS } from '@angular/common/http';
@@ -24,7 +23,6 @@ import { AuthGuard } from './guards/auth.guard';
     HeaderComponent,
     FooterComponent,
     FavoritesComponent,
-    ListArticleComponent,
     ModalArticleComponent
   ],
   imports: [
