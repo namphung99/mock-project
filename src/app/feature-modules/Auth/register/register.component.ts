@@ -73,11 +73,8 @@ export class RegisterComponent implements OnInit {
         this.uiService.emitSpinner.emit(false);
 
         // emit isLoggedIn
-        this.authService.emitIsLogin.emit(true);
-
-        localStorage.setItem('token',response?.user.token);
+        this.authService.logUserIn(response);
         this.toastr.success('', 'Register success');
-
         this.router.navigate(['/'])
 
       },
