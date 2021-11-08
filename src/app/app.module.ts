@@ -27,7 +27,7 @@ import { AuthGuard } from './guards/auth.guard';
     ProfileComponent,
     FavoritesComponent,
     EditProfileComponent,
-    ModalArticleComponent
+    ModalArticleComponent,
   ],
   imports: [
     CommonModule,

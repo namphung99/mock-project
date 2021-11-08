@@ -2,7 +2,7 @@ import { Component, OnInit } from '@angular/core';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { NgbActiveModal } from '@ng-bootstrap/ng-bootstrap';
 import { ArticleService } from 'src/app/services/article.service';
-import { Article } from 'src/app/shares/interfaces/article.interface';
+import { ArticlePost } from 'src/app/shares/interfaces/article.interface';
 import * as Validations from '../../shares/Custom-Validator/handleValidator';
 
 @Component({
@@ -14,7 +14,7 @@ export class ModalArticleComponent implements OnInit {
   public checkRequired = Validations.checkRequired;
   public checkConditionInvalid = Validations.checkConditionInvalid;
   public articleGroup: FormGroup;
-  public article: Article = {
+  public article: ArticlePost = {
     article: {
       title: "",
       description: "",
@@ -47,11 +47,10 @@ export class ModalArticleComponent implements OnInit {
       }
     }
 
-    this.articleService.postArticle(this.article).subscribe(response => {
-      console.log(response)
+    this.articleService.postArticle(this.article).subscribe((response: any) => {
+      this.articleService.setArticle(response.article);
+      this.activeModal.close();
     })
-
-    this.activeModal.close()
   }
 
   onClose() {
