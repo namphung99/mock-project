@@ -47,10 +47,9 @@ export class ModalArticleComponent implements OnInit {
       }
     }
 
-
-    // this.articleService.postArticle(this.article).subscribe(response => {
-    //   console.log(response)
-    // })
+    this.articleService.postArticle(this.article).subscribe(response => {
+      console.log(response)
+    })
 
     this.activeModal.close()
   }
