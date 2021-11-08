@@ -1,0 +1,30 @@
+@use "../../styles/color";
+
+img{
+  border-radius: 50%;
+  width: 35px;
+  height: 35px;
+  object-fit: cover;
+}
+
+.btn-like {
+  color: color.$primary-color;
+  border: 1px solid color.$primary-color;
+}
+
+.btn-like:hover {
+  background-color: color.$primary-color;
+  color: white;
+}
+
+.tag {
+  border: 1px solid gray;
+  padding: 5px 10px;
+  margin-right: 7px;
+  border-radius: 10px;
+}
+
+.article:hover {
+  box-shadow: 2px 2px 1px 2px #dbdbdb;
+  cursor: pointer;
+}

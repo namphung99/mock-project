@@ -13,7 +13,6 @@ import { FooterComponent } from './layouts/footer/footer.component';
 import { ProfileComponent } from './feature-modules/profile/profile.component';
 import { FavoritesComponent } from './feature-modules/favorites/favorites.component';
 import { EditProfileComponent } from './feature-modules/edit-profile/edit-profile.component';
-import { ListArticleComponent } from './share-modules/list-article/list-article.component';
 import { ModalArticleComponent } from './feature-modules/modal-article/modal-article.component';
 import { CommonModule } from '@angular/common';
 import { HttpClientModule, HTTP_INTERCEPTORS } from '@angular/common/http';
@@ -28,7 +27,6 @@ import { AuthGuard } from './guards/auth.guard';
     ProfileComponent,
     FavoritesComponent,
     EditProfileComponent,
-    ListArticleComponent,
     ModalArticleComponent
   ],
   imports: [
