@@ -4,6 +4,7 @@ import { Router } from '@angular/router';
 import { ToastrService } from 'ngx-toastr';
 import { regexEmail } from 'src/app/constants/index.constant';
 import { AuthService } from 'src/app/services/auth.service';
+import { UIService } from 'src/app/services/ui.service';
 import { comparePassword } from 'src/app/shares/Custom-Validator/CustomValidator';
 import * as Validations from '../../../shares/Custom-Validator/handleValidator';
 
@@ -26,6 +27,7 @@ export class RegisterComponent implements OnInit {
     private authService: AuthService,
     private toastr: ToastrService,
     private router: Router,
+    private uiService: UIService,
   ) { }
 
   ngOnInit(): void {
@@ -56,7 +58,8 @@ export class RegisterComponent implements OnInit {
   }
 
   onSubmit() {
-    // console.log(this.registerForm.value)
+    // toggle spinner
+    this.uiService.emitSpinner.emit(true)
     const user = {
       user: {
         username: this.registerForm.value.username,
@@ -64,42 +67,37 @@ export class RegisterComponent implements OnInit {
         password: this.registerForm.value.pw.password,
       }
     }
-    this.authService.registration(user)
-    .subscribe(response => {
+    setTimeout(() => {
+      this.authService.registration(user)
+      .subscribe(response => {
+        this.uiService.emitSpinner.emit(false);
 
-      localStorage.setItem('token',response?.user.token);
-      this.authService.emitIsLogin.emit(true);
-      this.toastr.success('', 'Register success', {
-        timeOut: 3000,
-        progressBar: true
-      });
+        // emit isLoggedIn
+        this.authService.emitIsLogin.emit(true);
 
-      this.router.navigate(['/'])
+        localStorage.setItem('token',response?.user.token);
+        this.toastr.success('', 'Register success');
 
-    },
-    error => {
-      const errorResponse = error.error.errors;
-      this.emailErrorResponse = errorResponse?.email;
-      this.usernameErrorResponse = errorResponse?.username;
+        this.router.navigate(['/'])
 
-      if(this.emailErrorResponse && !this.usernameErrorResponse){
-        this.toastr.error(`Email ${this.emailErrorResponse}`, 'Register failed', {
-          timeOut: 3000,
-          progressBar: true
-        });
-      }
-      else if(this.usernameErrorResponse && !this.emailErrorResponse){
-        this.toastr.error(`Username ${this.usernameErrorResponse}`, 'Register failed', {
-          timeOut: 3000,
-          progressBar: true
-        });
-      }
-      else if(this.emailErrorResponse && this.usernameErrorResponse){
-        this.toastr.error(`Username & email ${this.usernameErrorResponse}`, 'Register failed', {
-          timeOut: 3000,
-          progressBar: true
-        });
-      }
-    })
+      },
+      error => {
+        this.uiService.emitSpinner.emit(false);
+
+        const errorResponse = error.error.errors;
+        this.emailErrorResponse = errorResponse?.email;
+        this.usernameErrorResponse = errorResponse?.username;
+
+        if(this.emailErrorResponse && !this.usernameErrorResponse){
+          this.toastr.error(`Email ${this.emailErrorResponse}`, 'Register failed');
+        }
+        else if(this.usernameErrorResponse && !this.emailErrorResponse){
+          this.toastr.error(`Username ${this.usernameErrorResponse}`, 'Register failed');
+        }
+        else if(this.emailErrorResponse && this.usernameErrorResponse){
+          this.toastr.error(`Username & email ${this.usernameErrorResponse}`, 'Register failed');
+        }
+      })
+    }, 500)
   }
 }
