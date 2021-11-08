@@ -39,9 +39,13 @@ export class AuthService {
   logUserIn(user : any){
     this.isLoggedIn = true;
     this.emitIsLogin.emit(this.isLoggedIn)
-    this.user = user.user;
     this.token = user.user.token;
     localStorage.setItem("token", user.user.token);
+    // console.log(user.user)
+    localStorage.setItem("currentUser",JSON.stringify({
+      email: user.user.email,
+      username: user.user.username
+    }));
   }
 
   getIsLoggedIn(){
