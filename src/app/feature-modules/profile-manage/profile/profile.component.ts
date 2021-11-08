@@ -1,3 +1,4 @@
+import { UserService } from './../../../services/user.service';
 import { Component, OnInit } from '@angular/core';
 
 @Component({
@@ -12,7 +13,11 @@ export class ProfileComponent implements OnInit {
     'https://luv.vn/wp-content/uploads/2021/08/hinh-anh-gai-xinh-11.jpg';
   public username: string = 'Suger baby';
 
-  constructor() {}
+  public currentUser: any;
 
-  ngOnInit(): void {}
+  constructor(private readonly userService: UserService) {}
+
+  ngOnInit(): void {
+    console.log(this.userService.getCurrentUser());
+  }
 }
