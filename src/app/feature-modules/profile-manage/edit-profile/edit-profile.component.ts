@@ -19,7 +19,6 @@ export class EditProfileComponent implements OnInit {
     username: 'Day la username',
     bio: 'This is bio',
     email: 'hello@hello.hello',
-    password: 'hello'
   }
 
   constructor(private formSetting: FormBuilder) { }
@@ -29,13 +28,10 @@ export class EditProfileComponent implements OnInit {
     username: [this.user.username, Validators.required],
     bio: [this.user.bio],
     email: [this.user.email, [Validators.required, Validators.pattern(regexEmail)]],
-    oldPassword: [''],
   });
 
   ngOnInit(): void { }
 
   handleFormSubmission(): void {
-    console.log('Hello');
-    
   }
 }
