@@ -1,7 +1,6 @@
 import { AuthGuard } from './guards/auth.guard';
 import { NgModule } from '@angular/core';
 import { RouterModule, Routes } from '@angular/router';
-import { ModalArticleComponent } from './feature-modules/modal-article/modal-article.component';
 import { ProfileComponent } from './feature-modules/profile/profile.component';
 
 const routes: Routes = [
@@ -21,10 +20,6 @@ const routes: Routes = [
     canActivate:[AuthGuard],
     loadChildren: () => import("./feature-modules/Auth/register/register.module")
     .then(response => response.RegisterModule)
-  },
-  {
-    path:"articles",
-    component: ModalArticleComponent,
   },
   {
     path:"profile/:username",
