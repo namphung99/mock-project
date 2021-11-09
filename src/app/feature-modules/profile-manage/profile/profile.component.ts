@@ -1,4 +1,4 @@
-import { UserService } from './../../../services/user.service';
+import { UserService } from '../../../services/user.service';
 import { Component, OnInit } from '@angular/core';
 import { ActivatedRoute, ParamMap } from '@angular/router';
 import { switchMap } from 'rxjs/operators';
@@ -10,9 +10,6 @@ import { switchMap } from 'rxjs/operators';
 export class ProfileComponent implements OnInit {
   public imgBackgroundUrl: string =
     'https://www.solidbackgrounds.com/images/1920x1080/1920x1080-gray-solid-color-background.jpg';
-  public imgAvatarUrl: string =
-    'https://luv.vn/wp-content/uploads/2021/08/hinh-anh-gai-xinh-11.jpg';
-  public username: string = 'Suger baby';
   public currentUser: any;
   private user$: any;
 

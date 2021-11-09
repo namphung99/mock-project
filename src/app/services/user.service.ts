@@ -1,8 +1,13 @@
 import { baseUrl } from './../constants/index.constant';
 import { HttpClient, HttpHeaders } from '@angular/common/http';
 import { Injectable } from '@angular/core';
-import { map } from 'rxjs/operators';
+import { map, catchError } from 'rxjs/operators';
 
+const httpOptions = {
+  headers: new HttpHeaders({
+    'Content-Type':  'application/json',
+  })
+};
 @Injectable({
   providedIn: 'root'
 })
@@ -25,9 +30,9 @@ export class UserService {
   }
 
   editUser(data: {}) {
-    const httpOptions = {
-      headers: new HttpHeaders({'Content-Type': 'application/json'})
-    };
-    return this.http.put(`${baseUrl}/api/user`, data, httpOptions).subscribe(data => console.log(data)),(err: any) => console.log(err)
+    return this.http.put(`${baseUrl}/api/user`, data, httpOptions)
+    .subscribe(val => {
+      return val;
+    });
   }
 }
