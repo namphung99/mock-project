@@ -1,5 +1,7 @@
+import { UserService } from '../../../services/user.service';
 import { Component, OnInit } from '@angular/core';
-
+import { ActivatedRoute, ParamMap } from '@angular/router';
+import { switchMap } from 'rxjs/operators';
 @Component({
   selector: 'app-profile',
   templateUrl: './profile.component.html',
@@ -7,12 +9,21 @@ import { Component, OnInit } from '@angular/core';
 })
 export class ProfileComponent implements OnInit {
   public imgBackgroundUrl: string =
-    'https://vnn-imgs-f.vgcloud.vn/2020/06/10/09/-3.jpg';
-  public imgAvatarUrl: string =
-    'https://luv.vn/wp-content/uploads/2021/08/hinh-anh-gai-xinh-11.jpg';
-  public username: string = 'Suger baby';
+    'https://www.solidbackgrounds.com/images/1920x1080/1920x1080-gray-solid-color-background.jpg';
+  public currentUser: any;
+  private user$: any;
 
-  constructor() {}
+  constructor(
+    private route: ActivatedRoute,
+    private service: UserService
+    ) {}
 
-  ngOnInit(): void {}
+  ngOnInit(): void {
+    this.user$ = this.route.paramMap.pipe(
+      switchMap((params: ParamMap) =>
+      this.service.getProfilesUser(params.get('username')!))
+    ).subscribe(m => {
+      this.currentUser = m
+    })
+  }
 }

@@ -1,6 +1,8 @@
+import { Router } from '@angular/router';
+import { UserService } from '../../../services/user.service';
 import { regexEmail } from 'src/app/constants/index.constant';
-import { Component, OnInit } from '@angular/core';
-import { FormBuilder, FormGroup, Validators } from '@angular/forms';
+import { Component, createPlatform, OnInit } from '@angular/core';
+import { FormBuilder, Validators } from '@angular/forms';
 import * as Validations from '../../../shares/Custom-Validator/handleValidator';
 
 @Component({
@@ -9,29 +11,45 @@ import * as Validations from '../../../shares/Custom-Validator/handleValidator';
   styleUrls: ['./edit-profile.component.scss'],
 })
 export class EditProfileComponent implements OnInit {
-  patternEmail: string = '^[\\w]{1,}[\\w.+-]{0,}@[\\w-]{2,}([.][a-zA-Z]{2,}|[.][\\w-]{2,}[.][a-zA-Z]{2,})$';
+  [x: string]: any;
   checkConditionInvalid = Validations.checkConditionInvalid;
   checkRequired = Validations.checkRequired;
   checkPattern = Validations.checkPattern;
+  currentUser ?: any;
+  profileForm ?: any;
 
-  user = {
-    avatarUrl: 'link của ảnh',
-    username: 'Day la username',
-    bio: 'This is bio',
-    email: 'hello@hello.hello',
+  constructor(
+    private formSetting: FormBuilder,
+    private userService: UserService,
+    private router: Router
+    ) { }
+
+  ngOnInit(): void {
+    this.userService.getUsernameFromCurrentUser().subscribe(m => {
+      this.username = m;
+      this.userService.getProfilesUser(this.username).subscribe(m => {
+        this.userService.getEmail().subscribe(res => {
+          this.currentUser = m;
+          this.createForm(this.currentUser, res);
+        })
+      })
+    });
   }
 
-  constructor(private formSetting: FormBuilder) { }
-
-  profileForm = this.formSetting.group({
-    avatarUrl: [this.user.avatarUrl],
-    username: [this.user.username, Validators.required],
-    bio: [this.user.bio],
-    email: [this.user.email, [Validators.required, Validators.pattern(regexEmail)]],
-  });
-
-  ngOnInit(): void { }
+  createForm(currentUser: any, email: string){
+    this.profileForm = this.formSetting.group({
+      email: [email, [Validators.required, Validators.pattern(regexEmail)]],
+      image: [currentUser.profile.image],
+      bio: [currentUser.profile.bio]
+    });
+  }
 
   handleFormSubmission(): void {
+    let user = {
+      user: this.profileForm.value
+    }
+    
+    this.userService.editUser(user);
+    this.router.navigate(['/profile/' + JSON.parse(localStorage.getItem('currentUser') || '{}').username]);
   }
 }
