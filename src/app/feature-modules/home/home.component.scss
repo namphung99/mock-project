@@ -83,12 +83,10 @@
   li:hover{
     color: color.$primary-color;
     border-bottom: 1px solid color.$primary-color;
-    // font-weight: bold;
   }
 }
 
 .active {
   color: color.$primary-color;
   border-bottom: 1px solid color.$primary-color;
-  // font-weight: bold;
 }

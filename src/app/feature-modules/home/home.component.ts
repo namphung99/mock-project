@@ -12,6 +12,7 @@ import { ModalArticleComponent } from '../../share-modules/modal-article/modal-a
 export class HomeComponent implements OnInit {
   public token!: any;
   public articles: ArticleGet[] = []
+  public isGlobal:boolean=false;
   isLoggedIn: boolean = false;
   public imgUrl: string = "https://luv.vn/wp-content/uploads/2021/08/hinh-anh-gai-xinh-11.jpg"
   constructor(
@@ -29,6 +30,10 @@ export class HomeComponent implements OnInit {
   open() {
     const modalRef = this.modalService.open(ModalArticleComponent);
     modalRef.componentInstance.name = 'Article';
+  }
+
+  onChangeGlobal(){
+    this.isGlobal=!this.isGlobal
   }
 
 }
