@@ -7,8 +7,8 @@ import { ArticleGet, ArticlePost } from '../shares/interfaces/article.interface'
   providedIn: 'root'
 })
 export class ArticleService {
-  public articles:ArticlePost[]=[];
-  public emitArticle:EventEmitter<any>=new EventEmitter();
+  public articles:ArticleGet[]=[];
+  public emitArticle:EventEmitter<ArticleGet[]>=new EventEmitter();
   constructor(private http: HttpClient) { }
 
   getArticles() {
@@ -22,7 +22,7 @@ export class ArticleService {
     return this.http.post(`${baseUrl}/api/articles`, article)
   }
 
-  setArticle(article:ArticlePost){
+  setArticle(article:ArticleGet){
     this.articles.unshift(article);
     this.emitArticle.emit(this.articles);
   }

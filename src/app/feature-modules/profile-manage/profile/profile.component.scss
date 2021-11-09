@@ -1,0 +1,61 @@
+@use "../../../styles/color";
+.background-image {
+    height: 350px;
+    overflow: hidden;
+
+    img {
+        object-fit: cover;
+    }
+}
+
+.avatar {
+    margin-top: -160px;
+    img {
+        width: 250px;
+        height: 250px;
+        border-radius: 50%;
+        object-fit: cover;
+        border: 2px white solid;
+    }
+}
+
+.control {
+    display: flex;
+    padding-left: 0;
+    margin-top: 30px;
+    margin-bottom: 0;
+    border-bottom: 1px solid #ccc;
+    li {
+        list-style: none;
+        margin-right: 16px;
+        cursor: pointer;
+    }
+    li:hover {
+        color: color.$primary-color;
+        border-bottom: 1px solid color.$primary-color;
+        font-weight: bold;
+    }
+}
+
+.active {
+    color: color.$primary-color;
+    border-bottom: 1px solid color.$primary-color;
+    font-weight: bold;
+}
+
+@media screen and (max-width: 480px) {
+   .background-image {
+       height: 200px;
+   }
+
+   .avatar {
+    margin-top: -100px;
+        img {
+            width: 150px;
+            height: 150px;
+            border-radius: 50%;
+            object-fit: cover;
+            border: 2px white solid;
+        }
+    }
+}

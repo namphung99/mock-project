@@ -1,7 +1,7 @@
 import { AuthGuard } from './guards/auth.guard';
 import { NgModule } from '@angular/core';
 import { RouterModule, Routes } from '@angular/router';
-import { ProfileComponent } from './feature-modules/profile/profile.component';
+import { ModalArticleComponent } from './feature-modules/modal-article/modal-article.component';
 
 const routes: Routes = [
   {
@@ -22,23 +22,34 @@ const routes: Routes = [
     .then(response => response.RegisterModule)
   },
   {
-    path:"profile/:username",
-    component:ProfileComponent,
+    path:"articles",
+    component: ModalArticleComponent,
   },
   {
-    path:"home",
-    loadChildren: () => import("./feature-modules/home/home.module")
-    .then(response => response.HomeModule)
+    path: 'profile/:username',
+    loadChildren: () =>
+      import('./feature-modules/profile-manage/profile/profile.module').then(
+        (response) => response.ProfileModule
+      ),
   },
   {
-    path:"article-detail",
-    loadChildren: () => import("./feature-modules/article-detail/article-detail.module")
-    .then(response => response.ArticleDetailModule)
+    path: 'setting',
+    loadChildren: () =>
+      import(
+        './feature-modules/profile-manage/edit-profile/edit-profile.module'
+      ).then((response) => response.EditProfileModule),
+  },
+  {
+    path: 'home',
+    loadChildren: () =>
+      import('./feature-modules/home/home.module').then(
+        (response) => response.HomeModule
+      ),
   },
 ];
 
 @NgModule({
   imports: [RouterModule.forRoot(routes)],
-  exports: [RouterModule]
+  exports: [RouterModule],
 })
-export class AppRoutingModule { }
+export class AppRoutingModule {}

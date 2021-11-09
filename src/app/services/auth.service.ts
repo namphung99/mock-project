@@ -2,8 +2,6 @@ import { UserLogin, UserRegistration } from '../shares/interfaces/user.interface
 import { baseUrl } from '../constants/index.constant';
 import { HttpClient } from '@angular/common/http';
 import { EventEmitter, Injectable } from '@angular/core';
-import { ReplaySubject } from 'rxjs';
-
 
 @Injectable({
   providedIn: 'root'

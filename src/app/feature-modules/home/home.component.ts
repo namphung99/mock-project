@@ -1,7 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { NgbModal } from '@ng-bootstrap/ng-bootstrap';
 import { ArticleService } from 'src/app/services/article.service';
-import { ArticleGet } from 'src/app/shares/interfaces/article.interface';
+import { ArticleGet, ArticlePost } from 'src/app/shares/interfaces/article.interface';
 import { ModalArticleComponent } from '../modal-article/modal-article.component';
 
 @Component({
@@ -22,7 +22,7 @@ export class HomeComponent implements OnInit {
   ngOnInit(): void {
     this.token = localStorage.getItem('token')
     this.articleService.getArticles();
-    this.articleService.emitArticle.subscribe(res => {
+    this.articleService.emitArticle.subscribe((res:ArticleGet[]) => {
       this.articles = res
     })
   }
