@@ -25,13 +25,16 @@ export class HeaderComponent implements OnInit {
       this.isLoggedIn = response
       console.log(response)
     })
-    this.userService.getUsernameFromCurrentUser().subscribe(username => {
+    this.userService.getUser().subscribe(username => {
       this.username = username;
+      this.username = this.username.user.username;
+      console.log(this.username);
     });
   }
 
   onLogout(){
     localStorage.removeItem('token');
+    localStorage.removeItem('currentUser');
     this.authService.setLoggedIn(false);
     this.router.navigate(['/login'])
   }
