@@ -1,41 +1,36 @@
-<div class="container">
-  <div class="row home-wrapper">
-    <div class="col-lg-8 order-2 order-lg-1">
-      <div class="home-content">
-        <ng-container *ngIf="token">
-          <div class="add-article-box" (click)="open()">
-            <img [src]="imgUrl" alt="avatar">
-            <div class="description">
-              <p>Hey Nam, Please share posts with everyone!!!</p>
+<main>
+  <div class="container">
+    <div class="row home-wrapper">
+      <div class="col-lg-8 order-2 order-lg-1">
+        <div class="home-content">
+          <ng-container *ngIf="isLoggedIn">
+            <div class="add-article-box" (click)="open()">
+              <img [src]="imgUrl" alt="avatar">
+              <div class="description">
+                <p>Hey Nam, Please share posts with everyone!!!</p>
+              </div>
             </div>
-          </div>
-        </ng-container>
-
-        <ul class="control">
-          <ng-container *ngIf="token">
-            <li [ngClass]="!isGlobal ? 'active':''" (click)="onChangeGlobal()">Your article</li>
           </ng-container>
-          <li [ngClass]="isGlobal ? 'active':''" (click)="onChangeGlobal()">Global article</li>
-        </ul>
+  
+          <ul class="control">
+            <ng-container *ngIf="isLoggedIn">
+              <li [ngClass]="!isGlobal ? 'active':''" (click)="onChangeGlobal()">Your article</li>
+            </ng-container>
+            <li [ngClass]="isGlobal ? 'active':''" (click)="onChangeGlobal()">Global article</li>
+          </ul>
+        </div>
+        <app-list-article [articles]="articles"></app-list-article>
       </div>
-      <app-list-article [articles]="articles"></app-list-article>
-    </div>
-
-    <div class="col-lg-4 order-1 order-lg-2 mb-3">
-      <div class="has-tag">
-        <h5 class="has-tag__title">Has tag </h5>
-        <div class="has-tag__content">
-          <p> angular</p>
-          <p> javascript</p>
-          <p> HTML</p>
-          <p> angular</p>
-          <p> javascript</p>
-          <p> HTML</p>
-          <p> angular</p>
-          <p> javascript</p>
-          <p> HTML</p>
+  
+      <div class="col-lg-4 order-1 order-lg-2 mb-3">
+        <div class="has-tag">
+          <h5 class="has-tag__title">Has tag </h5>
+          <div class="has-tag__content">
+            <p *ngFor="let tag of tags" (click)="onChangeTag(tag)"
+            [ngClass]="tagSelect==tag ? 'active-tag':''"> {{tag}}</p>
+          </div>
         </div>
       </div>
     </div>
   </div>
-</div>
+</main>
