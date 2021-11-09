@@ -1,4 +1,5 @@
-import { UserService } from './../../../services/user.service';
+import { Router } from '@angular/router';
+import { UserService } from '../../../services/user.service';
 import { regexEmail } from 'src/app/constants/index.constant';
 import { Component, createPlatform, OnInit } from '@angular/core';
 import { FormBuilder, Validators } from '@angular/forms';
@@ -14,14 +15,13 @@ export class EditProfileComponent implements OnInit {
   checkConditionInvalid = Validations.checkConditionInvalid;
   checkRequired = Validations.checkRequired;
   checkPattern = Validations.checkPattern;
-
-  username ?: string;
   currentUser ?: any;
   profileForm ?: any;
 
   constructor(
     private formSetting: FormBuilder,
-    private userService: UserService
+    private userService: UserService,
+    private router: Router
     ) { }
 
   ngOnInit(): void {
@@ -39,12 +39,17 @@ export class EditProfileComponent implements OnInit {
   createForm(currentUser: any, email: string){
     this.profileForm = this.formSetting.group({
       email: [email, [Validators.required, Validators.pattern(regexEmail)]],
-      avatarUrl: [currentUser.profile.image],
+      image: [currentUser.profile.image],
       bio: [currentUser.profile.bio]
     });
   }
 
-  handleFormSubmission(): void {    
-    this.userService.editUser(this.profileForm.value);
+  handleFormSubmission(): void {
+    let user = {
+      user: this.profileForm.value
+    }
+    
+    this.userService.editUser(user);
+    this.router.navigate(['/profile/' + JSON.parse(localStorage.getItem('currentUser') || '{}').username]);
   }
 }
