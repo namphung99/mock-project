@@ -2,7 +2,7 @@
   <div class="row home-wrapper">
     <div class="col-lg-8 order-2 order-lg-1">
       <div class="home-content">
-        <ng-container *ngIf="token">
+        <ng-container *ngIf="isLoggedIn">
           <div class="add-article-box" (click)="open()">
             <img [src]="imgUrl" alt="avatar">
             <div class="description">
@@ -12,7 +12,7 @@
         </ng-container>
 
         <ul class="control">
-          <ng-container *ngIf="token">
+          <ng-container *ngIf="isLoggedIn">
             <li class="active">Your article</li>
           </ng-container>
           <li>Global article</li>
