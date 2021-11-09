@@ -58,7 +58,7 @@ export class ModalArticleComponent implements OnInit {
         this.uiService.emitSpinner.emit(false);
       }, 500)
 
-      this.toastr.success('', 'Login Success');
+      this.toastr.success('', 'Post Article Success');
     })
     this.activeModal.close();
   }

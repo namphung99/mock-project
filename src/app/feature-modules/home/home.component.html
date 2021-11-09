@@ -12,10 +12,10 @@
         </ng-container>
 
         <ul class="control">
-          <li class="active">Global article</li>
           <ng-container *ngIf="token">
-            <li>Your article</li>
+            <li class="active">Your article</li>
           </ng-container>
+          <li>Global article</li>
         </ul>
       </div>
       <app-list-article [articles]="articles"></app-list-article>
