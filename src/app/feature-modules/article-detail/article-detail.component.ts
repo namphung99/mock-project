@@ -1,9 +1,11 @@
 import { Component, OnInit } from '@angular/core';
 import { concatMap, map } from 'rxjs/operators';
-import { ActivatedRoute } from '@angular/router';
+import { ActivatedRoute, Router } from '@angular/router';
 import { ArticleService } from 'src/app/services/article.service';
 import { ArticleDetail } from 'src/app/shares/interfaces/article-detail.interface';
 import { CommentService } from 'src/app/services/comment.service';
+import { UIService } from 'src/app/services/ui.service';
+import { ToastrService } from 'ngx-toastr';
 
 @Component({
   selector: 'app-article-detail',
@@ -14,12 +16,14 @@ export class ArticleDetailComponent implements OnInit {
   public isMyArticle: boolean = false;
   public articleDetail! : ArticleDetail;
   public slug!: any;
-  public currentUser!: any;
   public comments: any[] = []
   constructor(
     private articleService: ArticleService,
     private activatedRoute: ActivatedRoute,
     private commentService: CommentService,
+    private uiService:UIService,
+    private toastr: ToastrService,
+    private router: Router
   ) { }
 
   ngOnInit() {
@@ -30,6 +34,16 @@ export class ArticleDetailComponent implements OnInit {
     )
     .subscribe(res => {
       this.articleDetail = res;
+      console.log(this.articleDetail)
+      const currentUserName = JSON.parse(localStorage.getItem('currentUser') as any).username;
+      const userInArticle = this.articleDetail.author.username;
+      console.log(userInArticle, currentUserName)
+
+      // check user's post
+      if(userInArticle === currentUserName){
+        this.isMyArticle = true;
+      }
+
       const slug = this.articleDetail?.slug;
       this.commentService.getComments(slug)
       .pipe(
@@ -40,12 +54,6 @@ export class ArticleDetailComponent implements OnInit {
 
       })
     })
-
-
-
-
-    this.currentUser = JSON.parse(localStorage.getItem('currentUser') as any).username; ;
-
   }
 
   addComment(comment: string) {
@@ -70,5 +78,21 @@ export class ArticleDetailComponent implements OnInit {
     listComment.splice(index, 1);
     this.comments = listComment;
     this.commentService.deleteComment(id, slug).subscribe(data => {console.log(data)})
+  }
+
+  onDeleteArticle(slug:string){
+    this.uiService.emitSpinner.emit(true);
+    setTimeout(() => {
+      this.articleService.deleteArticle(slug)
+      .subscribe(res => {
+        this.uiService.emitSpinner.emit(false);
+        this.toastr.success('', 'Delete article success');
+        this.router.navigate(['/']);
+      },
+      error =>{
+        this.uiService.emitSpinner.emit(false);
+        this.toastr.error('', 'Delete article failed');
+      })
+    }, 500)
   }
 }
