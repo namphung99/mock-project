@@ -1,7 +1,7 @@
 import { AuthGuard } from './guards/auth.guard';
 import { NgModule } from '@angular/core';
 import { RouterModule, Routes } from '@angular/router';
-import { ModalArticleComponent } from './feature-modules/modal-article/modal-article.component';
+import { ModalArticleComponent } from './share-modules/modal-article/modal-article.component';
 
 const routes: Routes = [
   {
