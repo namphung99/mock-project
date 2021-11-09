@@ -11,23 +11,24 @@
               </div>
             </div>
           </ng-container>
-  
+
           <ul class="control">
             <ng-container *ngIf="isLoggedIn">
-              <li [ngClass]="!isGlobal ? 'active':''" (click)="onChangeGlobal()">Your article</li>
+              <li [ngClass]="tabActive==1 ? 'active':''" (click)="onChangeGlobal(1)">Your article</li>
             </ng-container>
-            <li [ngClass]="isGlobal ? 'active':''" (click)="onChangeGlobal()">Global article</li>
+            <li [ngClass]="tabActive==2 ? 'active':''" (click)="onChangeGlobal(2)">Global article</li>
+            <li [ngClass]="tabActive==3 ? 'active':''">{{tagSelect}}</li>
           </ul>
         </div>
         <app-list-article [articles]="articles"></app-list-article>
       </div>
-  
+
       <div class="col-lg-4 order-1 order-lg-2 mb-3">
         <div class="has-tag">
           <h5 class="has-tag__title">Has tag </h5>
           <div class="has-tag__content">
-            <p *ngFor="let tag of tags" (click)="onChangeTag(tag)"
-            [ngClass]="tagSelect==tag ? 'active-tag':''"> {{tag}}</p>
+            <p *ngFor="let tag of tags" (click)="onChangeTag(tag)" [ngClass]="tagSelect==tag ? 'active-tag':''"> {{tag}}
+            </p>
           </div>
         </div>
       </div>
