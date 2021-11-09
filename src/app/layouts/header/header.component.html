@@ -34,10 +34,11 @@
             <a ngbDropdownItem class="dropdown-item" [routerLink]="['setting']">Setting</a>
             <a ngbDropdownItem class="dropdown-item" [routerLink]="['profile', getUsernameFromLocalStorage()]">View profile</a>
             <a
-              ngbDropdownItem class="dropdown-item"
-              (click)="onLogout()"
+            ngbDropdownItem class="dropdown-item"
+            (click)="onLogout()"
             >Logout</a>
           </div>
+          {{getUsernameFromLocalStorage()}}
         </li>
       </ul>
     </ng-template>
