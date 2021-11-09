@@ -58,4 +58,9 @@ export class ArticleService {
     const url = `${baseUrl}/api/articles/${slug}`;
     return this.http.get(url)
   }
+
+  deleteArticle(slug:string){
+    const url = `${baseUrl}/api/articles/${slug}`;
+    return this.http.delete(url);
+  }
 }

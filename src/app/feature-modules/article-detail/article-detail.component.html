@@ -7,15 +7,26 @@
           <img src="{{articleDetail?.author?.image}}" alt="avatar">
           <div class="d-flex flex-column">
             <span>{{articleDetail?.author?.username}}</span>
-            <span class="text-muted">{{articleDetail?.createdAt | date}}</span>
+            <span class="text-muted date-user">{{articleDetail?.createdAt | date}}</span>
           </div>
         </div>
 
-        <ng-container>
-          <button class="btn btn-follow"><i class="fas fa-plus"></i> Follow {{articleDetail?.author?.username}}</button>
-          <button class="btn btn-favorite"><i class="fas fa-heart"></i> Favorite Articles ({{articleDetail?.favoritesCount}})</button>
+        <ng-container *ngIf = "!isMyArticle; else isCurrentUser">
+          <div  class="control-article">
+            <button class="btn btn-follow"><i class="fas fa-plus"></i> Follow {{articleDetail?.author?.username}}</button>
+            <button class="btn btn-outline-info"><i class="fas fa-heart"></i> Favorite Articles ({{articleDetail?.favoritesCount}})</button>
+          </div>
         </ng-container>
-        <ng-template #name></ng-template>
+        <ng-template #isCurrentUser>
+          <div class="control-article">
+            <button
+              type="button"
+              class="btn btn-outline-danger"
+              (click)="onDeleteArticle(articleDetail.slug)"
+            ><i class="fas fa-trash"></i> Delete article</button>
+            <button type="button" class="btn btn-outline-info"><i class="fas fa-edit"></i> Edit article</button>
+          </div>
+        </ng-template>
 
       </div>
     </div>
