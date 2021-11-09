@@ -48,10 +48,7 @@ export class LoginComponent implements OnInit {
         this.uiService.emitSpinner.emit(false);
         this.authService.logUserIn(response);
         this.router.navigate(['/home']);
-        this.toastr.success('', 'Login Success', {
-          timeOut: 3000,
-          progressBar: true
-        });
+        this.toastr.success('', 'Login Success');
       },
       error => {
         this.uiService.emitSpinner.emit(false);
