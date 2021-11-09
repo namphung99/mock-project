@@ -36,6 +36,12 @@
   }
 }
 
+nav{
+  li{
+    cursor: pointer;
+  }
+}
+
 .has-tag{
   border: 1px solid color.$primary-color;
   border-radius: 5px;

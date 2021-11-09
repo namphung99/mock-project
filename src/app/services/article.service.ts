@@ -9,14 +9,19 @@ import { ArticleGet, ArticlePost } from '../shares/interfaces/article.interface'
 })
 export class ArticleService {
   public articles: ArticleGet[] = [];
+  public articlesCount: number = 0;
+
   public emitArticle: EventEmitter<ArticleGet[]> = new EventEmitter();
   public emitTag: EventEmitter<string[]> = new EventEmitter();
+  public emitArticlesCount: EventEmitter<number> = new EventEmitter();
   constructor(private http: HttpClient) { }
 
-  getArticles(): void {
-    this.http.get(`${baseUrl}/api/articles/?limit=5`).subscribe((res: any) => {
+  getArticles(offset:number): void {
+    this.http.get(`${baseUrl}/api/articles/?limit=5&offset=${offset}`).subscribe((res: any) => {
       this.articles = res.articles
+      
       this.emitArticle.emit(this.articles);
+      this.emitArticlesCount.emit(res.articlesCount)
     })
   }
 
@@ -24,12 +29,14 @@ export class ArticleService {
     this.http.get(`${baseUrl}/api/articles/feed`).subscribe((res: any) => {
       this.articles = res.articles
       this.emitArticle.emit(this.articles);
+      this.emitArticlesCount.emit(res.articlesCount)
     })
   }
 
   getTags(): void {
     this.http.get(`${baseUrl}/api/tags`).subscribe((res: any) => {
       this.emitTag.emit(res.tags);
+      this.emitArticlesCount.emit(res.articlesCount)
     })
   }
 
@@ -37,6 +44,7 @@ export class ArticleService {
     this.http.get(`${baseUrl}/api/articles/?tag=${tag}`).subscribe((res: any) => {
       this.articles = res.articles
       this.emitArticle.emit(this.articles);
+      this.emitArticlesCount.emit(res.articlesCount)
     })
   }
 

@@ -16,7 +16,11 @@ export class HomeComponent implements OnInit {
   public tagSelect: string = "";
   public tabActive: number = 1;
   public isLoggedIn: boolean = false;
+  
+  public articlesCount: number = 0;
+  public totalItem: number = 0;
   public imgUrl: string = "https://luv.vn/wp-content/uploads/2021/08/hinh-anh-gai-xinh-11.jpg"
+
   constructor(
     private modalService: NgbModal,
     private articleService: ArticleService,
@@ -25,10 +29,22 @@ export class HomeComponent implements OnInit {
 
   ngOnInit(): void {
     this.isLoggedIn = this.authService.getIsLoggedIn();
+    if (this.isLoggedIn) {
+      this.articleService.getArticlesFeed()
+    }
+    else {
+      this.articleService.getArticles(0);
+      this.tabActive = 2;
+    }
 
-    this.isLoggedIn ? this.articleService.getArticlesFeed() : this.articleService.getArticles();
     this.articleService.emitArticle.subscribe((res: ArticleGet[]) => {
       this.articles = res
+    })
+
+    this.articleService.emitArticlesCount.subscribe((res: number) => {
+      this.articlesCount = res
+      console.log('res',res);
+      
     })
 
     this.articleService.getTags();
@@ -44,13 +60,40 @@ export class HomeComponent implements OnInit {
   onChangeGlobal(tab: number) {
     this.tabActive = tab;
     this.tagSelect = ""
-    this.tabActive == 2 ? this.articleService.getArticles() : this.articleService.getArticlesFeed();
+    this.tabActive == 2 ? this.articleService.getArticles(0) : this.articleService.getArticlesFeed();
   }
 
   onChangeTag(tag: string) {
     this.tabActive = 3;
     this.tagSelect = tag;
     this.articleService.getArticlesByTag(tag);
+  }
+
+  // Phân trang
+
+  pagination(offset: number) {
+    this.articleService.getArticles(offset)
+  }
+
+  onPagination(offset: number) {
+    this.totalItem = offset;
+    this.pagination(this.totalItem)
+  }
+
+  previousPagination() {
+    if (this.totalItem > 0) {
+      this.totalItem = this.totalItem - 5;
+      this.pagination(this.totalItem)
+    }
+    else this.totalItem = 0
+  }
+
+  nextPagination() {
+    if (this.totalItem + 5 < this.articlesCount) {
+      this.totalItem = this.totalItem + 5;
+      this.pagination(this.totalItem)
+    }
+    else this.totalItem = this.articlesCount
   }
 
 }
