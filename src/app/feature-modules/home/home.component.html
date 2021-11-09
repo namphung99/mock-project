@@ -1,6 +1,6 @@
 <div class="container">
   <div class="row home-wrapper">
-    <div class="col-lg-8">
+    <div class="col-lg-8 order-2 order-lg-1">
       <div class="home-content">
         <ng-container *ngIf="token">
           <div class="add-article-box" (click)="open()">
@@ -21,7 +21,7 @@
       <app-list-article [articles]="articles"></app-list-article>
     </div>
 
-    <div class="col-lg-4">
+    <div class="col-lg-4 order-1 order-lg-2 mb-3">
       <div class="has-tag">
         <h5 class="has-tag__title">Has tag </h5>
         <div class="has-tag__content">

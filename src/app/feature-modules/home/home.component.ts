@@ -2,7 +2,7 @@ import { Component, OnInit } from '@angular/core';
 import { NgbModal } from '@ng-bootstrap/ng-bootstrap';
 import { ArticleService } from 'src/app/services/article.service';
 import { ArticleGet, ArticlePost } from 'src/app/shares/interfaces/article.interface';
-import { ModalArticleComponent } from '../modal-article/modal-article.component';
+import { ModalArticleComponent } from '../../share-modules/modal-article/modal-article.component';
 
 @Component({
   selector: 'app-home',

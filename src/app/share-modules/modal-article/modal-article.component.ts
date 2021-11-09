@@ -58,10 +58,7 @@ export class ModalArticleComponent implements OnInit {
         this.uiService.emitSpinner.emit(false);
       }, 500)
 
-      this.toastr.success('', 'Login Success', {
-        timeOut: 1000,
-        progressBar: true
-      });
+      this.toastr.success('', 'Login Success');
     })
     this.activeModal.close();
   }
