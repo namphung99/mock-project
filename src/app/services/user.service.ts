@@ -1,7 +1,7 @@
 import { baseUrl } from './../constants/index.constant';
 import { HttpClient, HttpHeaders } from '@angular/common/http';
 import { Injectable } from '@angular/core';
-import { catchError, map, tap } from 'rxjs/operators';
+import { map } from 'rxjs/operators';
 
 @Injectable({
   providedIn: 'root'
@@ -12,13 +12,8 @@ export class UserService {
 
   getUsernameFromCurrentUser() {
     return this.http.get(`${baseUrl}/api/user`).pipe(map((res:any) => {
-      console.log(res.user.username);
       return res.user.username;
     }));
-  }
-
-  getUser() {
-    return this.http.get(`${baseUrl}/api/user`);
   }
 
   getProfilesUser(username: any) {
