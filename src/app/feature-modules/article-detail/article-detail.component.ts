@@ -1,4 +1,8 @@
 import { Component, OnInit } from '@angular/core';
+import { concatMap, map } from 'rxjs/operators';
+import { ActivatedRoute } from '@angular/router';
+import { ArticleService } from 'src/app/services/article.service';
+import { ArticleDetail } from 'src/app/shares/interfaces/article-detail.interface';
 
 @Component({
   selector: 'app-article-detail',
@@ -18,10 +22,24 @@ export class ArticleDetailComponent implements OnInit {
     tags: ['tag1', 'tag2'],
     comments: ['']
   };
-
-  constructor() { }
+  public isMyArticle: boolean = false;
+  public articleDetail! : ArticleDetail;
+  public slug!: any
+  constructor(
+    private articleService: ArticleService,
+    private activatedRoute: ActivatedRoute
+  ) { }
 
   ngOnInit() {
+    this.activatedRoute.paramMap
+    .pipe(
+      concatMap((param: any) => this.articleService.getSingleArticle(param.get("slug"))),
+      map((res: any) => res.article)
+    )
+    .subscribe(res => {
+      this.articleDetail = res;
+      console.log(this.articleDetail)
+    })
   }
 
   addComment(comment: string) {

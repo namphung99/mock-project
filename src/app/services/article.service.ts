@@ -1,5 +1,6 @@
 import { HttpClient } from '@angular/common/http';
 import { EventEmitter, Injectable } from '@angular/core';
+import { Article } from '../common/models/article';
 import { baseUrl } from '../constants/index.constant';
 import { ArticleGet, ArticlePost } from '../shares/interfaces/article.interface';
 
@@ -25,5 +26,10 @@ export class ArticleService {
   setArticle(article:ArticleGet){
     this.articles.unshift(article);
     this.emitArticle.emit(this.articles);
+  }
+
+  getSingleArticle(slug:string){
+    const url = `${baseUrl}/api/articles/${slug}`;
+    return this.http.get(url)
   }
 }

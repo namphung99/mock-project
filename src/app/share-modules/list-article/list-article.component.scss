@@ -27,10 +27,11 @@
       margin-left: 7px;
       border-radius: 10px;
     }
-    a {
+    p {
       color: color.$primary-color;
+      cursor: pointer;
     }
-    a:hover {
+    p:hover {
       color: color.$primary-color-hover;
     }
   }
