@@ -1,44 +1,59 @@
-<div class="p-3 mb-2 bg-dark text-white bg-opacity-75">
-  <div class="container">
-    <h1>{{article.title}}</h1>
-    <div class="d-flex justify-content-between">
-      <div class="d-flex">
-        <img src="{{article.avatar}}" alt="avatar">
-        <div class="d-flex flex-column">
-          <span>{{article.username}}</span>
-          <span class="text-muted">{{article.publishedDate}}</span>
+<main>
+  <div class="p-3 mb-2 bg-dark text-white bg-opacity-75">
+    <div class="container">
+      <h1>{{articleDetail?.title}}</h1>
+      <div class="d-flex justify-content-between">
+        <div class="d-flex">
+          <img src="{{articleDetail?.author?.image}}" alt="avatar">
+          <div class="d-flex flex-column">
+            <span>{{articleDetail?.author?.username}}</span>
+            <span class="text-muted">{{articleDetail?.createdAt | date}}</span>
+          </div>
         </div>
-      </div>
 
-      <div>
-        <button class="btn btn-follow"><i class="fas fa-plus"></i> Follow {{article.username}}</button>
-        <button class="btn btn-favorite"><i class="fas fa-heart"></i> Favorite Articles ({{article.like}})</button>
-      </div>
-    </div>
-  </div>
-</div>
+        <ng-container>
+          <button class="btn btn-follow"><i class="fas fa-plus"></i> Follow {{articleDetail?.author?.username}}</button>
+          <button class="btn btn-favorite"><i class="fas fa-heart"></i> Favorite Articles ({{articleDetail?.favoritesCount}})</button>
+        </ng-container>
+        <ng-template #name></ng-template>
 
-<div class="container py-3">
-  {{article.body}}
-  <hr>
-</div>
-
-<div class="container">
-  <div class="textarea-container">
-    <textarea rows="3" class="p-3" placeholder="Write comments" #comment></textarea>
-    <button class="btn btn-success" (click)="addComment(comment.value); comment.value=''">Post</button>
-  </div>
-</div>
-
-<div *ngIf="article.comments[0]!==''">
-  <div class="container py-2 d-flex my-2 w-75 rounded border border-1" *ngFor="let comment of article.comments">
-    <div class="d-flex">
-      <img src="{{article.avatar}}" alt="avatar">
-      <div class="d-flex flex-column">
-        <span>{{article.username}}</span>
-        <span class="text-muted">{{article.publishedDate}}</span>
       </div>
     </div>
-    <p class="px-5">{{comment}}</p>
   </div>
-</div>
+
+  <div class="article-body container py-3">
+    {{articleDetail?.body}}
+    <hr>
+  </div>
+
+  <div class="container comment-wrapper">
+    <div class="">
+      <div class="textarea-container">
+        <textarea rows="3" class="p-3" placeholder="Write comments" #comment></textarea>
+        <button class="btn btn-success" (click)="addComment(comment.value); comment.value=''">Post</button>
+      </div>
+    </div>
+
+    <ng-container *ngIf="comments.length > 0">
+      <div class="comments d-flex py-2 my-2" *ngFor="let comment of comments">
+        <img src="{{comment?.author?.image}}" alt="avatar">
+        <div class="comment__content">
+          <div class="comment__user">
+            <div>
+              <p>{{comment?.author?.username}}</p>
+              <p class="text-muted">{{comment.createdAt | date}}</p>
+            </div>
+            <div
+              class="delete-comment"
+              (click)="onDeleteComment(comment.id)"
+            ><i class="fas fa-trash"></i></div>
+          </div>
+          <p class="comment__description">{{comment.body}}</p>
+
+        </div>
+
+      </div>
+    </ng-container>
+  </div>
+
+</main>
