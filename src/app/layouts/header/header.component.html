@@ -7,11 +7,11 @@
           <i class="fas fa-home pr-2"></i>
           <a>Home</a>
         </li>
-        <li routerLink="/login" routerLinkActive="active">
+        <li routerLink="/login" routerLinkActive="active" *ngIf="isActive('/register')">
           <i class="fas fa-sign-in-alt pr-2"></i>
           <a>Sign in</a>
         </li>
-        <li routerLink="/register" routerLinkActive="active">
+        <li routerLink="/register" routerLinkActive="active" *ngIf="isActive('/login')">
           <i class="fas fa-plus pr-2"></i>
           <a>Sign up</a>
         </li>
@@ -24,8 +24,11 @@
           <i class="fas fa-home pr-2"></i>
           <a>Home</a>
         </li>
-        <li id="dropdownMenuButton" data-toggle="dropdown" ngbDropdown placement="bottom-right">
-          <img src={{imgUrl}} alt="avatar" type="button" id="dropdownMenuButton" ngbDropdownToggle>
+        <li data-toggle="dropdown" ngbDropdown placement="bottom-right">
+          <div id="dropdownMenuButton" ngbDropdownToggle>
+            <img src={{imgUrl}} alt="avatar" type="button" class="mr-2">
+            <span>{{getUsernameFromLocalStorage()}}</span>
+          </div>
           <div ngbDropdownMenu class="dropdown" aria-labelledby="dropdownMenuButton">
             <a ngbDropdownItem class="dropdown-item" [routerLink]="['setting']">Setting</a>
             <a ngbDropdownItem class="dropdown-item" [routerLink]="['profile', getUsernameFromLocalStorage()]">View profile</a>
@@ -34,7 +37,6 @@
             (click)="onLogout()"
             >Logout</a>
           </div>
-          {{getUsernameFromLocalStorage()}}
         </li>
       </ul>
     </ng-template>

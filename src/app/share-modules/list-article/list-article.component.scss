@@ -28,6 +28,9 @@
       border-radius: 10px;
       cursor: pointer;
     }
+    .tag:hover {
+     background-color: #ccc;
+    }
     p {
       color: color.$primary-color;
       cursor: pointer;
