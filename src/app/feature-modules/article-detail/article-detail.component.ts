@@ -1,3 +1,4 @@
+import { ModalDeleteArticleComponent } from './../../share-modules/modal-delete-article/modal-delete-article.component';
 import { Component, OnInit } from '@angular/core';
 import { concatMap, map } from 'rxjs/operators';
 import { ActivatedRoute, Router } from '@angular/router';
@@ -6,6 +7,7 @@ import { ArticleDetail } from 'src/app/shares/interfaces/article-detail.interfac
 import { CommentService } from 'src/app/services/comment.service';
 import { UIService } from 'src/app/services/ui.service';
 import { ToastrService } from 'ngx-toastr';
+import { NgbModal } from '@ng-bootstrap/ng-bootstrap';
 
 @Component({
   selector: 'app-article-detail',
@@ -16,8 +18,9 @@ export class ArticleDetailComponent implements OnInit {
   public isMyArticle: boolean = false;
   public articleDetail! : ArticleDetail;
   public slug!: any;
-  public comments: any[] = []
+  public comments: any[] = [];
   constructor(
+    private modalService: NgbModal,
     private articleService: ArticleService,
     private activatedRoute: ActivatedRoute,
     private commentService: CommentService,
@@ -56,6 +59,12 @@ export class ArticleDetailComponent implements OnInit {
     })
   }
 
+  open(slug: string) {
+    this.articleService.setArticleSlug(slug);
+    const modalRef = this.modalService.open(ModalDeleteArticleComponent);
+    modalRef.componentInstance.name = 'DeleteArticle';
+  }
+
   addComment(comment: string) {
     const cmt = {
       comment: {
@@ -78,21 +87,5 @@ export class ArticleDetailComponent implements OnInit {
     listComment.splice(index, 1);
     this.comments = listComment;
     this.commentService.deleteComment(id, slug).subscribe(data => {console.log(data)})
-  }
-
-  onDeleteArticle(slug:string){
-    this.uiService.emitSpinner.emit(true);
-    setTimeout(() => {
-      this.articleService.deleteArticle(slug)
-      .subscribe(res => {
-        this.uiService.emitSpinner.emit(false);
-        this.toastr.success('', 'Delete article success');
-        this.router.navigate(['/']);
-      },
-      error =>{
-        this.uiService.emitSpinner.emit(false);
-        this.toastr.error('', 'Delete article failed');
-      })
-    }, 500)
   }
 }
