@@ -9,6 +9,11 @@
 @import '~bootstrap/scss/mixins';
 @import '~ngx-toastr/toastr-bs4-alert';
 
+*{
+  margin: 0px;
+  padding: 0px;
+}
+
 .form-control.ng-invalid.ng-touched {
   border: 1px solid red;
 }
@@ -24,5 +29,6 @@ ul.text-danger {
 }
 
 main{
+  // min-height: calc(100vh - 125px);
   margin-bottom: 100px;
 }

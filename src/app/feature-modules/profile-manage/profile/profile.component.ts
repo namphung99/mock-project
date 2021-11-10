@@ -19,11 +19,12 @@ export class ProfileComponent implements OnInit {
     ) {}
 
   ngOnInit(): void {
-    this.user$ = this.route.paramMap.pipe(
-      switchMap((params: ParamMap) =>
-      this.service.getProfilesUser(params.get('username')!))
-    ).subscribe(m => {
-      this.currentUser = m
-    })
+    // this.user$ = this.route.paramMap.pipe(
+    //   switchMap((params: ParamMap) =>
+    //   this.service.getProfilesUser(params.get('username')!))
+    // )
+    // .subscribe(m => {
+    //   this.currentUser = m
+    // })
   }
 }

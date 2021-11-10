@@ -25,16 +25,16 @@
           <a>Home</a>
         </li>
         <li id="dropdownMenuButton" data-toggle="dropdown" ngbDropdown placement="bottom-right">
-          <img src={{imgUrl}} alt="avatar" type="button" id="dropdownMenuButton" ngbDropdownToggle>
+          <img src={{user?.image}} alt="avatar" type="button" id="dropdownMenuButton" ngbDropdownToggle>
           <div ngbDropdownMenu class="dropdown" aria-labelledby="dropdownMenuButton">
             <a ngbDropdownItem class="dropdown-item" [routerLink]="['setting']">Setting</a>
-            <a ngbDropdownItem class="dropdown-item" [routerLink]="['profile', getUsernameFromLocalStorage()]">View profile</a>
+            <a ngbDropdownItem class="dropdown-item" [routerLink]="['profile', user?.username]">View profile</a>
             <a
             ngbDropdownItem class="dropdown-item"
             (click)="onLogout()"
             >Logout</a>
           </div>
-          {{getUsernameFromLocalStorage()}}
+          {{user?.username}}
         </li>
       </ul>
     </ng-template>

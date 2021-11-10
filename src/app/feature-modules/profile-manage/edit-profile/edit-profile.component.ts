@@ -27,12 +27,18 @@ export class EditProfileComponent implements OnInit {
   ngOnInit(): void {
     this.userService.getUsernameFromCurrentUser().subscribe(m => {
       this.username = m;
-      this.userService.getProfilesUser(this.username).subscribe(m => {
-        this.userService.getEmail().subscribe(res => {
-          this.currentUser = m;
-          this.createForm(this.currentUser, res);
-        })
+      this.userService.getProfilesUser(this.username)
+      this.userService.emitUser.subscribe((res:any) => {
+        this.currentUser = res
+        console.log("home",this.currentUser);
+        this.createForm(this.currentUser, res);
       })
+      // .subscribe(m => {
+      //   this.userService.getEmail().subscribe(res => {
+      //     this.currentUser = m;
+      //     this.createForm(this.currentUser, res);
+      //   })
+      // })
     });
   }
 

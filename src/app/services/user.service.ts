@@ -1,6 +1,6 @@
 import { baseUrl } from './../constants/index.constant';
 import { HttpClient, HttpHeaders } from '@angular/common/http';
-import { Injectable } from '@angular/core';
+import { Injectable,EventEmitter } from '@angular/core';
 import { map, catchError } from 'rxjs/operators';
 
 const httpOptions = {
@@ -12,6 +12,8 @@ const httpOptions = {
   providedIn: 'root'
 })
 export class UserService {
+  public emitUser: EventEmitter<any> = new EventEmitter();
+  public user: any = "";
 
   constructor(private readonly http: HttpClient) { }
 
@@ -22,7 +24,11 @@ export class UserService {
   }
 
   getProfilesUser(username: any) {
-    return this.http.get(`${baseUrl}/api/profiles/${username}`);
+    this.http.get(`${baseUrl}/api/profiles/${username}`).subscribe((res:any)=>{
+      console.log("data",res.profile);
+      
+      this.emitUser.emit(res.profile);
+    });
   }
 
   getEmail() {
@@ -35,4 +41,12 @@ export class UserService {
       return val;
     });
   }
+
+  // getUsernameFromLocalStorage() {
+  //   let username = JSON.parse(localStorage.getItem('currentUser') || '{}').username;
+  //   if(!username){
+  //     return 'hello';
+  //   }
+  //   return username;
+  // }
 }

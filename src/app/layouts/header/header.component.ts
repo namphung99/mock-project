@@ -10,7 +10,7 @@ import { AuthService } from 'src/app/services/auth.service';
 })
 export class HeaderComponent implements OnInit {
   public isLoggedIn: boolean = false;
-  public imgUrl!: string;
+  public user!: any;
   constructor(
     private authService: AuthService,
     private userService: UserService,
@@ -22,11 +22,12 @@ export class HeaderComponent implements OnInit {
     this.authService.emitIsLogin.subscribe(response => {
       this.isLoggedIn = response;
     })
-    this.getUserImage(this.getUsernameFromLocalStorage()).subscribe((res:any) =>{
-      console.log("m",res.profile);
-      
-      this.imgUrl = res.profile.image;
-    });
+
+    this.userService.getProfilesUser(this.getUsernameFromLocalStorage());
+    this.userService.emitUser.subscribe((res:any) => {
+      this.user = res
+      // console.log("home",this.user);
+    })
   }
 
   onLogout(){
@@ -44,7 +45,4 @@ export class HeaderComponent implements OnInit {
     return username;
   }
 
-  getUserImage(username: string) {
-    return this.userService.getProfilesUser(username);
-  }
 }
