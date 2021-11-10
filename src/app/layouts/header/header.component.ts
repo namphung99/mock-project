@@ -23,8 +23,6 @@ export class HeaderComponent implements OnInit {
       this.isLoggedIn = response;
     })
     this.getUserImage(this.getUsernameFromLocalStorage()).subscribe((res:any) =>{
-      console.log("m",res.profile);
-      
       this.imgUrl = res.profile.image;
     });
   }
