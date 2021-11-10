@@ -24,16 +24,19 @@ header {
     .active {
       color: #373737;
     }
-    img{
+    img {
       border-radius: 50%;
       width: 35px;
       height: 35px;
       object-fit: cover;
     }
   }
+  #dropdownMenuButton::after {
+    content: none;
+  }
 }
 
-@media only screen and (min-width: 576px){
+@media only screen and (min-width: 576px) {
   header {
     padding: 1rem 6rem;
   }
