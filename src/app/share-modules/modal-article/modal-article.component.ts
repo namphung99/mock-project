@@ -60,6 +60,10 @@ export class ModalArticleComponent implements OnInit {
       }, 300)
 
       this.toastr.success('', 'Post Article Success');
+    },
+    error => {
+      this.uiService.emitSpinner.emit(false);
+      this.toastr.error('Post failed, please check the internet again');
     })
     this.activeModal.close();
   }

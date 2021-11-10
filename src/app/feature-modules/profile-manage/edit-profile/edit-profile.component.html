@@ -1,5 +1,5 @@
-<div>
-  <h2 class="text-center my-4 ">Edit Account</h2>
+<main>
+  <h2 class="text-center py-4 ">Edit Account</h2>
   <form [formGroup]="profileForm" class="container px-lg-5 w-50 form-edit" *ngIf="currentUser">
     <label for="email" class="d-flex justify-content-between">Email:</label>
       <input id="email" type="text" class="form-control" placeholder="Ex: abc123@gmail.com" formControlName="email">
@@ -19,4 +19,4 @@
       <button class="btn bg-danger text-white" routerLink="/profile/{{username}}">Cancel</button>
     </div>
   </form>
-</div>
+</main>

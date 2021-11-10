@@ -47,4 +47,8 @@ export class HeaderComponent implements OnInit {
   getUserImage(username: string) {
     return this.userService.getProfilesUser(username);
   }
+
+  public isActive(route: string): boolean {
+    return this.router.isActive(route, true);
+  }
 }

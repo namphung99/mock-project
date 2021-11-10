@@ -8,14 +8,14 @@
   <div class="modal-body">
     <form [formGroup]="articleGroup">
       <div class="form-group">
-        <label for="exampleInputTitle">Article Title</label>
+        <label for="exampleInputTitle">Title</label>
         <input type="email" class="form-control" id="exampleInputTitle" formControlName="title">
         <ul class="text-danger" *ngIf="checkConditionInvalid('title', articleGroup)">
           <li *ngIf="checkRequired('title', articleGroup)">Title is required</li>
         </ul>
       </div>
       <div class="form-group">
-        <label for="exampleInputDescription">Article Description</label>
+        <label for="exampleInputDescription">Description</label>
         <input type="text" class="form-control" id="exampleInputDescription" formControlName="description">
       </div>
       <ul class="text-danger" *ngIf="checkConditionInvalid('description', articleGroup)">
@@ -23,7 +23,7 @@
       </ul>
 
       <div class="form-group">
-        <label for="exampleInputBody">Article Body</label>
+        <label for="exampleInputBody">Body</label>
         <textarea class="form-control" id="exampleInputBody" rows="4" formControlName="body">
         </textarea>
       </div>
@@ -31,7 +31,7 @@
         <li *ngIf="checkRequired('body', articleGroup)">Body is required</li>
       </ul>
       <div class="form-group">
-        <label for="exampleInputTagList">Article Tag List</label>
+        <label for="exampleInputTagList">Tag List</label>
         <input type="text" class="form-control" id="exampleInputTagList" formControlName="tagList" title="Each tag is separated by a ;">
       </div>
       <ul class="text-danger" *ngIf="checkConditionInvalid('tagList', articleGroup)">
