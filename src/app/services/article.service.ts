@@ -26,7 +26,12 @@ export class ArticleService {
   }
 
   getArticlesFeed(): void {
-    this.http.get(`${baseUrl}/api/articles/feed`).subscribe((res: any) => {
+    // this.http.get(`${baseUrl}/api/articles/feed`).subscribe((res: any) => {
+    //   this.articles = res.articles
+    //   this.emitArticle.emit(this.articles);
+    // })
+
+    this.http.get(`${baseUrl}/api/articles?author=namphung`).subscribe((res: any) => {
       this.articles = res.articles
       this.emitArticle.emit(this.articles);
       this.emitArticlesCount.emit(res.articlesCount)
@@ -55,5 +60,15 @@ export class ArticleService {
   setArticle(article: ArticleGet): void {
     this.articles.unshift(article);
     this.emitArticle.emit(this.articles);
+  }
+
+  getSingleArticle(slug:string){
+    const url = `${baseUrl}/api/articles/${slug}`;
+    return this.http.get(url)
+  }
+
+  deleteArticle(slug:string){
+    const url = `${baseUrl}/api/articles/${slug}`;
+    return this.http.delete(url);
   }
 }

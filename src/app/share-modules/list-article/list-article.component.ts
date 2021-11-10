@@ -1,4 +1,5 @@
 import { Component, Input, OnInit } from '@angular/core';
+import { Router } from '@angular/router';
 import { ArticleService } from 'src/app/services/article.service';
 import { ArticleGet } from 'src/app/shares/interfaces/article.interface';
 
@@ -11,9 +12,13 @@ export class ListArticleComponent implements OnInit {
   @Input()
   articles: ArticleGet[] = []
 
-  constructor() { }
+  constructor(private router: Router) { }
 
   ngOnInit(): void {
+  }
+
+  viewDetailArticle(slug: any){
+    this.router.navigate(['article', slug])
   }
 
   toggleLike() {

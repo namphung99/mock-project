@@ -22,8 +22,9 @@ const routes: Routes = [
     .then(response => response.RegisterModule)
   },
   {
-    path:"articles",
-    component: ModalArticleComponent,
+    path:"article/:slug",
+    loadChildren: () => import("./feature-modules/article-detail/article-detail.module")
+    .then(response => response.ArticleDetailModule)
   },
   {
     path: 'profile/:username',

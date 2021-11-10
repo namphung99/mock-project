@@ -1,3 +1,4 @@
+import { UserService } from './../../services/user.service';
 import { Component, OnInit } from '@angular/core';
 import { Router } from '@angular/router';
 import { AuthService } from 'src/app/services/auth.service';
@@ -10,10 +11,11 @@ import { AuthService } from 'src/app/services/auth.service';
 export class HeaderComponent implements OnInit {
   public isLoggedIn: boolean = false;
   token: any;
-  public imgUrl:string="https://luv.vn/wp-content/uploads/2021/08/hinh-anh-gai-xinh-11.jpg";
+  public imgUrl!: any;
   constructor(
     private authService: AuthService,
-    private router: Router,
+    private userService: UserService,
+    private router: Router
   ) { }
 
   ngOnInit(): void {
@@ -21,6 +23,10 @@ export class HeaderComponent implements OnInit {
     this.authService.emitIsLogin.subscribe(response => {
       this.isLoggedIn = response;
     })
+    this.getUserImage(this.getUsernameFromLocalStorage()).subscribe(m =>{
+      this.imgUrl = m;
+      this.imgUrl = this.imgUrl.profile.image;
+    });
   }
 
   onLogout(){
@@ -30,4 +36,15 @@ export class HeaderComponent implements OnInit {
     this.router.navigate(['/login'])
   }
 
+  getUsernameFromLocalStorage() {
+    let username = JSON.parse(localStorage.getItem('currentUser') || '{}').username;
+    if(!username){
+      return 'hello';
+    }
+    return username;
+  }
+
+  getUserImage(username: string) {
+    return this.userService.getProfilesUser(username);
+  }
 }
