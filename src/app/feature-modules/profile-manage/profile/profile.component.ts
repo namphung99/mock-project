@@ -1,5 +1,5 @@
 import { UserService } from '../../../services/user.service';
-import { Component, OnInit } from '@angular/core';
+import { Component, HostBinding, HostListener, OnInit } from '@angular/core';
 import { ActivatedRoute, ParamMap } from '@angular/router';
 import { switchMap } from 'rxjs/operators';
 @Component({
@@ -12,6 +12,7 @@ export class ProfileComponent implements OnInit {
     'https://www.solidbackgrounds.com/images/1920x1080/1920x1080-gray-solid-color-background.jpg';
   public currentUser: any;
   private user$: any;
+  public usernameFromLocalStorage: string = JSON.parse(localStorage.getItem('currentUser') || '{}').username;
 
   constructor(
     private route: ActivatedRoute,
@@ -25,5 +26,13 @@ export class ProfileComponent implements OnInit {
     ).subscribe(m => {
       this.currentUser = m
     })
+  }
+
+  checkIsFollow(isFollow: boolean, username: string) {
+    // this.service.editFollow(isFollow, username).subscribe(m => console.log(m));
+    if(isFollow) {
+      return this.currentUser.profile.following = false;
+    }
+    return this.currentUser.profile.following = true;
   }
 }
