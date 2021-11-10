@@ -4,6 +4,7 @@ import { ArticleService } from 'src/app/services/article.service';
 import { AuthService } from 'src/app/services/auth.service';
 import { ArticleGet } from 'src/app/shares/interfaces/article.interface';
 import { ModalArticleComponent } from '../../share-modules/modal-article/modal-article.component';
+import {limitArticle} from "../../constants/index.constant"
 
 @Component({
   selector: 'app-home',
@@ -16,7 +17,11 @@ export class HomeComponent implements OnInit {
   public tagSelect: string = "";
   public tabActive: number = 1;
   public isLoggedIn: boolean = false;
+
+  public articlesCount: number = 0;
+  public totalItem: number = 0;
   public imgUrl: string = "https://luv.vn/wp-content/uploads/2021/08/hinh-anh-gai-xinh-11.jpg"
+
   constructor(
     private modalService: NgbModal,
     private articleService: ArticleService,
@@ -25,10 +30,20 @@ export class HomeComponent implements OnInit {
 
   ngOnInit(): void {
     this.isLoggedIn = this.authService.getIsLoggedIn();
+    if (this.isLoggedIn) {
+      this.articleService.getArticlesFeed(0)
+    }
+    else {
+      this.articleService.getArticles(0);
+      this.tabActive = 2;
+    }
 
-    this.isLoggedIn ? this.articleService.getArticlesFeed() : this.articleService.getArticles();
     this.articleService.emitArticle.subscribe((res: ArticleGet[]) => {
       this.articles = res
+    })
+
+    this.articleService.emitArticlesCount.subscribe((res: number) => {
+      this.articlesCount = res
     })
 
     this.articleService.getTags();
@@ -44,13 +59,51 @@ export class HomeComponent implements OnInit {
   onChangeGlobal(tab: number) {
     this.tabActive = tab;
     this.tagSelect = ""
-    this.tabActive == 2 ? this.articleService.getArticles() : this.articleService.getArticlesFeed();
+    this.totalItem=0;
+    this.tabActive == 2 ? this.articleService.getArticles(0) : this.articleService.getArticlesFeed(0);
   }
 
   onChangeTag(tag: string) {
     this.tabActive = 3;
     this.tagSelect = tag;
-    this.articleService.getArticlesByTag(tag);
+    this.totalItem=0;
+    this.articleService.getArticlesByTag(tag,0);
+  }
+
+  // Phân trang
+
+  pagination(offset: number) {
+    switch (this.tabActive) {
+      case 1:
+        this.articleService.getArticlesFeed(offset)
+        break;
+      case 2:
+        this.articleService.getArticles(offset)
+        break;
+      case 3:
+        this.articleService.getArticlesByTag(this.tagSelect,offset)
+        break;
+    }
+  }
+
+  onPagination(offset: number) {
+    this.totalItem = offset;
+    this.pagination(this.totalItem)
+  }
+
+  previousPagination() {
+    if (this.totalItem > 0) {
+      this.totalItem = this.totalItem - limitArticle;
+      this.pagination(this.totalItem)
+    }
+    else this.totalItem = 0
+  }
+
+  nextPagination() {
+    if (this.totalItem + limitArticle < this.articlesCount) {
+      this.totalItem = this.totalItem + limitArticle;
+      this.pagination(this.totalItem)
+    }
   }
 
 }

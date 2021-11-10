@@ -17,6 +17,7 @@ import { AuthInterceptor } from './interceptors/auth.interceptor';
 import { AuthGuard } from './guards/auth.guard';
 import { SpinnerComponent } from './share-modules/spinner/spinner.component';
 
+
 @NgModule({
   declarations: [
     AppComponent,

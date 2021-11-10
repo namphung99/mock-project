@@ -3,27 +3,34 @@ import { EventEmitter, Injectable } from '@angular/core';
 import { Observable } from 'rxjs';
 import { baseUrl } from '../constants/index.constant';
 import { ArticleGet, ArticlePost } from '../shares/interfaces/article.interface';
+import {limitArticle} from "../constants/index.constant"
 
 @Injectable({
   providedIn: 'root'
 })
 export class ArticleService {
   public articles: ArticleGet[] = [];
+  public articlesCount: number = 0;
+
   public emitArticle: EventEmitter<ArticleGet[]> = new EventEmitter();
   public emitTag: EventEmitter<string[]> = new EventEmitter();
+  public emitArticlesCount: EventEmitter<number> = new EventEmitter();
   constructor(private http: HttpClient) { }
 
-  getArticles(): void {
-    this.http.get(`${baseUrl}/api/articles/?limit=5`).subscribe((res: any) => {
+  getArticles(offset:number): void {
+    this.http.get(`${baseUrl}/api/articles/?limit=${limitArticle}&offset=${offset}`).subscribe((res: any) => {
       this.articles = res.articles
+      
       this.emitArticle.emit(this.articles);
+      this.emitArticlesCount.emit(res.articlesCount)
     })
   }
 
-  getArticlesFeed(): void {
-    this.http.get(`${baseUrl}/api/articles/feed`).subscribe((res: any) => {
+  getArticlesFeed(offset:number): void {
+    this.http.get(`${baseUrl}/api/articles?author=thuc&offset=${offset}`).subscribe((res: any) => {
       this.articles = res.articles
       this.emitArticle.emit(this.articles);
+      this.emitArticlesCount.emit(res.articlesCount)
     })
   }
 
@@ -33,10 +40,11 @@ export class ArticleService {
     })
   }
 
-  getArticlesByTag(tag:string): void {
-    this.http.get(`${baseUrl}/api/articles/?tag=${tag}`).subscribe((res: any) => {
+  getArticlesByTag(tag:string,offset:number): void {
+    this.http.get(`${baseUrl}/api/articles/?tag=${tag}&limit=${limitArticle}&offset=${offset}`).subscribe((res: any) => {
       this.articles = res.articles
       this.emitArticle.emit(this.articles);
+      this.emitArticlesCount.emit(res.articlesCount)
     })
   }
 
@@ -47,5 +55,15 @@ export class ArticleService {
   setArticle(article: ArticleGet): void {
     this.articles.unshift(article);
     this.emitArticle.emit(this.articles);
+  }
+
+  getSingleArticle(slug:string){
+    const url = `${baseUrl}/api/articles/${slug}`;
+    return this.http.get(url)
+  }
+
+  deleteArticle(slug:string){
+    const url = `${baseUrl}/api/articles/${slug}`;
+    return this.http.delete(url);
   }
 }
