@@ -11,6 +11,7 @@ import {limitArticle} from "../constants/index.constant"
 export class ArticleService {
   public articles: ArticleGet[] = [];
   public articlesCount: number = 0;
+  public articleSlug!: string;
 
   public emitArticle: EventEmitter<ArticleGet[]> = new EventEmitter();
   public emitTag: EventEmitter<string[]> = new EventEmitter();
@@ -65,5 +66,13 @@ export class ArticleService {
   deleteArticle(slug:string){
     const url = `${baseUrl}/api/articles/${slug}`;
     return this.http.delete(url);
+  }
+
+  setArticleSlug(slug: string) {
+    this.articleSlug = slug;
+  }
+
+  getArticleSlug() {
+    return this.articleSlug;
   }
 }
