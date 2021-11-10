@@ -5,6 +5,7 @@ import { AuthService } from 'src/app/services/auth.service';
 import { ArticleGet } from 'src/app/shares/interfaces/article.interface';
 import { ModalArticleComponent } from '../../share-modules/modal-article/modal-article.component';
 import {limitArticle} from "../../constants/index.constant"
+import { UserService } from 'src/app/services/user.service';
 
 @Component({
   selector: 'app-home',
@@ -26,10 +27,17 @@ export class HomeComponent implements OnInit {
     private modalService: NgbModal,
     private articleService: ArticleService,
     private authService: AuthService,
+    private userService:UserService
   ) { }
 
   ngOnInit(): void {
     this.isLoggedIn = this.authService.getIsLoggedIn();
+    this.userService.emitUser.subscribe((res:any) => {
+      console.log("vao day");
+      
+      this.imgUrl = res.profile.image
+    })
+
     if (this.isLoggedIn) {
       this.articleService.getArticlesFeed(0)
     }

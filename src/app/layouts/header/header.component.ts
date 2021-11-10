@@ -23,10 +23,9 @@ export class HeaderComponent implements OnInit {
       this.isLoggedIn = response;
     })
 
-    this.userService.getProfilesUser(this.getUsernameFromLocalStorage());
+    this.userService.getProfilesUser(this.userService.getUsernameFromLocalStorage());
     this.userService.emitUser.subscribe((res:any) => {
-      this.user = res
-      // console.log("home",this.user);
+      this.user = res.profile
     })
   }
 
@@ -35,14 +34,6 @@ export class HeaderComponent implements OnInit {
     localStorage.removeItem('currentUser');
     this.authService.setLoggedIn(false);
     this.router.navigate(['/login'])
-  }
-
-  getUsernameFromLocalStorage() {
-    let username = JSON.parse(localStorage.getItem('currentUser') || '{}').username;
-    if(!username){
-      return 'hello';
-    }
-    return username;
   }
 
 }

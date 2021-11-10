@@ -12,3 +12,11 @@ export interface UserRegistration {
     password: string
   }
 }
+
+export interface UserProfile {
+  profile: {
+    following: string,
+    image: string,
+    username: string
+  }
+}

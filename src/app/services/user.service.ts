@@ -2,6 +2,7 @@ import { baseUrl } from './../constants/index.constant';
 import { HttpClient, HttpHeaders } from '@angular/common/http';
 import { Injectable,EventEmitter } from '@angular/core';
 import { map, catchError } from 'rxjs/operators';
+import { UserProfile } from '../shares/interfaces/user.interface';
 
 const httpOptions = {
   headers: new HttpHeaders({
@@ -23,11 +24,9 @@ export class UserService {
     }));
   }
 
-  getProfilesUser(username: any) {
+  getProfilesUser(username: string|null):void {
     this.http.get(`${baseUrl}/api/profiles/${username}`).subscribe((res:any)=>{
-      console.log("data",res.profile);
-      
-      this.emitUser.emit(res.profile);
+      this.emitUser.emit(res);
     });
   }
 
@@ -42,11 +41,12 @@ export class UserService {
     });
   }
 
-  // getUsernameFromLocalStorage() {
-  //   let username = JSON.parse(localStorage.getItem('currentUser') || '{}').username;
-  //   if(!username){
-  //     return 'hello';
-  //   }
-  //   return username;
-  // }
+  getUsernameFromLocalStorage() {
+    let username = JSON.parse(localStorage.getItem('currentUser') || '{}').username;
+    if(!username){
+      return 'hello';
+    }
+    return username;
+  }
+
 }
