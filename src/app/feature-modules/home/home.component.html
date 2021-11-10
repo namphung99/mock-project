@@ -20,9 +20,12 @@
             <li [ngClass]="tabActive==3 ? 'active':''">{{tagSelect}}</li>
           </ul>
         </div>
-        <app-list-article [articles]="articles"></app-list-article>
+        <app-list-article [articles]="articles" *ngIf="articles.length >0; else emptyArticle"></app-list-article>
+        <ng-template #emptyArticle>
+          <p class="mt-3">No article at here</p>
+        </ng-template>
 
-        <nav class="mt-4 d-flex flex-row-reverse" aria-label="Page navigation example">
+        <nav *ngIf="articlesCount >5" class="mt-4 d-flex flex-row-reverse" aria-label="Page navigation example">
           <ul class="pagination">
             <li class="page-item">
               <a class="page-link" (click)="previousPagination()" aria-label="Previous">

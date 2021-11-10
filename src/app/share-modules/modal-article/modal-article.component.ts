@@ -53,10 +53,11 @@ export class ModalArticleComponent implements OnInit {
     }
 
     this.articleService.postArticle(this.article).subscribe((response: any) => {
+      this.articleService.getTags()
       this.articleService.setArticle(response.article);
       setTimeout(() => {
         this.uiService.emitSpinner.emit(false);
-      }, 500)
+      }, 300)
 
       this.toastr.success('', 'Post Article Success');
     })
