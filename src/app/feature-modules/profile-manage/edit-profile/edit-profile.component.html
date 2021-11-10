@@ -1,18 +1,24 @@
 <main>
   <h2 class="text-center py-4 ">Edit Account</h2>
   <form [formGroup]="profileForm" class="container px-lg-5 w-50 form-edit" *ngIf="currentUser">
-    <label for="email" class="d-flex justify-content-between">Email:</label>
+    <div class="form-group">
+      <label for="email">Email:</label>
       <input id="email" type="text" class="form-control" placeholder="Ex: abc123@gmail.com" formControlName="email">
       <ul class="text-danger" *ngIf = "checkConditionInvalid('email',profileForm)">
         <li *ngIf="checkRequired('email', profileForm)">Email is required</li>
         <li *ngIf="checkPattern('email', profileForm)"> {{profileForm.get('email')?.value}} is not a valid email</li>
       </ul>
+    </div>
     
-    <label for="avatar-image">Avatar: </label>
+    <div class="form-group">
+      <p for="avatar-image" class="mb-2 font-weight-bold">Avatar: </p>
       <input id="avatar-image" type="text" class="form-control" placeholder="Enter link avatar photo" formControlName="image">
+    </div>
 
-    <label for="bio">Bio: </label>
+    <div class="form-group">
+      <p for="avatar-image" class="mb-2 font-weight-bold">Bio: </p>
       <textarea id="bio" cols="30" rows="2" class="form-control" placeholder="Ex: This is a beautiful website" formControlName="bio">{{currentUser.bio}}</textarea>
+    </div>
 
     <div class="text-right py-3">
       <button class="btn btn-success mx-2" type="submit" *ngIf="profileForm.status" [disabled]="profileForm.invalid||!profileForm.dirty" (click)="handleFormSubmission()">Save</button>
