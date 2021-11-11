@@ -1,5 +1,5 @@
 import { UserService } from '../../../services/user.service';
-import { Component, HostBinding, HostListener, OnInit } from '@angular/core';
+import { Component, OnInit } from '@angular/core';
 import { ActivatedRoute, ParamMap } from '@angular/router';
 import { switchMap } from 'rxjs/operators';
 @Component({
@@ -34,5 +34,14 @@ export class ProfileComponent implements OnInit {
       return this.currentUser.profile.following = false;
     }
     return this.currentUser.profile.following = true;
+  }
+
+  getAvatarFromLocalStorage() {
+    let avatar = localStorage.getItem('avatar');
+    
+    if(!avatar) {
+      return 'https://static.productionready.io/images/smiley-cyrus.jpg';
+    }
+    return avatar;
   }
 }
