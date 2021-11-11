@@ -4,6 +4,8 @@ import { Observable } from 'rxjs';
 import { baseUrl } from '../constants/index.constant';
 import { ArticleGet, ArticlePost } from '../shares/interfaces/article.interface';
 import {limitArticle} from "../constants/index.constant"
+import { ArticleDetail } from '../shares/interfaces/article-detail.interface';
+import { map } from 'rxjs/operators';
 
 const httpOptions = {
   headers: new HttpHeaders ({
@@ -21,12 +23,12 @@ export class ArticleService {
   public emitArticle: EventEmitter<ArticleGet[]> = new EventEmitter();
   public emitTag: EventEmitter<string[]> = new EventEmitter();
   public emitArticlesCount: EventEmitter<number> = new EventEmitter();
+  public emitArticleDetail: EventEmitter<ArticleDetail> = new EventEmitter();
   constructor(private http: HttpClient) { }
 
   getArticles(offset:number): void {
     this.http.get(`${baseUrl}/api/articles/?limit=${limitArticle}&offset=${offset}`).subscribe((res: any) => {
       this.articles = res.articles
-
       this.emitArticle.emit(this.articles);
       this.emitArticlesCount.emit(res.articlesCount)
     })
@@ -63,9 +65,16 @@ export class ArticleService {
     this.emitArticle.emit(this.articles);
   }
 
-  getSingleArticle(slug:string){
+  getSingleArticle(slug: string){
     const url = `${baseUrl}/api/articles/${slug}`;
     return this.http.get(url)
+    .pipe(
+      map((res: any) => res.article)
+    )
+    .subscribe(response =>{
+      // console.log(response)
+      this.emitArticleDetail.emit(response)
+    })
   }
 
   deleteArticle(slug:string){
