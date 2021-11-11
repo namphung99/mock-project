@@ -1,6 +1,6 @@
 import { ModalDeleteArticleComponent } from './../../share-modules/modal-delete-article/modal-delete-article.component';
 import { Component, OnInit } from '@angular/core';
-import { concatMap, map } from 'rxjs/operators';
+import { map } from 'rxjs/operators';
 import { ActivatedRoute, Router } from '@angular/router';
 import { ArticleService } from 'src/app/services/article.service';
 import { ArticleDetail } from 'src/app/shares/interfaces/article-detail.interface';
@@ -32,30 +32,31 @@ export class ArticleDetailComponent implements OnInit {
 
   ngOnInit() {
     this.activatedRoute.paramMap
-    .pipe(
-      concatMap((param: any) => this.articleService.getSingleArticle(param.get("slug"))),
-      map((res: any) => res.article)
-    )
-    .subscribe(res => {
-      this.articleDetail = res;
-      const currentUserName = JSON.parse(localStorage.getItem('currentUser') as any).username;
-      const userInArticle = this.articleDetail.author.username;
+    .subscribe(params => {
+      const slug = params.get('slug');
+      this.articleService.getSingleArticle(slug as string)
+      this.articleService.emitArticleDetail
+      .subscribe(res => {
+        this.articleDetail = res;
+        const currentUserName = JSON.parse(localStorage.getItem('currentUser') as any).username;
+        const userInArticle = this.articleDetail.author.username;
 
-      // check user's post
-      if(userInArticle === currentUserName){
-        this.isMyArticle = true;
-      }
+        // check user's post
+        if(userInArticle === currentUserName){
+          this.isMyArticle = true;
+        }
 
-      const slug = this.articleDetail?.slug;
-      this.commentService.getComments(slug)
-      .pipe(
-        map((res: any) => res.comments)
-      )
-      .subscribe(response => {
-        this.comments = response;
-
+        const slug = this.articleDetail?.slug;
+        this.commentService.getComments(slug)
+        .pipe(
+          map((res: any) => res.comments)
+        )
+        .subscribe(response => {
+          this.comments = response;
+        })
       })
     })
+
   }
 
   open(slug: string) {

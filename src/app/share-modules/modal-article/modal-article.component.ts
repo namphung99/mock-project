@@ -1,5 +1,5 @@
 import { ArticleDetail } from 'src/app/shares/interfaces/article-detail.interface';
-import { Component, OnInit } from '@angular/core';
+import { Component, EventEmitter, OnInit } from '@angular/core';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import {Router } from '@angular/router';
 import { NgbActiveModal } from '@ng-bootstrap/ng-bootstrap';
@@ -31,6 +31,7 @@ export class ModalArticleComponent implements OnInit {
   public isSlug!: boolean;
   public articleDetail! : ArticleDetail;
 
+
   constructor(
     public fb: FormBuilder,
     private activeModal: NgbActiveModal,
@@ -53,24 +54,18 @@ export class ModalArticleComponent implements OnInit {
     this.isSlug =  this.uiService.getIsSlug();
 
     this.slug = this.articleService.getArticleSlug();
-    console.log(this.slug);
     if(this.slug && this.isSlug == true){
       this.articleService.getSingleArticle(this.slug)
-    .pipe(
-      map((res: any) => res.article)
-      )
+      this.articleService.emitArticleDetail
       .subscribe(res => {
         this.articleDetail = res;
-          this.articleGroup.patchValue({
-            title: this.articleDetail.title,
-            description: this.articleDetail.description,
-            body: this.articleDetail.body,
-            tagList: this.articleDetail.tagList,
+        this.articleGroup.patchValue({
+          title: this.articleDetail.title,
+          description: this.articleDetail.description,
+          body: this.articleDetail.body,
+          tagList: this.articleDetail.tagList,
         })
       })
-    }
-    else{
-      this.articleGroup.reset()
     }
   }
 
@@ -119,10 +114,13 @@ export class ModalArticleComponent implements OnInit {
   handleEditArticle(article: ArticlePost) {
     setTimeout(() => {
       this.articleService.editArticle(this.slug, article)
+      .pipe(
+        map((res: any) => res.article)
+      )
       .subscribe(response => {
         this.uiService.emitSpinner.emit(false);
         this.toastr.success('', 'Update article success');
-        this.router.navigate(['/']);
+        this.articleService.emitArticleDetail.emit(response)
       },
       err => {
         this.uiService.emitSpinner.emit(false);
