@@ -5,6 +5,7 @@ import { AuthService } from 'src/app/services/auth.service';
 import { ArticleGet } from 'src/app/shares/interfaces/article.interface';
 import { ModalArticleComponent } from '../../share-modules/modal-article/modal-article.component';
 import {limitArticle} from "../../constants/index.constant"
+import { Router } from '@angular/router';
 
 @Component({
   selector: 'app-home',
@@ -26,9 +27,12 @@ export class HomeComponent implements OnInit {
     private modalService: NgbModal,
     private articleService: ArticleService,
     private authService: AuthService,
+    private router: Router
   ) { }
 
   ngOnInit(): void {
+    console.log("router",this.isActive("/home"));
+    
     this.isLoggedIn = this.authService.getIsLoggedIn();
     if (this.isLoggedIn) {
       this.articleService.getArticlesFeed(0)
@@ -51,6 +55,11 @@ export class HomeComponent implements OnInit {
       this.tags = res
     })
   }
+
+  public isActive(route: string): boolean {
+    return this.router.isActive(route, true);
+  }
+
   open() {
     const modalRef = this.modalService.open(ModalArticleComponent);
     modalRef.componentInstance.name = 'Article';
