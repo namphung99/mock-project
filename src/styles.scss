@@ -23,6 +23,16 @@ ul.text-danger {
   }
 }
 
+label{
+  font-weight: bolder ;
+}
+label::after {
+  content: " *";
+  color: red;
+  font-style: italic;
+  font-weight: 300;
+}
+
 main{
-  margin-bottom: 100px;
+  min-height: calc(100vh - 132px);
 }

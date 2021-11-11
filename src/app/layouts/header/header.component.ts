@@ -10,8 +10,7 @@ import { AuthService } from 'src/app/services/auth.service';
 })
 export class HeaderComponent implements OnInit {
   public isLoggedIn: boolean = false;
-  token: any;
-  public imgUrl!: any;
+  public imgUrl!: string;
   constructor(
     private authService: AuthService,
     private userService: UserService,
@@ -23,9 +22,8 @@ export class HeaderComponent implements OnInit {
     this.authService.emitIsLogin.subscribe(response => {
       this.isLoggedIn = response;
     })
-    this.getUserImage(this.getUsernameFromLocalStorage()).subscribe(m =>{
-      this.imgUrl = m;
-      this.imgUrl = this.imgUrl.profile.image;
+    this.getUserImage(this.getUsernameFromLocalStorage()).subscribe((res:any) =>{
+      this.imgUrl = res.profile.image;
     });
   }
 
@@ -46,5 +44,9 @@ export class HeaderComponent implements OnInit {
 
   getUserImage(username: string) {
     return this.userService.getProfilesUser(username);
+  }
+
+  public isActive(route: string): boolean {
+    return this.router.isActive(route, true);
   }
 }

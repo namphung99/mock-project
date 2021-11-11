@@ -7,7 +7,7 @@
         <p class="text-muted m-0">{{item.createdAt | dateFormat}}</p>
       </div>
     </div>
-    <button class="btn btn-like py-0" (click)="toggleLike()">
+    <button class="btn btn-like py-0" (click)="toggleLike()" title="Like article">
       <i class="fas fa-heart"></i> {{item.favoritesCount}}
     </button>
   </div>
@@ -18,7 +18,7 @@
     <div class="d-flex justify-content-between text-muted">
       <p (click)="viewDetailArticle(item.slug)">Read more...</p>
       <div>
-        <span *ngFor="let tag of item.tagList" class="tag">
+        <span *ngFor="let tag of item.tagList" class="tag" (click)="onChangeTag(tag)">
           {{tag}}
         </span>
       </div>

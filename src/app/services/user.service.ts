@@ -35,4 +35,11 @@ export class UserService {
       return val;
     });
   }
+
+  editFollow(isFollow: boolean, username: string){
+    if(isFollow) {
+      return this.http.post(`${baseUrl}/api/profiles/${username}/follow`, '');
+    }
+    return this.http.delete(`${baseUrl}/api/profiles/${username}/follow`);
+  }
 }
