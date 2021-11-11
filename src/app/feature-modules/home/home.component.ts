@@ -18,10 +18,9 @@ export class HomeComponent implements OnInit {
   public tagSelect: string = "";
   public tabActive: number = 1;
   public isLoggedIn: boolean = false;
-
+  public username: string = JSON.parse(localStorage.getItem('currentUser') || '').username;
   public articlesCount: number = 0;
   public totalItem: number = 0;
-  public imgUrl: string = "https://luv.vn/wp-content/uploads/2021/08/hinh-anh-gai-xinh-11.jpg"
 
   constructor(
     private modalService: NgbModal,
@@ -110,4 +109,11 @@ export class HomeComponent implements OnInit {
     }
   }
 
+  getAvatarFromLocalStorage() {
+    let avatar = localStorage.getItem('avatar');
+    if(!avatar) {
+      return '';
+    }
+    return avatar;
+  }
 }
