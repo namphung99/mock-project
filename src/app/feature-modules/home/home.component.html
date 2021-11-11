@@ -13,10 +13,10 @@
           </ng-container>
 
           <ul class="control">
+            <li [ngClass]="tabActive==1 ? 'active':''"  routerLink="/home" (click)="onChangeGlobal(1)">Global article</li>
             <ng-container *ngIf="isLoggedIn">
-              <li [ngClass]="tabActive==1 ? 'active':''" (click)="onChangeGlobal(1)">Your article</li>
+              <li [ngClass]="tabActive==2 ? 'active':''" routerLink="/home/your-article" (click)="onChangeGlobal(2)">Your article</li>
             </ng-container>
-            <li [ngClass]="tabActive==2 ? 'active':''" (click)="onChangeGlobal(2)">Global article</li>
             <li [ngClass]="tabActive==3 ? 'active':''">{{tagSelect}}</li>
           </ul>
         </div>
