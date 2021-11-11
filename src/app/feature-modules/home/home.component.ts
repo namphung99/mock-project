@@ -5,6 +5,7 @@ import { AuthService } from 'src/app/services/auth.service';
 import { ArticleGet } from 'src/app/shares/interfaces/article.interface';
 import { ModalArticleComponent } from '../../share-modules/modal-article/modal-article.component';
 import {limitArticle} from "../../constants/index.constant"
+import { UIService } from 'src/app/services/ui.service';
 
 @Component({
   selector: 'app-home',
@@ -26,6 +27,7 @@ export class HomeComponent implements OnInit {
     private modalService: NgbModal,
     private articleService: ArticleService,
     private authService: AuthService,
+    private uiService: UIService
   ) { }
 
   ngOnInit(): void {
@@ -51,7 +53,9 @@ export class HomeComponent implements OnInit {
       this.tags = res
     })
   }
+
   open() {
+    this.uiService.setIsSlug(false);
     const modalRef = this.modalService.open(ModalArticleComponent);
     modalRef.componentInstance.name = 'Article';
   }

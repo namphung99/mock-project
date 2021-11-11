@@ -1,7 +1,10 @@
+import { ArticleDetail } from 'src/app/shares/interfaces/article-detail.interface';
 import { Component, OnInit } from '@angular/core';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
+import {Router } from '@angular/router';
 import { NgbActiveModal } from '@ng-bootstrap/ng-bootstrap';
 import { ToastrService } from 'ngx-toastr';
+import { map } from 'rxjs/operators';
 import { ArticleService } from 'src/app/services/article.service';
 import { UIService } from 'src/app/services/ui.service';
 import { ArticlePost } from 'src/app/shares/interfaces/article.interface';
@@ -15,7 +18,7 @@ import * as Validations from '../../shares/Custom-Validator/handleValidator';
 export class ModalArticleComponent implements OnInit {
   public checkRequired = Validations.checkRequired;
   public checkConditionInvalid = Validations.checkConditionInvalid;
-  public articleGroup: FormGroup;
+  public articleGroup!: FormGroup;
   public article: ArticlePost = {
     article: {
       title: "",
@@ -24,6 +27,9 @@ export class ModalArticleComponent implements OnInit {
       tagList: [],
     }
   };
+  public slug!: any;
+  public isSlug!: boolean;
+  public articleDetail! : ArticleDetail;
 
   constructor(
     public fb: FormBuilder,
@@ -31,44 +37,105 @@ export class ModalArticleComponent implements OnInit {
     private articleService: ArticleService,
     private uiService: UIService,
     private toastr: ToastrService,
-  ) {
+    private router: Router
+  ) {}
+
+
+  ngOnInit(): void {
+
     this.articleGroup = this.fb.group({
       title: ['', Validators.required],
       description: ['', Validators.required],
       body: ['', Validators.required],
       tagList: ['', Validators.required]
     })
-  }
 
-  ngOnInit(): void {
+    this.isSlug =  this.uiService.getIsSlug();
+
+    this.slug = this.articleService.getArticleSlug();
+    console.log(this.slug);
+    if(this.slug && this.isSlug == true){
+      this.articleService.getSingleArticle(this.slug)
+    .pipe(
+      map((res: any) => res.article)
+      )
+      .subscribe(res => {
+        this.articleDetail = res;
+          this.articleGroup.patchValue({
+            title: this.articleDetail.title,
+            description: this.articleDetail.description,
+            body: this.articleDetail.body,
+            tagList: this.articleDetail.tagList,
+        })
+      })
+    }
+    else{
+      this.articleGroup.reset()
+    }
   }
 
   onSubmit() {
     this.uiService.emitSpinner.emit(true);
-    this.article = {
-      article: {
-        ...this.articleGroup.value,
-        tagList: this.articleGroup.controls.tagList.value.split(";")
+    if(this.slug){
+      let tags =[ this.articleGroup.controls.tagList.value[0]];
+      if(this.articleGroup.controls.tagList.value.includes(';')){
+        tags = this.articleGroup.controls.tagList.value.split(';')
       }
+      this.article = {
+        article: {
+          ...this.articleGroup.value,
+          tagList: tags
+        }
+      }
+
+      this.handleEditArticle(this.article)
+
     }
+    else{
+      this.article = {
+        article: {
+          ...this.articleGroup.value,
+          tagList: this.articleGroup.controls.tagList.value.split(";")
+        }
+      }
 
-    this.articleService.postArticle(this.article).subscribe((response: any) => {
-      this.articleService.getTags()
-      this.articleService.setArticle(response.article);
-      setTimeout(() => {
+      this.articleService.postArticle(this.article).subscribe((response: any) => {
+        this.articleService.getTags()
+        this.articleService.setArticle(response.article);
+        setTimeout(() => {
+          this.uiService.emitSpinner.emit(false);
+        }, 300)
+
+        this.toastr.success('', 'Post Article Success');
+      },
+      error => {
         this.uiService.emitSpinner.emit(false);
-      }, 300)
-
-      this.toastr.success('', 'Post Article Success');
-    },
-    error => {
-      this.uiService.emitSpinner.emit(false);
-      this.toastr.error('Post failed, please check the internet again');
-    })
+        this.toastr.error('','Post failed, please check the internet again');
+      })
+    }
     this.activeModal.close();
   }
 
+  handleEditArticle(article: ArticlePost) {
+    setTimeout(() => {
+      this.articleService.editArticle(this.slug, article)
+      .subscribe(response => {
+        this.uiService.emitSpinner.emit(false);
+        this.toastr.success('', 'Update article success');
+        this.router.navigate(['/']);
+      },
+      err => {
+        this.uiService.emitSpinner.emit(false);
+        this.toastr.error('', 'Update failed,  please check the internet again');
+      })
+    }, 500)
+  }
+
   onClose() {
+
+    this.articleGroup.reset()
+    this.slug = undefined;
+    this.articleService.setArticleSlug('')
     this.activeModal.close()
   }
 }

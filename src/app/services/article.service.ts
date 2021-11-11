@@ -1,10 +1,15 @@
-import { HttpClient } from '@angular/common/http';
+import { HttpClient, HttpHeaders } from '@angular/common/http';
 import { EventEmitter, Injectable } from '@angular/core';
 import { Observable } from 'rxjs';
 import { baseUrl } from '../constants/index.constant';
 import { ArticleGet, ArticlePost } from '../shares/interfaces/article.interface';
 import {limitArticle} from "../constants/index.constant"
 
+const httpOptions = {
+  headers: new HttpHeaders ({
+    'Content-Type': 'application/json'
+  })
+}
 @Injectable({
   providedIn: 'root'
 })
@@ -21,7 +26,7 @@ export class ArticleService {
   getArticles(offset:number): void {
     this.http.get(`${baseUrl}/api/articles/?limit=${limitArticle}&offset=${offset}`).subscribe((res: any) => {
       this.articles = res.articles
-      
+
       this.emitArticle.emit(this.articles);
       this.emitArticlesCount.emit(res.articlesCount)
     })
@@ -50,7 +55,7 @@ export class ArticleService {
   }
 
   postArticle(article: ArticlePost):Observable<ArticleGet> {
-    return this.http.post<ArticleGet>(`${baseUrl}/api/articles`, article)
+    return this.http.post<ArticleGet>(`${baseUrl}/api/articles`, article, httpOptions)
   }
 
   setArticle(article: ArticleGet): void {
@@ -66,6 +71,11 @@ export class ArticleService {
   deleteArticle(slug:string){
     const url = `${baseUrl}/api/articles/${slug}`;
     return this.http.delete(url);
+  }
+
+  editArticle(slug:string, article: ArticlePost){
+    const url = `${baseUrl}/api/articles/${slug}`;
+    return this.http.put(url, article, httpOptions)
   }
 
   setArticleSlug(slug: string) {
