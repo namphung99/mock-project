@@ -6,8 +6,8 @@
 
     <div class="avatar">
       <div class="text-center">
-        <img src="{{getAvatarFromLocalStorage()}}" alt="avatar"
-          onError="this.src='https://static.productionready.io/images/smiley-cyrus.jpg'; localStorage.setItem('avatar', 'https://static.productionready.io/images/smiley-cyrus.jpg')">
+        <img src="{{currentUser.profile.image}}" alt="avatar" *ngIf="currentUser.profile.image != null"
+          onError="this.src='https://static.productionready.io/images/smiley-cyrus.jpg'">
       </div>
       <h3 class="text-center py-2">{{currentUser.profile.username}}</h3>
     </div>

@@ -35,13 +35,4 @@ export class ProfileComponent implements OnInit {
     }
     return this.currentUser.profile.following = true;
   }
-
-  getAvatarFromLocalStorage() {
-    let avatar = localStorage.getItem('avatar');
-    
-    if(!avatar) {
-      return 'https://static.productionready.io/images/smiley-cyrus.jpg';
-    }
-    return avatar;
-  }
 }
