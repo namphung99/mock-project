@@ -1,4 +1,3 @@
-import { UserService } from './../../services/user.service';
 import { Component, OnInit } from '@angular/core';
 import { Router } from '@angular/router';
 import { AuthService } from 'src/app/services/auth.service';
@@ -10,11 +9,9 @@ import { AuthService } from 'src/app/services/auth.service';
 })
 export class HeaderComponent implements OnInit {
   public isLoggedIn: boolean = false;
-  public imgUrl!: string;
   constructor(
     private authService: AuthService,
-    private userService: UserService,
-    private router: Router
+    private router: Router,
   ) { }
 
   ngOnInit(): void {
@@ -22,9 +19,6 @@ export class HeaderComponent implements OnInit {
     this.authService.emitIsLogin.subscribe(response => {
       this.isLoggedIn = response;
     })
-    this.getUserImage(this.getUsernameFromLocalStorage()).subscribe((res:any) =>{
-      this.imgUrl = res.profile.image;
-    });
   }
 
   onLogout(){
@@ -42,8 +36,12 @@ export class HeaderComponent implements OnInit {
     return username;
   }
 
-  getUserImage(username: string) {
-    return this.userService.getProfilesUser(username);
+  getAvatarFromLocalStorage() {
+    let avatar = localStorage.getItem('avatar');
+    if(!avatar) {
+      return '';
+    }
+    return avatar;
   }
 
   public isActive(route: string): boolean {

@@ -5,9 +5,9 @@
         <div class="home-content">
           <ng-container *ngIf="isLoggedIn">
             <div class="add-article-box mb-4" (click)="open()">
-              <img [src]="imgUrl" alt="avatar">
+              <img src="{{getAvatarFromLocalStorage()}}"  onError="this.src='https://safetyaustraliagroup.com.au/wp-content/uploads/2019/05/image-not-found.png'">
               <div class="description">
-                <p>Hey Nam, Please share posts with everyone!!!</p>
+                <p>Hey {{username}}, Please share posts with everyone!!!</p>
               </div>
             </div>
           </ng-container>

@@ -44,8 +44,9 @@ export class AuthService {
     // console.log(user.user)
     localStorage.setItem("currentUser",JSON.stringify({
       email: user.user.email,
-      username: user.user.username
+      username: user.user.username,
     }));
+    localStorage.setItem("avatar", user.user.image)
   }
 
   getIsLoggedIn(){
