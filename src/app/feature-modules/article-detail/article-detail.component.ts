@@ -8,6 +8,7 @@ import { CommentService } from 'src/app/services/comment.service';
 import { UIService } from 'src/app/services/ui.service';
 import { ToastrService } from 'ngx-toastr';
 import { NgbModal } from '@ng-bootstrap/ng-bootstrap';
+import { ModalArticleComponent } from 'src/app/share-modules/modal-article/modal-article.component';
 
 @Component({
   selector: 'app-article-detail',
@@ -37,10 +38,8 @@ export class ArticleDetailComponent implements OnInit {
     )
     .subscribe(res => {
       this.articleDetail = res;
-      console.log(this.articleDetail)
       const currentUserName = JSON.parse(localStorage.getItem('currentUser') as any).username;
       const userInArticle = this.articleDetail.author.username;
-      console.log(userInArticle, currentUserName)
 
       // check user's post
       if(userInArticle === currentUserName){
@@ -66,18 +65,19 @@ export class ArticleDetailComponent implements OnInit {
   }
 
   addComment(comment: string) {
-    const cmt = {
-      comment: {
-        body: comment,
+    if(comment.trim() !== ""){
+      const cmt = {
+        comment: {
+          body: comment,
+        }
       }
-    }
-    const slug = this.articleDetail?.slug;
+      const slug = this.articleDetail?.slug;
 
-    this.commentService.postComment(cmt,slug)
-    .subscribe(res => {
-      console.log(res.comment);
-      this.comments.push(res.comment);
-    })
+      this.commentService.postComment(cmt,slug)
+      .subscribe(res => {
+        this.comments.push(res.comment);
+      })
+    }
   }
 
   onDeleteComment(id: any){
@@ -87,5 +87,14 @@ export class ArticleDetailComponent implements OnInit {
     listComment.splice(index, 1);
     this.comments = listComment;
     this.commentService.deleteComment(id, slug).subscribe(data => {console.log(data)})
+  }
+
+  // handle edit article
+
+  openArticleModal(slug: string) {
+    this.uiService.setIsSlug(true);
+    this.articleService.setArticleSlug(slug);
+    const modalRef = this.modalService.open(ModalArticleComponent);
+    modalRef.componentInstance.name = 'Article';
   }
 }

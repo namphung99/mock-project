@@ -5,18 +5,18 @@
         <div class="home-content">
           <ng-container *ngIf="isLoggedIn">
             <div class="add-article-box mb-4" (click)="open()">
-              <img [src]="imgUrl" alt="avatar">
+              <img src="{{getAvatarFromLocalStorage()}}"  onError="this.src='https://safetyaustraliagroup.com.au/wp-content/uploads/2019/05/image-not-found.png'">
               <div class="description">
-                <p>Hey Nam, Please share posts with everyone!!!</p>
+                <p>Hey {{username}}, Please share posts with everyone!!!</p>
               </div>
             </div>
           </ng-container>
 
           <ul class="control">
+            <li [ngClass]="tabActive==1 ? 'active':''"  routerLink="/home" (click)="onChangeGlobal(1)">Global article</li>
             <ng-container *ngIf="isLoggedIn">
-              <li [ngClass]="tabActive==1 ? 'active':''" routerLink="/home/your-article" (click)="onChangeGlobal(1)">Your article</li>
+              <li [ngClass]="tabActive==2 ? 'active':''" routerLink="/home/your-article" (click)="onChangeGlobal(2)">Your article</li>
             </ng-container>
-            <li [ngClass]="tabActive==2 ? 'active':''"  routerLink="/home/global-article" (click)="onChangeGlobal(2)">Global article</li>
             <li [ngClass]="tabActive==3 ? 'active':''">{{tagSelect}}</li>
           </ul>
         </div>

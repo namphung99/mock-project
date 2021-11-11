@@ -11,10 +11,6 @@ const routes: Routes = [
         path: 'your-article',
         component: HomeComponent,
       },
-      {
-        path: 'global-article',
-        component: HomeComponent,
-      }
     ]
   }
 ]

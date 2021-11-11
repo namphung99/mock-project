@@ -4,8 +4,9 @@ import { ArticleService } from 'src/app/services/article.service';
 import { AuthService } from 'src/app/services/auth.service';
 import { ArticleGet } from 'src/app/shares/interfaces/article.interface';
 import { ModalArticleComponent } from '../../share-modules/modal-article/modal-article.component';
-import {limitArticle} from "../../constants/index.constant"
-import { Router } from '@angular/router';
+import { limitArticle } from "../../constants/index.constant"
+import { ActivatedRoute, Router } from '@angular/router';
+import { UIService } from 'src/app/services/ui.service';
 
 @Component({
   selector: 'app-home',
@@ -18,49 +19,53 @@ export class HomeComponent implements OnInit {
   public tagSelect: string = "";
   public tabActive: number = 1;
   public isLoggedIn: boolean = false;
-
+  public username: string =""
   public articlesCount: number = 0;
   public totalItem: number = 0;
-  public imgUrl: string = "https://luv.vn/wp-content/uploads/2021/08/hinh-anh-gai-xinh-11.jpg"
 
   constructor(
     private modalService: NgbModal,
     private articleService: ArticleService,
     private authService: AuthService,
-    private router: Router
+    private router: Router,
+    private uiService: UIService,
+    private activatedRoute: ActivatedRoute
   ) { }
 
   ngOnInit(): void {
-    console.log("router",this.isActive("/home"));
-    
+    this.activatedRoute.queryParamMap.subscribe((params: any) => this.tagSelect = params.params.tag);
+    this.username=localStorage.getItem('currentUser')? JSON.parse(localStorage.getItem('currentUser') || '').username:"";
     this.isLoggedIn = this.authService.getIsLoggedIn();
-    if (this.isLoggedIn) {
-      this.articleService.getArticlesFeed(0)
-    }
-    else {
-      this.articleService.getArticles(0);
-      this.tabActive = 2;
-    }
-
-    this.articleService.emitArticle.subscribe((res: ArticleGet[]) => {
-      this.articles = res
-    })
-
-    this.articleService.emitArticlesCount.subscribe((res: number) => {
-      this.articlesCount = res
-    })
-
     this.articleService.getTags();
-    this.articleService.emitTag.subscribe((res: string[]) => {
-      this.tags = res
-    })
+    this.handelArticle()
+
+    this.articleService.emitArticle.subscribe((res: ArticleGet[]) => this.articles = res)
+    this.articleService.emitArticlesCount.subscribe((res: number) => this.articlesCount = res)
+    this.articleService.emitTag.subscribe((res: string[]) => this.tags = res)
   }
 
-  public isActive(route: string): boolean {
+  handelArticle() {
+    if (this.isActive("/home/your-article") && this.isLoggedIn) {
+      this.articleService.getArticlesFeed(0)
+      this.tabActive = 2;
+    }
+    else if (this.tagSelect) {
+      this.articleService.getArticlesByTag(this.tagSelect, 0);
+      this.tabActive = 3;
+    }
+    else {
+      this.router.navigate(['/home']);
+      this.articleService.getArticles(0);
+      this.tabActive = 1;
+    }
+  }
+
+  isActive(route: string): boolean {
     return this.router.isActive(route, true);
   }
 
   open() {
+    this.uiService.setIsSlug(false);
     const modalRef = this.modalService.open(ModalArticleComponent);
     modalRef.componentInstance.name = 'Article';
   }
@@ -68,15 +73,16 @@ export class HomeComponent implements OnInit {
   onChangeGlobal(tab: number) {
     this.tabActive = tab;
     this.tagSelect = ""
-    this.totalItem=0;
-    this.tabActive == 2 ? this.articleService.getArticles(0) : this.articleService.getArticlesFeed(0);
+    this.totalItem = 0;
+    this.tabActive == 1 ? this.articleService.getArticles(0) : this.articleService.getArticlesFeed(0);
   }
 
   onChangeTag(tag: string) {
+    this.router.navigate(['/home'], { queryParams: { tag: tag } });
     this.tabActive = 3;
     this.tagSelect = tag;
-    this.totalItem=0;
-    this.articleService.getArticlesByTag(tag,0);
+    this.totalItem = 0;
+    this.articleService.getArticlesByTag(tag, 0);
   }
 
   // Phân trang
@@ -84,13 +90,13 @@ export class HomeComponent implements OnInit {
   pagination(offset: number) {
     switch (this.tabActive) {
       case 1:
-        this.articleService.getArticlesFeed(offset)
-        break;
-      case 2:
         this.articleService.getArticles(offset)
         break;
+      case 2:
+        this.articleService.getArticlesFeed(offset)
+        break;
       case 3:
-        this.articleService.getArticlesByTag(this.tagSelect,offset)
+        this.articleService.getArticlesByTag(this.tagSelect, offset)
         break;
     }
   }
@@ -115,4 +121,11 @@ export class HomeComponent implements OnInit {
     }
   }
 
+  getAvatarFromLocalStorage() {
+    let avatar = localStorage.getItem('avatar');
+    if (!avatar) {
+      return '';
+    }
+    return avatar;
+  }
 }
