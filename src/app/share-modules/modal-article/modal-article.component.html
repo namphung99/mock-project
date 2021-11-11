@@ -24,8 +24,9 @@
 
       <div class="form-group">
         <label for="exampleInputBody">Body</label>
-        <textarea class="form-control" id="exampleInputBody" rows="4" formControlName="body">
-        </textarea>
+        <!-- <textarea class="form-control" id="exampleInputBody" rows="4" formControlName="body">
+        </textarea> -->
+        <!-- <md-editor name="Content" formControlName="body" mode="editor"></md-editor> -->
       </div>
       <ul class="text-danger" *ngIf="checkConditionInvalid('body', articleGroup)">
         <li *ngIf="checkRequired('body', articleGroup)">Body is required</li>
@@ -38,6 +39,8 @@
         <li *ngIf="checkRequired('tagList', articleGroup)">Tag List is required</li>
       </ul>
     </form>
+    <!-- <md-editor name="Content" formControlName="body" mode="editor"></md-editor> -->
+    <md-editor name="Content" [ngModel]="content" mode="editor"></md-editor>
   </div>
   <div class="modal-footer py-2">
     <button type="submit" class="btn btn-primary" [disabled]="articleGroup.invalid" (click)="onSubmit()">Submit</button>

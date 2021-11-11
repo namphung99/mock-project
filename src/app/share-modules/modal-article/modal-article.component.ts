@@ -43,29 +43,32 @@ export class ModalArticleComponent implements OnInit {
   ngOnInit(): void {
   }
 
+  content="CAHO"
   onSubmit() {
-    this.uiService.emitSpinner.emit(true);
-    this.article = {
-      article: {
-        ...this.articleGroup.value,
-        tagList: this.articleGroup.controls.tagList.value.split(";")
-      }
-    }
+    console.log(this.articleGroup.value);
+    
+    // this.uiService.emitSpinner.emit(true);
+    // this.article = {
+    //   article: {
+    //     ...this.articleGroup.value,
+    //     tagList: this.articleGroup.controls.tagList.value.split(";")
+    //   }
+    // }
 
-    this.articleService.postArticle(this.article).subscribe((response: any) => {
-      this.articleService.getTags()
-      this.articleService.setArticle(response.article);
-      setTimeout(() => {
-        this.uiService.emitSpinner.emit(false);
-      }, 300)
+    // this.articleService.postArticle(this.article).subscribe((response: any) => {
+    //   this.articleService.getTags()
+    //   this.articleService.setArticle(response.article);
+    //   setTimeout(() => {
+    //     this.uiService.emitSpinner.emit(false);
+    //   }, 300)
 
-      this.toastr.success('', 'Post Article Success');
-    },
-    error => {
-      this.uiService.emitSpinner.emit(false);
-      this.toastr.error('Post failed, please check the internet again');
-    })
-    this.activeModal.close();
+    //   this.toastr.success('', 'Post Article Success');
+    // },
+    // error => {
+    //   this.uiService.emitSpinner.emit(false);
+    //   this.toastr.error('Post failed, please check the internet again');
+    // })
+    // this.activeModal.close();
   }
 
   onClose() {
