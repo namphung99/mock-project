@@ -5,7 +5,7 @@
         <div class="home-content">
           <ng-container *ngIf="isLoggedIn">
             <div class="add-article-box mb-4" (click)="open()">
-              <img [src]="imgUrl" alt="avatar">
+              <img [src]="getAvatarFromLocalStorage()" alt="avatar">
               <div class="description">
                 <p>Hey {{username}}, Please share posts with everyone!!!</p>
               </div>
