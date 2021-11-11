@@ -21,7 +21,7 @@
         <li>Favorited Articles</li>
       </ul>
       <ng-container *ngIf="(currentUser.profile.username !== usernameFromLocalStorage) && (usernameFromLocalStorage !== undefined)">
-        <button class="btn" [ngClass]="currentUser.profile.following === false ? 'following-user' : 'remove-following-user'"  (click)="checkIsFollow(currentUser.profile.following, currentUser.profile.username)">{{currentUser.profile.following === false ? 'Follow +' : 'Following'}}</button>
+        <button class="btn follow-button" [ngClass]="currentUser.profile.following === false ? 'following-user' : 'remove-following-user'"  (click)="checkIsFollow(currentUser.profile.following, currentUser.profile.username)">{{currentUser.profile.following === false ? 'Follow +' : 'Following'}}</button>
       </ng-container>
     </div>
   </section>
