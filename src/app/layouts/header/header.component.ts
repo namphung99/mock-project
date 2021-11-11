@@ -37,7 +37,7 @@ export class HeaderComponent implements OnInit {
   }
 
   getAvatarFromLocalStorage() {
-    let avatar = JSON.parse(localStorage.getItem('currentUser') || '{}').image;
+    let avatar = localStorage.getItem('avatar');
     if(!avatar) {
       return '';
     }
