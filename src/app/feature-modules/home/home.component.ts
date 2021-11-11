@@ -1,3 +1,4 @@
+import { UserService } from './../../services/user.service';
 import { Component, OnInit } from '@angular/core';
 import { NgbModal } from '@ng-bootstrap/ng-bootstrap';
 import { ArticleService } from 'src/app/services/article.service';
@@ -17,7 +18,7 @@ export class HomeComponent implements OnInit {
   public tagSelect: string = "";
   public tabActive: number = 1;
   public isLoggedIn: boolean = false;
-
+  public username: string = JSON.parse(localStorage.getItem('currentUser') || '').username;
   public articlesCount: number = 0;
   public totalItem: number = 0;
   public imgUrl: string = "https://luv.vn/wp-content/uploads/2021/08/hinh-anh-gai-xinh-11.jpg"
@@ -26,6 +27,7 @@ export class HomeComponent implements OnInit {
     private modalService: NgbModal,
     private articleService: ArticleService,
     private authService: AuthService,
+    private userService: UserService
   ) { }
 
   ngOnInit(): void {
