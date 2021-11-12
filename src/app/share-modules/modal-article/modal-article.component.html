@@ -24,12 +24,16 @@
 
       <div class="form-group">
         <label for="exampleInputBody">Body</label>
-        <textarea class="form-control" id="exampleInputBody" rows="4" formControlName="body">
+        <textarea class="form-control"  rows="8"  formControlName="body" (keyup)="updateOutput($event)">
         </textarea>
       </div>
       <ul class="text-danger" *ngIf="checkConditionInvalid('body', articleGroup)">
         <li *ngIf="checkRequired('body', articleGroup)">Body is required</li>
       </ul>
+      <b>Preview:</b>
+        <div class="markdown-convert" >
+          <markdown [data] = "covertedText"></markdown>
+        </div>
       <div class="form-group">
         <label for="exampleInputTagList">Tag List</label>
         <input type="text" class="form-control" id="exampleInputTagList" formControlName="tagList" title="Each tag is separated by a ;">

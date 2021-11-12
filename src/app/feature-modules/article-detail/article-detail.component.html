@@ -35,10 +35,11 @@
       </div>
     </div>
   </div>
-
   <div class="article-body container py-3">
-    {{articleDetail?.body}}
-    <hr>
+      <markdown
+        [data]="articleDetail?.body"
+      ></markdown>
+  <hr>
   </div>
 
   <div class="container comment-wrapper" *ngIf="getIsLogin()">
