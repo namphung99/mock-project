@@ -34,6 +34,7 @@ const routes: Routes = [
   },
   {
     path: 'setting',
+    canActivate: [AuthGuard],
     loadChildren: () =>
       import(
         './feature-modules/profile-manage/edit-profile/edit-profile.module'
@@ -46,6 +47,12 @@ const routes: Routes = [
         (response) => response.HomeModule
       ),
   },
+  {
+    path: '**',
+    loadChildren: () => import("./share-modules/error/error.module").then(
+      (response) => response.ErrorModule
+    )
+  }
 ];
 
 @NgModule({

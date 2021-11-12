@@ -13,7 +13,7 @@ import { limitArticle } from "../../../constants/index.constant"
 })
 export class ProfileComponent implements OnInit {
   public imgBackgroundUrl: string =
-    'https://www.solidbackgrounds.com/images/1920x1080/1920x1080-gray-solid-color-background.jpg';
+    'https://simplepage.vn/blog/wp-content/uploads/2021/06/huong-dan-tao-blog-website.png';
   public currentUser: UserProfile = {
     bio: "",
     following: false,
