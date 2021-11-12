@@ -60,8 +60,13 @@
             </div>
             <div
               class="delete-comment"
-              (click)="onDeleteComment(comment.id)"
-            ><i class="fas fa-trash"></i></div>
+            ><i class="fas fa-trash"
+            mwlConfirmationPopover
+              [popoverTitle]="'Alert'"
+              [popoverMessage]="'Are you sure to delete this comment?'"
+              placement="left"
+              (confirm)="onDeleteComment(comment.id)"
+              (cancel)="true"></i></div>
           </div>
           <p class="comment__description">{{comment.body}}</p>
 
