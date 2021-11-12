@@ -2,10 +2,13 @@ import { NgModule } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { ProfileComponent } from './profile.component';
 import { RouterModule } from '@angular/router';
+import { ListArticleModule } from 'src/app/share-modules/list-article/list-article.module';
 
 @NgModule({
-  declarations: [ProfileComponent],
+  declarations: [
+    ProfileComponent],
   imports: [
+    ListArticleModule,
     RouterModule.forChild([
       {
         path: '',
