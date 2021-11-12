@@ -29,4 +29,8 @@ export class ListArticleComponent implements OnInit {
   toggleLike() {
     console.log("Hello");
   }
+
+  redirectProfilePage(username: string) {
+    this.router.navigate(['profile', username]);
+  }
 }

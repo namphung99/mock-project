@@ -1,97 +1,103 @@
 @use "../../../styles/color";
 .background-image {
-    height: 350px;
-    overflow: hidden;
+  height: 350px;
+  overflow: hidden;
 
-    img {
-        object-fit: cover;
-    }
+  img {
+    object-fit: cover;
+  }
 }
 
 .avatar {
-    margin-top: -160px;
-    img {
-        width: 250px;
-        height: 250px;
-        border-radius: 50%;
-        object-fit: cover;
-        border: 2px white solid;
-    }
+  margin-top: -160px;
+  img {
+    width: 250px;
+    height: 250px;
+    border-radius: 50%;
+    object-fit: cover;
+    border: 2px white solid;
+  }
 }
 
 .control {
-    display: flex;
-    padding-left: 0;
-    margin-bottom: 0;
-    border-bottom: 1px solid #ccc;
-    li {
-        list-style: none;
-        margin-right: 16px;
-        cursor: pointer;
-    }
-    li:hover {
-        color: color.$primary-color;
-        border-bottom: 1px solid color.$primary-color;
-        font-weight: bold;
-    }
+  display: flex;
+  padding-left: 0;
+  margin-bottom: 0;
+  border-bottom: 1px solid #ccc;
+  li {
+    list-style: none;
+    margin-right: 16px;
+    cursor: pointer;
+  }
+  li:hover {
+    color: color.$primary-color;
+    border-bottom: 1px solid color.$primary-color;
+  }
 }
 
 .active {
-    color: color.$primary-color;
-    border-bottom: 1px solid color.$primary-color;
-    font-weight: bold;
+  color: color.$primary-color;
+  border-bottom: 1px solid color.$primary-color;
+}
+
+.follow-button {
+  padding: 2px 15px;
+  position: absolute;
+  right: 0px;
+  bottom: 5px;
 }
 
 .remove-following-user {
-    padding: 2px 12px;
-    outline: none;
-    border: 1px solid color.$primary-color;
-    background-color: color.$primary-color;
-    color: white;
-    position: absolute;
-    right: 0px;
-    bottom: 0px;
+  outline: none;
+  border: 1px solid color.$primary-color;
+  background-color: color.$primary-color;
+  color: white;
 }
 
 .remove-following-user:hover {
-    background-color: color.$primary-color-hover;
+  background-color: color.$primary-color-hover;
 }
 
 .following-user {
-    padding: 2px 12px;
-    outline: none;
-    border: 1px solid color.$primary-color;
-    color: color.$primary-color;
-    position: absolute;
-    right: 0px;
-    bottom: 0px;
+  outline: none;
+  border: 1px solid color.$primary-color;
+  color: color.$primary-color;
 }
 
 .following-user:hover {
-    background-color: color.$primary-color;
-    color: white;
+  background-color: color.$primary-color;
+  color: white;
 }
 
 .navigate-article {
-    height: 100%;
-    margin-top: 30px;
-    position: relative;
-    overflow: visible;
+  height: 100%;
+  margin-top: 30px;
+  position: relative;
+  overflow: visible;
+}
+
+.navigate-article ul li {
+  padding-bottom: 5px;
+}
+nav {
+  li {
+    cursor: pointer;
+  }
 }
 
 @media screen and (max-width: 480px) {
-   .background-image {
-       height: 200px;
-   }
+  .background-image {
+    height: 200px;
+  }
 
-   .avatar {
+  .avatar {
     margin-top: -100px;
-        img {
-            width: 150px;
-            height: 150px;
-            border-radius: 50%;
-            object-fit: cover;
-            border: 2px white solid;
-        }
+    img {
+      width: 150px;
+      height: 150px;
+      border-radius: 50%;
+      object-fit: cover;
+      border: 2px white solid;
     }
+  }
 }

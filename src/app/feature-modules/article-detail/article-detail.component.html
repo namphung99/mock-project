@@ -41,7 +41,8 @@
       ></markdown>
   <hr>
   </div>
-  <div class="container comment-wrapper">
+
+  <div class="container comment-wrapper" *ngIf="getIsLogin()">
     <div class="">
       <div class="textarea-container">
         <textarea rows="3" class="p-3" placeholder="Write comments" #comment></textarea>

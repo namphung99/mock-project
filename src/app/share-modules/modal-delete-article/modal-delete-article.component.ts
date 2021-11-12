@@ -25,9 +25,11 @@ export class ModalDeleteArticleComponent implements OnInit {
 
   onClose() {
     this.activeModal.close();
+    console.log(this.articleService.getArticleSlug());
   }
 
   onConfirm() {
+    
     setTimeout(() => {
     this.uiService.emitSpinner.emit(true);
       this.articleService.deleteArticle(this.articleService.getArticleSlug())

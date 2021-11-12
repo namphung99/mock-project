@@ -5,7 +5,8 @@
         <div class="home-content">
           <ng-container *ngIf="isLoggedIn">
             <div class="add-article-box mb-4" (click)="open()">
-              <img src="{{getAvatarFromLocalStorage()}}"  onError="this.src='https://safetyaustraliagroup.com.au/wp-content/uploads/2019/05/image-not-found.png'">
+              <img src="{{getAvatarFromLocalStorage()}}"
+                onError="this.src='https://static.productionready.io/images/smiley-cyrus.jpg'; localStorage.setItem('avatar', 'https://static.productionready.io/images/smiley-cyrus.jpg')">
               <div class="description">
                 <p>Hey {{username}}, Please share posts with everyone!!!</p>
               </div>
@@ -13,21 +14,26 @@
           </ng-container>
 
           <ul class="control">
-            <li [ngClass]="tabActive==1 ? 'active':''"  routerLink="/home" (click)="onChangeGlobal(1)">Global article</li>
+            <li [ngClass]="tabActive==1 ? 'active':''" routerLink="/home" (click)="onChangeGlobal(1)">Global Fee
+            </li>
             <ng-container *ngIf="isLoggedIn">
-              <li [ngClass]="tabActive==2 ? 'active':''" routerLink="/home/your-article" (click)="onChangeGlobal(2)">Your article</li>
+              <li [ngClass]="tabActive==2 ? 'active':''" routerLink="/home/your-fee" (click)="onChangeGlobal(2)">
+                Your Fee</li>
             </ng-container>
             <li [ngClass]="tabActive==3 ? 'active':''">{{tagSelect}}</li>
           </ul>
         </div>
-        <app-list-article (changeTag)="onChangeTag($event)" [articles]="articles" *ngIf="articles.length >0; else emptyArticle"></app-list-article>
+        <app-list-article (changeTag)="onChangeTag($event)" [articles]="articles"
+          *ngIf="articles.length >0; else emptyArticle">
+        </app-list-article>
+
         <ng-template #emptyArticle>
           <p class="mt-3">No article at here</p>
         </ng-template>
 
         <nav *ngIf="articlesCount >5" class="mt-4 d-flex flex-row-reverse" aria-label="Page navigation example">
           <ul class="pagination">
-            <li class="page-item">
+            <li class="page-item" [ngClass]="this.totalItem == 0 ? 'disabled':''">
               <a class="page-link" (click)="previousPagination()" aria-label="Previous">
                 <span aria-hidden="true">&laquo;</span>
               </a>
@@ -35,7 +41,7 @@
             <li class="page-item"><a class="page-link" (click)="onPagination(0)">1</a></li>
             <li class="page-item"><a class="page-link" (click)="onPagination(5)">2</a></li>
             <li class="page-item"><a class="page-link" (click)="onPagination(10)">3</a></li>
-            <li class="page-item">
+            <li class="page-item" [ngClass]="totalItem + 5 >= articlesCount ? 'disabled':''">
               <a class="page-link" (click)="nextPagination()" aria-label="Next">
                 <span aria-hidden="true">&raquo;</span>
               </a>

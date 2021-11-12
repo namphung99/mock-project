@@ -3,12 +3,12 @@ import { EventEmitter, Injectable } from '@angular/core';
 import { Observable } from 'rxjs';
 import { baseUrl } from '../constants/index.constant';
 import { ArticleGet, ArticlePost } from '../shares/interfaces/article.interface';
-import {limitArticle} from "../constants/index.constant"
+import { limitArticle } from "../constants/index.constant"
 import { ArticleDetail } from '../shares/interfaces/article-detail.interface';
 import { map } from 'rxjs/operators';
 
 const httpOptions = {
-  headers: new HttpHeaders ({
+  headers: new HttpHeaders({
     'Content-Type': 'application/json'
   })
 }
@@ -26,20 +26,24 @@ export class ArticleService {
   public emitArticleDetail: EventEmitter<ArticleDetail> = new EventEmitter();
   constructor(private http: HttpClient) { }
 
-  getArticles(offset:number): void {
-    this.http.get(`${baseUrl}/api/articles/?limit=${limitArticle}&offset=${offset}`).subscribe((res: any) => {
-      this.articles = res.articles
-      this.emitArticle.emit(this.articles);
-      this.emitArticlesCount.emit(res.articlesCount)
-    })
+  getArticles(offset: number): void {
+    this.http.get(`${baseUrl}/api/articles/?limit=${limitArticle}&offset=${offset}`)
+      .subscribe((res: any) => this.setDataEmit(res))
   }
 
-  getArticlesFeed(offset:number): void {
-    this.http.get(`${baseUrl}/api/articles?author=thuc&offset=${offset}`).subscribe((res: any) => {
-      this.articles = res.articles
-      this.emitArticle.emit(this.articles);
-      this.emitArticlesCount.emit(res.articlesCount)
-    })
+  getArticlesFeed(offset: number): void {
+    this.http.get(`${baseUrl}/api/articles/feed?limit=${limitArticle}&offset=${offset}`)
+      .subscribe((res: any) => this.setDataEmit(res))
+  }
+
+  getArticlesByUsername(offset: number, username: string): void {
+    this.http.get(`${baseUrl}/api/articles/?author=${username}&limit=${limitArticle}&offset=${offset}`)
+      .subscribe((res: any) => this.setDataEmit(res))
+  }
+
+  getArticlesByFavorite(favorite: string, offset: number): void {
+    this.http.get(`${baseUrl}/api/articles/?favorited=${favorite}&limit=${limitArticle}&offset=${offset}`)
+      .subscribe((res: any) => this.setDataEmit(res))
   }
 
   getTags(): void {
@@ -48,41 +52,32 @@ export class ArticleService {
     })
   }
 
-  getArticlesByTag(tag:string,offset:number): void {
-    this.http.get(`${baseUrl}/api/articles/?tag=${tag}&limit=${limitArticle}&offset=${offset}`).subscribe((res: any) => {
-      this.articles = res.articles
-      this.emitArticle.emit(this.articles);
-      this.emitArticlesCount.emit(res.articlesCount)
-    })
+  getArticlesByTag(tag: string, offset: number): void {
+    this.http.get(`${baseUrl}/api/articles/?tag=${tag}&limit=${limitArticle}&offset=${offset}`)
+      .subscribe((res: any) => this.setDataEmit(res))
   }
 
-  postArticle(article: ArticlePost):Observable<ArticleGet> {
+  postArticle(article: ArticlePost): Observable<ArticleGet> {
     return this.http.post<ArticleGet>(`${baseUrl}/api/articles`, article, httpOptions)
   }
 
-  setArticle(article: ArticleGet): void {
-    this.articles.unshift(article);
-    this.emitArticle.emit(this.articles);
-  }
-
-  getSingleArticle(slug: string){
+  getSingleArticle(slug: string) {
     const url = `${baseUrl}/api/articles/${slug}`;
     return this.http.get(url)
-    .pipe(
-      map((res: any) => res.article)
-    )
-    .subscribe(response =>{
-      // console.log(response)
-      this.emitArticleDetail.emit(response)
-    })
+      .pipe(
+        map((res: any) => res.article)
+      )
+      .subscribe(response => {
+        this.emitArticleDetail.emit(response)
+      })
   }
 
-  deleteArticle(slug:string){
+  deleteArticle(slug: string) {
     const url = `${baseUrl}/api/articles/${slug}`;
     return this.http.delete(url);
   }
 
-  editArticle(slug:string, article: ArticlePost){
+  editArticle(slug: string, article: ArticlePost) {
     const url = `${baseUrl}/api/articles/${slug}`;
     return this.http.put(url, article, httpOptions)
   }
@@ -93,5 +88,16 @@ export class ArticleService {
 
   getArticleSlug() {
     return this.articleSlug;
+  }
+
+  setArticle(article: ArticleGet): void {
+    this.articles.unshift(article);
+    this.emitArticle.emit(this.articles);
+  }
+
+  setDataEmit(data: any): void {
+    this.articles = data.articles
+    this.emitArticle.emit(data.articles);
+    this.emitArticlesCount.emit(data.articlesCount)
   }
 }
