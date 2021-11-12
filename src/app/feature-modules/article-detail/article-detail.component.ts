@@ -1,5 +1,4 @@
 import { AuthService } from 'src/app/services/auth.service';
-import { ModalDeleteArticleComponent } from './../../share-modules/modal-delete-article/modal-delete-article.component';
 import { Component, OnInit } from '@angular/core';
 import { map } from 'rxjs/operators';
 import { ActivatedRoute, Router } from '@angular/router';
@@ -96,12 +95,22 @@ export class ArticleDetailComponent implements OnInit {
   }
 
   onDeleteComment(id: any){
-    const slug = this.articleDetail?.slug;
-    const listComment = this.comments;
-    const index = listComment.findIndex(comment => comment.id == id);
-    listComment.splice(index, 1);
-    this.comments = listComment;
-    this.commentService.deleteComment(id, slug).subscribe(data => {console.log(data)})
+    setTimeout(() => {
+      const slug = this.articleDetail?.slug;
+      const listComment = this.comments;
+      const index = listComment.findIndex(comment => comment.id == id);
+      listComment.splice(index, 1);
+      this.comments = listComment;
+      this.commentService.deleteComment(id, slug)
+      .subscribe(res => {
+        this.uiService.emitSpinner.emit(false);
+        this.toastr.success('', 'Delete article success');
+      },
+      error =>{
+        this.uiService.emitSpinner.emit(false);
+        this.toastr.error('', 'Delete article failed');
+      })
+    }, 500)
   }
 
   // handle edit article
