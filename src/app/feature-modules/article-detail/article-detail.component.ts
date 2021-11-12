@@ -63,12 +63,6 @@ export class ArticleDetailComponent implements OnInit {
 
   }
 
-  open(slug: string) {
-    this.articleService.setArticleSlug(slug);
-    const modalRef = this.modalService.open(ModalDeleteArticleComponent);
-    modalRef.componentInstance.name = 'DeleteArticle';
-  }
-
   addComment(comment: string) {
     if(comment.trim() !== ""){
       const cmt = {
@@ -83,6 +77,22 @@ export class ArticleDetailComponent implements OnInit {
         this.comments.push(res.comment);
       })
     }
+  }
+
+  onDeleteArticle(slug: string) {
+    setTimeout(() => {
+    this.uiService.emitSpinner.emit(true);
+      this.articleService.deleteArticle(this.articleDetail?.slug)
+      .subscribe(res => {
+        this.uiService.emitSpinner.emit(false);
+        this.toastr.success('', 'Delete article success');
+        this.router.navigate(['/home']);
+      },
+      error =>{
+        this.uiService.emitSpinner.emit(false);
+        this.toastr.error('', 'Delete article failed');
+      })
+      }, 500)
   }
 
   onDeleteComment(id: any){
