@@ -21,6 +21,8 @@ export class ArticleDetailComponent implements OnInit {
   public articleDetail! : ArticleDetail;
   public slug!: any;
   public comments: any[] = [];
+  content: any;
+
   constructor(
     private modalService: NgbModal,
     private articleService: ArticleService,
