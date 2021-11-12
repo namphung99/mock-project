@@ -39,6 +39,7 @@ export class HeaderComponent implements OnInit {
 
   getAvatarFromLocalStorage() {
     let avatar = localStorage.getItem('avatar');
+    
     if(!avatar) {
       return '';
     }

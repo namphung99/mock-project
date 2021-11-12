@@ -1,7 +1,6 @@
-import { AuthGuard } from './guards/auth.guard';
 import { NgModule } from '@angular/core';
 import { RouterModule, Routes } from '@angular/router';
-import { ModalArticleComponent } from './share-modules/modal-article/modal-article.component';
+import { AuthGuard } from './guards/auth.guard';
 
 const routes: Routes = [
   {
@@ -10,21 +9,21 @@ const routes: Routes = [
     pathMatch: 'full',
   },
   {
-    path:"login",
-    canActivate:[AuthGuard],
+    path: "login",
+    canActivate: [AuthGuard],
     loadChildren: () => import("./feature-modules/Auth/login/login.module")
-    .then(response => response.LoginModule)
+      .then(response => response.LoginModule)
   },
   {
-    path:"register",
-    canActivate:[AuthGuard],
+    path: "register",
+    canActivate: [AuthGuard],
     loadChildren: () => import("./feature-modules/Auth/register/register.module")
-    .then(response => response.RegisterModule)
+      .then(response => response.RegisterModule)
   },
   {
-    path:"article/:slug",
+    path: "article/:slug",
     loadChildren: () => import("./feature-modules/article-detail/article-detail.module")
-    .then(response => response.ArticleDetailModule)
+      .then(response => response.ArticleDetailModule)
   },
   {
     path: 'profile/:username',
@@ -53,4 +52,4 @@ const routes: Routes = [
   imports: [RouterModule.forRoot(routes)],
   exports: [RouterModule],
 })
-export class AppRoutingModule {}
+export class AppRoutingModule { }

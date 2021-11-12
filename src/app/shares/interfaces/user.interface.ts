@@ -12,3 +12,10 @@ export interface UserRegistration {
     password: string
   }
 }
+
+export interface UserProfile {
+  bio: string,
+  following: boolean,
+  image: string,
+  username: string,
+}

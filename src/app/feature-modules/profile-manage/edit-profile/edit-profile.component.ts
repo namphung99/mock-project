@@ -45,6 +45,8 @@ export class EditProfileComponent implements OnInit {
   }
 
   handleFormSubmission(): void {
+    let image = this.profileForm.value.image;
+    localStorage.setItem('avatar', image);
     let user = {
       user: this.profileForm.value
     }

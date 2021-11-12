@@ -1,5 +1,6 @@
 @use "../../styles/color" as color;
 section {
+
   .close {
     background-color: #e4e6eb;
     padding: 10px 15px;
@@ -13,5 +14,20 @@ section {
     button:hover {
       background-color: color.$primary-color-hover;
     }
+  }
+}
+
+.markdown-convert{
+  border: 1px solid;
+  border-radius: 5px;
+  font-size: 16px;
+  padding: 6px;
+
+  h1{
+    font-size: 16px;
+  }
+
+  h2{
+    font-size: 14px;
   }
 }

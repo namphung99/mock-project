@@ -6,6 +6,12 @@ const routes: Routes = [
   {
     path: '',
     component: HomeComponent,
+    children: [
+      {
+        path: 'your-fee',
+        component: HomeComponent,
+      },
+    ]
   }
 ]
 
@@ -16,4 +22,4 @@ const routes: Routes = [
   exports: [RouterModule]
 })
 
-export class HomeRoutingModule {}
+export class HomeRoutingModule { }

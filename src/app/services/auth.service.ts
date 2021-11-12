@@ -41,12 +41,11 @@ export class AuthService {
     this.emitIsLogin.emit(this.isLoggedIn)
     this.token = user.user.token;
     localStorage.setItem("token", user.user.token);
-    // console.log(user.user)
     localStorage.setItem("currentUser",JSON.stringify({
       email: user.user.email,
       username: user.user.username,
     }));
-    localStorage.setItem("avatar", user.user.image)
+    localStorage.setItem("avatar", (user.user.image==undefined ? 'https://static.productionready.io/images/smiley-cyrus.jpg' : user.user.image))
   }
 
   getIsLoggedIn(){

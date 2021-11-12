@@ -1,3 +1,4 @@
+import { AuthService } from 'src/app/services/auth.service';
 import { ModalDeleteArticleComponent } from './../../share-modules/modal-delete-article/modal-delete-article.component';
 import { Component, OnInit } from '@angular/core';
 import { map } from 'rxjs/operators';
@@ -20,6 +21,8 @@ export class ArticleDetailComponent implements OnInit {
   public articleDetail! : ArticleDetail;
   public slug!: any;
   public comments: any[] = [];
+  content: any;
+
   constructor(
     private modalService: NgbModal,
     private articleService: ArticleService,
@@ -27,7 +30,8 @@ export class ArticleDetailComponent implements OnInit {
     private commentService: CommentService,
     private uiService:UIService,
     private toastr: ToastrService,
-    private router: Router
+    private router: Router,
+    private auth: AuthService
   ) { }
 
   ngOnInit() {
@@ -38,7 +42,7 @@ export class ArticleDetailComponent implements OnInit {
       this.articleService.emitArticleDetail
       .subscribe(res => {
         this.articleDetail = res;
-        const currentUserName = JSON.parse(localStorage.getItem('currentUser') as any).username;
+        const currentUserName = JSON.parse(localStorage.getItem('currentUser') as any)?.username;
         const userInArticle = this.articleDetail.author.username;
 
         // check user's post
@@ -97,5 +101,9 @@ export class ArticleDetailComponent implements OnInit {
     this.articleService.setArticleSlug(slug);
     const modalRef = this.modalService.open(ModalArticleComponent);
     modalRef.componentInstance.name = 'Article';
+  }
+
+  getIsLogin() {
+    return this.auth.getIsLoggedIn();
   }
 }

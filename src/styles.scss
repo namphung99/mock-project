@@ -36,3 +36,8 @@ label::after {
 main{
   min-height: calc(100vh - 132px);
 }
+
+table, th, td {
+  border-collapse: collapse;
+  border: 1px solid #ccc;
+}
