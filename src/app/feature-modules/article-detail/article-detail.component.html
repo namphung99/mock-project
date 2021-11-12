@@ -64,7 +64,7 @@
               <p>{{comment?.author?.username}}</p>
               <p class="text-muted">{{comment.createdAt | date}}</p>
             </div>
-            <div
+            <div *ngIf="comment?.author?.username===getCurrentUser()"
               class="delete-comment"
             ><i class="fas fa-trash"
             mwlConfirmationPopover

@@ -125,4 +125,8 @@ export class ArticleDetailComponent implements OnInit {
   getIsLogin() {
     return this.auth.getIsLoggedIn();
   }
+
+  getCurrentUser() {
+    return JSON.parse(localStorage.getItem('currentUser') || '{}').username;
+  }
 }
