@@ -104,11 +104,11 @@ export class ArticleDetailComponent implements OnInit {
       this.commentService.deleteComment(id, slug)
       .subscribe(res => {
         this.uiService.emitSpinner.emit(false);
-        this.toastr.success('', 'Delete article success');
+        this.toastr.success('', 'Delete comment success');
       },
       error =>{
         this.uiService.emitSpinner.emit(false);
-        this.toastr.error('', 'Delete article failed');
+        this.toastr.error('', 'Delete comment failed');
       })
     }, 500)
   }
