@@ -22,8 +22,13 @@
             <button
               type="button"
               class="btn btn-outline-danger"
-              (click)="open(articleDetail.slug)"
-            ><i class="fas fa-trash"></i> Delete article</button>
+              mwlConfirmationPopover
+              [popoverTitle]="'Alert'"
+              [popoverMessage]="'Are you sure to delete this article?'"
+              placement="bottom"
+              (confirm)="onDeleteArticle(articleDetail.slug)"
+              (cancel)="true">
+            <i class="fas fa-trash"></i> Delete article</button>
             <button
               type="button"
               class="btn btn-outline-info"
@@ -35,10 +40,11 @@
       </div>
     </div>
   </div>
-
   <div class="article-body container py-3">
-    {{articleDetail?.body}}
-    <hr>
+      <markdown
+        [data]="articleDetail?.body"
+      ></markdown>
+  <hr>
   </div>
 
   <div class="container comment-wrapper" *ngIf="getIsLogin()">
@@ -60,8 +66,13 @@
             </div>
             <div
               class="delete-comment"
-              (click)="onDeleteComment(comment.id)"
-            ><i class="fas fa-trash"></i></div>
+            ><i class="fas fa-trash"
+            mwlConfirmationPopover
+              [popoverTitle]="'Alert'"
+              [popoverMessage]="'Are you sure to delete this comment?'"
+              placement="left"
+              (confirm)="onDeleteComment(comment.id)"
+              (cancel)="true"></i></div>
           </div>
           <p class="comment__description">{{comment.body}}</p>
 

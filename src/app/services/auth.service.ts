@@ -41,7 +41,6 @@ export class AuthService {
     this.emitIsLogin.emit(this.isLoggedIn)
     this.token = user.user.token;
     localStorage.setItem("token", user.user.token);
-    // console.log(user.user)
     localStorage.setItem("currentUser",JSON.stringify({
       email: user.user.email,
       username: user.user.username,

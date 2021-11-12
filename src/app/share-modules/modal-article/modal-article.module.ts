@@ -1,16 +1,24 @@
-import { NgModule } from '@angular/core';
+import { MarkdownModule } from 'ngx-markdown';
+import { NgModule, CUSTOM_ELEMENTS_SCHEMA, NO_ERRORS_SCHEMA } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { ModalArticleComponent } from './modal-article.component';
 import { ReactiveFormsModule } from '@angular/forms';
 
+
+
 @NgModule({
   imports: [
     ReactiveFormsModule,
-    CommonModule
+    CommonModule,
+    MarkdownModule.forChild(),
   ],
   declarations: [
-    ModalArticleComponent,
+    ModalArticleComponent
   ],
-  exports: [ModalArticleComponent]
+  exports: [ModalArticleComponent],
+  schemas: [
+    CUSTOM_ELEMENTS_SCHEMA,
+    NO_ERRORS_SCHEMA
+  ]
 })
 export class ModalArticleModule { }

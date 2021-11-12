@@ -1,3 +1,4 @@
+import { MarkdownPaserService } from './../../services/markdown-paser.service';
 import { ArticleDetail } from 'src/app/shares/interfaces/article-detail.interface';
 import { Component, EventEmitter, OnInit } from '@angular/core';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
@@ -9,6 +10,7 @@ import { ArticleService } from 'src/app/services/article.service';
 import { UIService } from 'src/app/services/ui.service';
 import { ArticlePost } from 'src/app/shares/interfaces/article.interface';
 import * as Validations from '../../shares/Custom-Validator/handleValidator';
+import { MdEditorOption } from 'ngx-markdown-editor';
 
 @Component({
   selector: 'app-modal-article',
@@ -30,7 +32,7 @@ export class ModalArticleComponent implements OnInit {
   public slug!: any;
   public isSlug!: boolean;
   public articleDetail! : ArticleDetail;
-
+  public covertedText!: string;
 
   constructor(
     public fb: FormBuilder,
@@ -38,7 +40,8 @@ export class ModalArticleComponent implements OnInit {
     private articleService: ArticleService,
     private uiService: UIService,
     private toastr: ToastrService,
-    private router: Router
+    private router: Router,
+    private md: MarkdownPaserService
   ) {}
 
 
@@ -59,6 +62,7 @@ export class ModalArticleComponent implements OnInit {
       this.articleService.emitArticleDetail
       .subscribe(res => {
         this.articleDetail = res;
+        this.covertedText = this.articleDetail.body;
         this.articleGroup.patchValue({
           title: this.articleDetail.title,
           description: this.articleDetail.description,
@@ -135,5 +139,13 @@ export class ModalArticleComponent implements OnInit {
     this.slug = undefined;
     this.articleService.setArticleSlug('')
     this.activeModal.close()
+  }
+
+  // markdown
+
+  updateOutput(event: any){
+    const mdText = event.target.value;
+    this.covertedText = this.md.convert(mdText);
+
   }
 }
