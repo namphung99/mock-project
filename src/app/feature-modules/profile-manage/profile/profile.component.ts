@@ -1,11 +1,10 @@
-import { UserService } from '../../../services/user.service';
 import { Component, OnInit } from '@angular/core';
-import { ActivatedRoute, ParamMap } from '@angular/router';
-import { switchMap } from 'rxjs/operators';
-import { ArticleGet } from 'src/app/shares/interfaces/article.interface';
+import { ActivatedRoute } from '@angular/router';
 import { ArticleService } from 'src/app/services/article.service';
+import { ArticleGet } from 'src/app/shares/interfaces/article.interface';
 import { UserProfile } from 'src/app/shares/interfaces/user.interface';
-import { limitArticle } from "../../../constants/index.constant"
+import { limitArticle } from "../../../constants/index.constant";
+import { UserService } from '../../../services/user.service';
 @Component({
   selector: 'app-profile',
   templateUrl: './profile.component.html',
@@ -50,12 +49,9 @@ export class ProfileComponent implements OnInit {
 
   }
 
-  checkIsFollow(isFollow: boolean, username: string) {
-    // this.service.editFollow(isFollow, username).subscribe(m => console.log(m));
-    if (isFollow) {
-      return this.currentUser.following = false;
-    }
-    return this.currentUser.following = true;
+  changFollow() {
+    this.service.editFollow(!this.currentUser.following, this.currentUser.username)
+      .subscribe((res: any) => this.currentUser = res.profile);
   }
 
   onChangeTag(tag: string) {
