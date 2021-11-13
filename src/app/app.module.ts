@@ -17,6 +17,7 @@ import { AuthInterceptor } from './interceptors/auth.interceptor';
 import { AuthGuard } from './guards/auth.guard';
 import { SpinnerComponent } from './share-modules/spinner/spinner.component';
 import { MarkdownModule } from 'ngx-markdown';
+import { ModalConfirmLoginComponent } from './share-modules/modal-confirm-login/modal-confirm-login.component';
 
 
 
@@ -26,7 +27,8 @@ import { MarkdownModule } from 'ngx-markdown';
     HeaderComponent,
     FooterComponent,
     FavoritesComponent,
-    SpinnerComponent
+    SpinnerComponent,
+    ModalConfirmLoginComponent
   ],
   imports: [
     CommonModule,
