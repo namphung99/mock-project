@@ -1,16 +1,15 @@
-import { MarkdownPaserService } from './../../services/markdown-paser.service';
-import { ArticleDetail } from 'src/app/shares/interfaces/article-detail.interface';
-import { Component, EventEmitter, OnInit } from '@angular/core';
+import { Component, OnInit } from '@angular/core';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
-import {Router } from '@angular/router';
+import { Router } from '@angular/router';
 import { NgbActiveModal } from '@ng-bootstrap/ng-bootstrap';
 import { ToastrService } from 'ngx-toastr';
 import { map } from 'rxjs/operators';
 import { ArticleService } from 'src/app/services/article.service';
 import { UIService } from 'src/app/services/ui.service';
+import { ArticleDetail } from 'src/app/shares/interfaces/article-detail.interface';
 import { ArticlePost } from 'src/app/shares/interfaces/article.interface';
 import * as Validations from '../../shares/Custom-Validator/handleValidator';
-import { MdEditorOption } from 'ngx-markdown-editor';
+import { MarkdownPaserService } from './../../services/markdown-paser.service';
 
 @Component({
   selector: 'app-modal-article',
