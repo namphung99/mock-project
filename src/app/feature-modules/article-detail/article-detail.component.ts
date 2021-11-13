@@ -1,5 +1,4 @@
 import { AuthService } from 'src/app/services/auth.service';
-import { ModalDeleteArticleComponent } from './../../share-modules/modal-delete-article/modal-delete-article.component';
 import { Component, OnInit } from '@angular/core';
 import { map } from 'rxjs/operators';
 import { ActivatedRoute, Router } from '@angular/router';
@@ -63,12 +62,6 @@ export class ArticleDetailComponent implements OnInit {
 
   }
 
-  open(slug: string) {
-    this.articleService.setArticleSlug(slug);
-    const modalRef = this.modalService.open(ModalDeleteArticleComponent);
-    modalRef.componentInstance.name = 'DeleteArticle';
-  }
-
   addComment(comment: string) {
     if(comment.trim() !== ""){
       const cmt = {
@@ -85,14 +78,39 @@ export class ArticleDetailComponent implements OnInit {
     }
   }
 
-  onDeleteComment(id: any){
-    const slug = this.articleDetail?.slug;
+  onDeleteArticle(slug: string) {
+    setTimeout(() => {
+    this.uiService.emitSpinner.emit(true);
+      this.articleService.deleteArticle(this.articleDetail?.slug)
+      .subscribe(res => {
+        this.uiService.emitSpinner.emit(false);
+        this.toastr.success('', 'Delete article success');
+        this.router.navigate(['/home']);
+      },
+      error =>{
+        this.uiService.emitSpinner.emit(false);
+        this.toastr.error('', 'Delete article failed');
+      })
+      }, 500)
+  }
 
-    const listComment = this.comments;
-    const index = listComment.findIndex(comment => comment.id == id);
-    listComment.splice(index, 1);
-    this.comments = listComment;
-    this.commentService.deleteComment(id, slug).subscribe(data => {console.log(data)})
+  onDeleteComment(id: any){
+    setTimeout(() => {
+      const slug = this.articleDetail?.slug;
+      const listComment = this.comments;
+      const index = listComment.findIndex(comment => comment.id == id);
+      listComment.splice(index, 1);
+      this.comments = listComment;
+      this.commentService.deleteComment(id, slug)
+      .subscribe(res => {
+        this.uiService.emitSpinner.emit(false);
+        this.toastr.success('', 'Delete comment success');
+      },
+      error =>{
+        this.uiService.emitSpinner.emit(false);
+        this.toastr.error('', 'Delete comment failed');
+      })
+    }, 500)
   }
 
   // handle edit article
@@ -106,5 +124,9 @@ export class ArticleDetailComponent implements OnInit {
 
   getIsLogin() {
     return this.auth.getIsLoggedIn();
+  }
+
+  getCurrentUser() {
+    return JSON.parse(localStorage.getItem('currentUser') || '{}').username;
   }
 }
