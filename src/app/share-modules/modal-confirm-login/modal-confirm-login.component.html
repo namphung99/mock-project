@@ -1,0 +1,13 @@
+<div class="modal-header">
+  <h4 class="modal-title">Can't favorite this article</h4>
+  <button type="button" class="close" aria-label="Close" (click)="onCancel()">
+    <span aria-hidden="true">&times;</span>
+  </button>
+</div>
+<div class="modal-body">
+  <p>You need to login to favorite this article</p>
+</div>
+<div class="modal-footer">
+  <button type="button" class="btn btn-light btn-outline-secondary" (click)="onCancel()">Cancel</button>
+  <button type="button" class="btn btn-submit" (click)="onSubmit()">Go to Login page</button>
+</div>

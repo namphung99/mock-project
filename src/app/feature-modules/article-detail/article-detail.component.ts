@@ -22,7 +22,6 @@ export class ArticleDetailComponent implements OnInit {
   public comments: any[] = [];
   public currentUserName!: string;
   public avatar!:string;
-  content: any;
 
   constructor(
     private modalService: NgbModal,
