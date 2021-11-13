@@ -19,9 +19,10 @@ export class HomeComponent implements OnInit {
   public tagSelect: string = "";
   public tabActive: number = 1;
   public isLoggedIn: boolean = false;
-  public username: string =""
+  public username: string = ""
   public articlesCount: number = 0;
   public totalItem: number = 0;
+  public currentPage: number = 1;
 
   constructor(
     private modalService: NgbModal,
@@ -34,7 +35,7 @@ export class HomeComponent implements OnInit {
 
   ngOnInit(): void {
     this.activatedRoute.queryParamMap.subscribe((params: any) => this.tagSelect = params.params.tag);
-    this.username=localStorage.getItem('currentUser')? JSON.parse(localStorage.getItem('currentUser') || '').username:"";
+    this.username = localStorage.getItem('currentUser') ? JSON.parse(localStorage.getItem('currentUser') || '').username : "";
     this.isLoggedIn = this.authService.getIsLoggedIn();
     this.articleService.getTags();
     this.handelArticle()
@@ -101,14 +102,16 @@ export class HomeComponent implements OnInit {
     }
   }
 
-  onPagination(offset: number) {
+  onPagination(offset: number, page: number) {
     this.totalItem = offset;
+    this.currentPage = page
     this.pagination(this.totalItem)
   }
 
   previousPagination() {
     if (this.totalItem > 0) {
       this.totalItem = this.totalItem - limitArticle;
+      this.currentPage = ++this.currentPage
       this.pagination(this.totalItem)
     }
     else this.totalItem = 0
@@ -117,6 +120,7 @@ export class HomeComponent implements OnInit {
   nextPagination() {
     if (this.totalItem + limitArticle < this.articlesCount) {
       this.totalItem = this.totalItem + limitArticle;
+      this.currentPage = --this.currentPage;
       this.pagination(this.totalItem)
     }
   }

@@ -12,22 +12,35 @@ export class ListArticleComponent implements OnInit {
   @Input()
   articles: ArticleGet[] = []
   @Output() changeTag = new EventEmitter();
+  public username: string = ""
 
-  constructor(private router: Router) { }
+  constructor(
+    private router: Router,
+    private articleService: ArticleService,
+  ) { }
 
   ngOnInit(): void {
+    this.username = localStorage.getItem('currentUser') ?
+      JSON.parse(localStorage.getItem('currentUser') || '').username : "";
   }
 
-  onChangeTag(tag:string[]) {
+  onChangeTag(tag: string[]) {
     this.changeTag.emit(tag);
   }
 
-  viewDetailArticle(slug: any){
+  viewDetailArticle(slug: any) {
     this.router.navigate(['article', slug])
   }
 
-  toggleLike() {
-    console.log("Hello");
+  handleLike(slug: string, favorited: boolean) {
+    console.log(this.username);
+
+    if (this.username) {
+      this.articleService.handelArticleFavorite(slug, !favorited)
+    }
+    else {
+      this.router.navigate(['/login']);
+    }
   }
 
   redirectProfilePage(username: string) {

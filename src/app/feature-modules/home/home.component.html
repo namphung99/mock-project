@@ -38,9 +38,16 @@
                 <span aria-hidden="true">&laquo;</span>
               </a>
             </li>
-            <li class="page-item"><a class="page-link" (click)="onPagination(0)">1</a></li>
-            <li class="page-item"><a class="page-link" (click)="onPagination(5)">2</a></li>
-            <li class="page-item"><a class="page-link" (click)="onPagination(10)">3</a></li>
+            <li class="page-item">
+              <a class="page-link" (click)="onPagination(0,1)"
+                [ngClass]="this.currentPage == 1 ? 'bg-primary text-light':''">1</a>
+            </li>
+            <li class="page-item">
+              <a class="page-link" (click)="onPagination(5,2)"
+                [ngClass]="this.currentPage == 2 ? 'bg-primary text-light':''">2</a>
+            </li>
+            <li class="page-item"><a class="page-link" (click)="onPagination(10,3)"
+                [ngClass]="this.currentPage == 3 ? 'bg-primary text-light':''">3</a></li>
             <li class="page-item" [ngClass]="totalItem + 5 >= articlesCount ? 'disabled':''">
               <a class="page-link" (click)="nextPagination()" aria-label="Next">
                 <span aria-hidden="true">&raquo;</span>
