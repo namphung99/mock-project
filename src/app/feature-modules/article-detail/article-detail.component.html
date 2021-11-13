@@ -61,7 +61,7 @@
             </div>
             <div
               class="delete-comment"
-              (click)="onDeleteComment(comment.id)"
+              (click)="onDeleteComment(comment?._id)"
             ><i class="fas fa-trash"></i></div>
           </div>
           <p class="comment__description">{{comment.body}}</p>

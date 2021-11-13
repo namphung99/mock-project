@@ -87,6 +87,7 @@ export class ArticleDetailComponent implements OnInit {
 
   onDeleteComment(id: any){
     const slug = this.articleDetail?.slug;
+
     const listComment = this.comments;
     const index = listComment.findIndex(comment => comment.id == id);
     listComment.splice(index, 1);
