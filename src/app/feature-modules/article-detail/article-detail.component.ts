@@ -20,6 +20,8 @@ export class ArticleDetailComponent implements OnInit {
   public articleDetail! : ArticleDetail;
   public slug!: any;
   public comments: any[] = [];
+  public currentUserName!: string;
+  public avatar!:string;
 
   constructor(
     private modalService: NgbModal,
@@ -34,27 +36,40 @@ export class ArticleDetailComponent implements OnInit {
 
   ngOnInit() {
     this.activatedRoute.paramMap
+
+    // get slug article
     .subscribe(params => {
       const slug = params.get('slug');
+      this.slug = slug;
       this.articleService.getSingleArticle(slug as string)
       this.articleService.emitArticleDetail
+
+      // get article detail
       .subscribe(res => {
         this.articleDetail = res;
         const currentUserName = JSON.parse(localStorage.getItem('currentUser') as any)?.username;
         const userInArticle = this.articleDetail.author.username;
+        this.currentUserName = currentUserName;
+        this.avatar = localStorage?.getItem('avatar') as any;
 
         // check user's post
         if(userInArticle === currentUserName){
           this.isMyArticle = true;
         }
 
-        const slug = this.articleDetail?.slug;
-        this.commentService.getComments(slug)
+        // get comments in article
+        this.commentService.getComments(this.slug)
         .pipe(
           map((res: any) => res.comments)
         )
         .subscribe(response => {
-          this.comments = response;
+          // get comment and sort by date
+          this.comments = response.sort((a: any, b: any) => {
+            let dateA = new Date(a.createdAt) as any
+            let dateB = new Date(b.createdAt) as any
+            return dateB - dateA
+          })
+
         })
       })
     })
@@ -68,19 +83,43 @@ export class ArticleDetailComponent implements OnInit {
           body: comment,
         }
       }
-      const slug = this.articleDetail?.slug;
 
-      this.commentService.postComment(cmt,slug)
+      this.commentService.postComment(cmt,this.slug)
       .subscribe(res => {
-        this.comments.push(res.comment);
+        this.comments.unshift({
+          ... res.comment,
+          author: {
+            username: this.currentUserName,
+            image: this.avatar
+          }
+        })
       })
     }
   }
 
-  onDeleteArticle(slug: string) {
-    setTimeout(() => {
+  onDeleteComment(id: any){
     this.uiService.emitSpinner.emit(true);
-      this.articleService.deleteArticle(this.articleDetail?.slug)
+    setTimeout(() => {
+      const listComment = this.comments;
+      const index = listComment.findIndex(comment => comment._id == id);
+      listComment.splice(index, 1);
+      this.comments = listComment;
+      this.commentService.deleteComment(id, this.slug)
+      .subscribe(res => {
+        this.uiService.emitSpinner.emit(false);
+        this.toastr.success('', 'Delete comment success');
+      },
+      error =>{
+        this.uiService.emitSpinner.emit(false);
+        this.toastr.error('', 'Delete comment failed');
+      })
+    }, 500)
+  }
+
+  onDeleteArticle(slug: string) {
+    this.uiService.emitSpinner.emit(true);
+    setTimeout(() => {
+      this.articleService.deleteArticle(slug)
       .subscribe(res => {
         this.uiService.emitSpinner.emit(false);
         this.toastr.success('', 'Delete article success');
@@ -93,24 +132,6 @@ export class ArticleDetailComponent implements OnInit {
       }, 500)
   }
 
-  onDeleteComment(id: any){
-    setTimeout(() => {
-      const slug = this.articleDetail?.slug;
-      const listComment = this.comments;
-      const index = listComment.findIndex(comment => comment.id == id);
-      listComment.splice(index, 1);
-      this.comments = listComment;
-      this.commentService.deleteComment(id, slug)
-      .subscribe(res => {
-        this.uiService.emitSpinner.emit(false);
-        this.toastr.success('', 'Delete comment success');
-      },
-      error =>{
-        this.uiService.emitSpinner.emit(false);
-        this.toastr.error('', 'Delete comment failed');
-      })
-    }, 500)
-  }
 
   // handle edit article
 
@@ -123,9 +144,5 @@ export class ArticleDetailComponent implements OnInit {
 
   getIsLogin() {
     return this.auth.getIsLoggedIn();
-  }
-
-  getCurrentUser() {
-    return JSON.parse(localStorage.getItem('currentUser') || '{}').username;
   }
 }

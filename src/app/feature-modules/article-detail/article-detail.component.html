@@ -13,8 +13,7 @@
 
         <ng-container *ngIf = "!isMyArticle; else isCurrentUser">
           <div  class="control-article">
-            <button class="btn btn-follow"><i class="fas fa-plus"></i> Follow {{articleDetail?.author?.username}}</button>
-            <button class="btn btn-outline-info"><i class="fas fa-heart"></i> Favorite Articles ({{articleDetail?.favoritesCount}})</button>
+            <button class="btn btn-outline-info"><i class="fas fa-heart"></i></button>
           </div>
         </ng-container>
         <ng-template #isCurrentUser>
@@ -56,7 +55,6 @@
     </div>
 
     <ng-container *ngIf="comments.length > 0">
-      {{comments[0] | json}}
       <div class="comments d-flex py-2 my-2" *ngFor="let comment of comments">
         <img src="{{comment?.author?.image}}" alt="avatar">
         <div class="comment__content">
@@ -65,14 +63,14 @@
               <p>{{comment?.author?.username}}</p>
               <p class="text-muted">{{comment.createdAt | date}}</p>
             </div>
-            <div *ngIf="comment?.author?.username===getCurrentUser()"
+            <div *ngIf="comment?.author?.username === currentUserName"
               class="delete-comment"
             ><i class="fas fa-trash"
             mwlConfirmationPopover
               [popoverTitle]="'Alert'"
               [popoverMessage]="'Are you sure to delete this comment?'"
               placement="left"
-              (confirm)="onDeleteComment(comment?.id)"
+              (confirm)="onDeleteComment(comment?._id)"
               (cancel)="true"></i></div>
           </div>
           <p class="comment__description">{{comment.body}}</p>

@@ -70,6 +70,11 @@ export class ModalArticleComponent implements OnInit {
         })
       })
     }
+
+    // reset flag slug
+    if(!this.isSlug){
+      this.slug = undefined;
+    }
   }
 
   onSubmit() {
@@ -135,7 +140,6 @@ export class ModalArticleComponent implements OnInit {
   onClose() {
 
     this.articleGroup.reset()
-    this.slug = undefined;
     this.articleService.setArticleSlug('')
     this.activeModal.close()
   }
