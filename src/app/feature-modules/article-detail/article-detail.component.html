@@ -56,6 +56,7 @@
     </div>
 
     <ng-container *ngIf="comments.length > 0">
+      {{comments[0] | json}}
       <div class="comments d-flex py-2 my-2" *ngFor="let comment of comments">
         <img src="{{comment?.author?.image}}" alt="avatar">
         <div class="comment__content">
@@ -71,7 +72,7 @@
               [popoverTitle]="'Alert'"
               [popoverMessage]="'Are you sure to delete this comment?'"
               placement="left"
-              (confirm)="onDeleteComment(comment?._id)"
+              (confirm)="onDeleteComment(comment?.id)"
               (cancel)="true"></i></div>
           </div>
           <p class="comment__description">{{comment.body}}</p>
