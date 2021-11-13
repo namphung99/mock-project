@@ -46,7 +46,7 @@
   <hr>
   </div>
 
-  <div class="container comment-wrapper" *ngIf="getIsLogin()">
+  <div class="container comment-wrapper" *ngIf="getIsLogin(); else mustBeLogin">
     <div class="">
       <div class="textarea-container">
         <textarea rows="3" class="p-3" placeholder="Write comments" #comment></textarea>
@@ -66,7 +66,7 @@
             <div *ngIf="comment?.author?.username === currentUserName"
               class="delete-comment"
             ><i class="fas fa-trash"
-            mwlConfirmationPopover
+              mwlConfirmationPopover
               [popoverTitle]="'Alert'"
               [popoverMessage]="'Are you sure to delete this comment?'"
               placement="left"
@@ -80,5 +80,9 @@
       </div>
     </ng-container>
   </div>
+
+  <ng-template #mustBeLogin>
+   <p class="login-notice"> You must login to be able to comment! <a routerLink = "/login"> Click here</a></p>
+  </ng-template>
 
 </main>
