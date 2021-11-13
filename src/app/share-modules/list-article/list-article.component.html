@@ -7,7 +7,7 @@
         <p class="text-muted m-0">{{item.createdAt | dateFormat}}</p>
       </div>
     </div>
-    <button class="btn btn-like py-0" (click)="toggleLike()" title="Like article">
+    <button class="btn btn-like py-0" (click)="handleLike(item.slug,item.favorited)" title="Like article">
       <i class="fas fa-heart"></i> {{item.favoritesCount}}
     </button>
   </div>

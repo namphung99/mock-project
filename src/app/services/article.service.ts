@@ -61,6 +61,35 @@ export class ArticleService {
     return this.http.post<ArticleGet>(`${baseUrl}/api/articles`, article, httpOptions)
   }
 
+  postArticleFavorite(slug: string): void {
+    this.http.post<ArticleGet>(`${baseUrl}/api/articles/${slug}/favorite`, '').subscribe((res: any) => {
+      let data = this.articles.map((item) => {
+        if (item.slug == res.article.slug) return res.article;
+        return item;
+      })
+      this.emitArticle.emit(data);
+    })
+  }
+
+  deleteArticleFavorite(slug: string): void {
+    this.http.delete<ArticleGet>(`${baseUrl}/api/articles/${slug}/favorite`).subscribe((res: any) => {
+      let data = this.articles.map((item) => {
+        if (item.slug == res.article.slug) return res.article;
+        return item;
+      })
+      this.emitArticle.emit(data);
+    })
+  }
+
+  handelArticleFavorite(slug: string, isFavorite: boolean): void {
+    if (isFavorite) {
+      this.postArticleFavorite(slug)
+    }
+    else {
+      this.deleteArticleFavorite(slug);
+    }
+  }
+
   getSingleArticle(slug: string) {
     const url = `${baseUrl}/api/articles/${slug}`;
     return this.http.get(url)
