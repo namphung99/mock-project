@@ -1,6 +1,6 @@
 <section>
   <div class="modal-header d-flex align-items-center py-2">
-    <h4 class="modal-title text-center">Create new Article</h4>
+    <h4 class="modal-title text-center">{{ isSlug? "Edit Article" : "Create new Article" }}</h4>
     <button type="button" class="close rounded-circle mr-1" aria-label="Close" (click)="onClose()">
       <span aria-hidden="true">&times;</span>
     </button>

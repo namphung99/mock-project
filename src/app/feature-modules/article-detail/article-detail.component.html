@@ -64,15 +64,16 @@
               <p>{{comment?.author?.username}}</p>
               <p class="text-muted">{{comment.createdAt | date}}</p>
             </div>
-            <div *ngIf="comment?.author?.username===getCurrentUser()"
+            <div *ngIf="comment?.author?.username === currentUserName"
               class="delete-comment"
             ><i class="fas fa-trash"
             mwlConfirmationPopover
               [popoverTitle]="'Alert'"
               [popoverMessage]="'Are you sure to delete this comment?'"
               placement="left"
-              (confirm)="onDeleteComment(comment?._id)"
-              (cancel)="true"></i></div>
+              (confirm)="onDeleteComment(comment._id)"
+              (cancel)="true"></i>
+            </div>
           </div>
           <p class="comment__description">{{comment.body}}</p>
 
