@@ -71,7 +71,7 @@
               [popoverTitle]="'Alert'"
               [popoverMessage]="'Are you sure to delete this comment?'"
               placement="left"
-              (confirm)="onDeleteComment(comment.id)"
+              (confirm)="onDeleteComment(comment?._id)"
               (cancel)="true"></i></div>
           </div>
           <p class="comment__description">{{comment.body}}</p>
