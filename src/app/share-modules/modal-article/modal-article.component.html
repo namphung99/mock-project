@@ -24,7 +24,7 @@
 
       <div class="form-group">
         <label for="exampleInputBody">Body</label>
-        <textarea class="form-control"  rows="8"  formControlName="body" (keyup)="updateOutput($event)">
+        <textarea class="form-control"  rows="6"  formControlName="body" (keyup)="updateOutput($event)">
         </textarea>
       </div>
       <ul class="text-danger" *ngIf="checkConditionInvalid('body', articleGroup)">

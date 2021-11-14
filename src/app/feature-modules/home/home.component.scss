@@ -61,15 +61,18 @@ nav{
       margin-bottom: 6px;
       padding: 2px 8px;
       border-radius: 2px;
-      background-color: color.$primary-color;
-      color: #fff;
+      background-color: white;
+      color: color.$primary-color;
+      border: 1px solid color.$primary-color;
       cursor: pointer;
     }
     p:hover{
-      background-color: #0369dd;
+      background-color: color.$primary-color;
+      color: white;
     }
     .active-tag{
-      background-color: #0369dd;
+      background-color: color.$primary-color;
+      color: white;
     }
   }
 }
