@@ -21,6 +21,9 @@ export class RegisterComponent implements OnInit {
   checkConditionInvalid = Validations.checkConditionInvalid;
   checkRequired = Validations.checkRequired;
   checkPattern = Validations.checkPattern;
+  checkRequiredGR = Validations.checkRequiredGR;
+  checkComparePassword = Validations.checkComparePassword;
+  checkMinLength = Validations.checkMinLength;
 
   constructor(
     private fb: FormBuilder,
@@ -35,26 +38,12 @@ export class RegisterComponent implements OnInit {
       email: [null, [Validators.required, Validators.pattern(regexEmail)]],
       username: [null, [Validators.required]],
       pw: this.fb.group({
-        password: [null, [Validators.required]],
-        confirmPassword: [null, [Validators.required]],
+        password: [null, [Validators.required, Validators.minLength(6)]],
+        confirmPassword: [null, [Validators.required, Validators.minLength(6)]],
       },{
         validator: comparePassword
       })
     })
-  }
-
-  checkRequiredGR(form: FormGroup, group: string, control: string){
-    if(form.get(group)?.get(control)?.hasError('required') && form.get(group)?.get(control)?.touched){
-      return true;
-    }
-    return false;
-  }
-
-  checkComparePassword(form: FormGroup, group: string){
-    if(form.hasError('passwordnotmatch', group) && !form.get(group)?.get('confirmPassword')?.hasError('required')){
-      return true;
-    }
-    return false;
   }
 
   onSubmit() {

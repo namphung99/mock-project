@@ -1,8 +1,13 @@
 import { UserLogin, UserRegistration } from '../shares/interfaces/user.interface';
 import { baseUrl } from '../constants/index.constant';
-import { HttpClient } from '@angular/common/http';
+import { HttpClient, HttpHeaders } from '@angular/common/http';
 import { EventEmitter, Injectable } from '@angular/core';
 
+const httpOptions = {
+  headers: new HttpHeaders({
+    'Content-Type':  'application/json',
+  })
+};
 @Injectable({
   providedIn: 'root'
 })
@@ -28,12 +33,12 @@ export class AuthService {
 
   login(user : UserLogin){
     const url = `${baseUrl}/api/users/login`;
-    return this.http.post(url, user)
+    return this.http.post(url, user,httpOptions)
   }
 
   registration(user: UserRegistration ){
     const url = `${baseUrl}/api/users`;
-    return this.http.post<any>(url, user);
+    return this.http.post<any>(url, user, httpOptions);
   }
 
   logUserIn(user : any){
