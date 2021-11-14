@@ -63,6 +63,7 @@ export class ArticleService {
 
   postArticleFavorite(slug: string): void {
     this.http.post<ArticleGet>(`${baseUrl}/api/articles/${slug}/favorite`, '').subscribe((res: any) => {
+      this.emitArticleDetail.emit(res.article)
       let data = this.articles.map((item) => {
         if (item.slug == res.article.slug) return res.article;
         return item;
@@ -73,6 +74,7 @@ export class ArticleService {
 
   deleteArticleFavorite(slug: string): void {
     this.http.delete<ArticleGet>(`${baseUrl}/api/articles/${slug}/favorite`).subscribe((res: any) => {
+      this.emitArticleDetail.emit(res.article)
       let data = this.articles.map((item) => {
         if (item.slug == res.article.slug) return res.article;
         return item;

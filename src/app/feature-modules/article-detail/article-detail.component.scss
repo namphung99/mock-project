@@ -8,24 +8,8 @@ img{
   margin-right: 12px;
 }
 
-.btn-follow {
-  border: 1px solid gray;
-  background-color: transparent;
-  color: gray;
-  margin-right: 10px;
-}
-.btn-follow:hover {
-  color: white;
-  background-color: color.$primary-color-hover;
-  border: none;
-}
-
-.btn-favorite {
-  border:1px solid color.$primary-color;
-  color: color.$primary-color;
-}
-.btn-favorite:hover {
-  background-color: color.$primary-color-hover;
+.isLike{
+  background-color: #17a2b8;
   color: white;
 }
 
