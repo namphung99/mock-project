@@ -46,7 +46,7 @@ export class HomeComponent implements OnInit {
   }
 
   handelArticle() {
-    if (this.isActive("/home/your-fee") && this.isLoggedIn) {
+    if (this.isActive("/home/your-feed") && this.isLoggedIn) {
       this.articleService.getArticlesFeed(0)
       this.tabActive = 2;
     }

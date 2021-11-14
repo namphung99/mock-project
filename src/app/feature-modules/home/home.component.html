@@ -1,4 +1,4 @@
-<main>
+<!-- <main> -->
   <div class="container pt-5">
     <div class="row">
       <div class="col-lg-8 order-2 order-lg-1">
@@ -14,11 +14,11 @@
           </ng-container>
 
           <ul class="control">
-            <li [ngClass]="tabActive==1 ? 'active':''" routerLink="/home" (click)="onChangeGlobal(1)">Global Fee
+            <li [ngClass]="tabActive==1 ? 'active':''" routerLink="/home" (click)="onChangeGlobal(1)">Global Feed
             </li>
             <ng-container *ngIf="isLoggedIn">
               <li [ngClass]="tabActive==2 ? 'active':''" routerLink="/home/your-fee" (click)="onChangeGlobal(2)">
-                Your Fee</li>
+                Your Feed</li>
             </ng-container>
             <li [ngClass]="tabActive==3 ? 'active':''">{{tagSelect}}</li>
           </ul>
@@ -68,4 +68,4 @@
       </div>
     </div>
   </div>
-</main>
+<!-- </main> -->

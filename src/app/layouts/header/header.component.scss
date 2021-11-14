@@ -1,7 +1,10 @@
+@import "../../../app/styles/color";
+
 header {
   padding: 1rem 1rem;
   h5 {
     cursor: pointer;
+    color: $primary-color;
   }
 }
 

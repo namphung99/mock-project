@@ -19,7 +19,7 @@
       <ul class="control">
         <li [ngClass]="tabActive==1 ? 'active':''" (click)="onChangeArticle(1)"
           routerLink="/profile/{{currentUser.username}}">
-          {{currentUser.username !== username? 'Her':'My'}} Articles</li>
+          {{currentUser.username !== username? '':'My'}} Articles</li>
         <li [ngClass]="tabActive==2 ? 'active':''" (click)="onChangeArticle(2)"
           routerLink="/profile/{{currentUser.username}}/favorite-article">
           Favorited Articles</li>
