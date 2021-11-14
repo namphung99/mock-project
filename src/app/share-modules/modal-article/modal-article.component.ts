@@ -81,8 +81,8 @@ export class ModalArticleComponent implements OnInit {
     this.uiService.emitSpinner.emit(true);
     if(this.slug){
       let tags =[ this.articleGroup.controls.tagList.value[0]];
-      if(this.articleGroup.controls.tagList.value.includes(';')){
-        tags = this.articleGroup.controls.tagList.value.split(';')
+      if(this.articleGroup.controls.tagList.value.includes(',')){
+        tags = this.articleGroup.controls.tagList.value.split(',')
       }
       this.article = {
         article: {
@@ -98,7 +98,7 @@ export class ModalArticleComponent implements OnInit {
       this.article = {
         article: {
           ...this.articleGroup.value,
-          tagList: this.articleGroup.controls.tagList.value.split(";")
+          tagList: this.articleGroup.controls.tagList.value.split(",")
         }
       }
 
