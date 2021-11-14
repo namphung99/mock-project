@@ -9,8 +9,8 @@
         <p class="text-muted m-0">{{item.createdAt | dateFormat}}</p>
       </div>
     </div>
-    <button class="btn btn-like py-0" (click)="username? handleLike(item.slug,item.favorited):openModal()"
-      title="Like article">
+    <button class="btn btn-like py-0" [ngClass]="item.favorited?'isLike':'' "
+      (click)="username? handleLike(item.slug,item.favorited):openModal()" title="Like article">
       <i class="fas fa-heart"></i> {{item.favoritesCount}}
     </button>
   </div>

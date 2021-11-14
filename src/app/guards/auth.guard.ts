@@ -21,3 +21,22 @@ export class AuthGuard implements CanActivate {
     }
   }
 }
+
+@Injectable()
+export class NotLoginGuard implements CanActivate {
+  constructor(
+      private authService: AuthService,
+      private router: Router,
+    ) { }
+
+  public canActivate(route: ActivatedRouteSnapshot, state: RouterStateSnapshot)
+  :Observable<boolean | UrlTree> | Promise<boolean | UrlTree> | boolean | UrlTree {
+    let isLoggedIn = this.authService.getIsLoggedIn();
+    if(!isLoggedIn){
+      return this.router.createUrlTree(['/login'])
+    }
+    else{
+      return true;
+    }
+  }
+}

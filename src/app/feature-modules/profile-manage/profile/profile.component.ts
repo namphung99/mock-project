@@ -40,10 +40,18 @@ export class ProfileComponent implements OnInit {
       JSON.parse(localStorage.getItem('currentUser') || '').username : "";
 
     this.activatedRoute.paramMap.subscribe(paramMap => {
-      this.userService.getProfilesUser(paramMap.get('username')).subscribe((res: any) => {
-        this.currentUser = res.profile
-        this.handelArticle()
-      })
+      this.userService.getProfilesUser(paramMap.get('username')).subscribe(
+        (res: any) => {
+          this.currentUser = res.profile
+          this.handelArticle()
+        },
+        err => {
+          this.router.navigate(['error']);
+          if (err.status === 404) {
+            console.log('Not found');
+          }
+        }
+      )
     })
 
     this.articleService.emitArticle.subscribe((res: ArticleGet[]) => this.articles = res)
@@ -91,7 +99,7 @@ export class ProfileComponent implements OnInit {
   previousPagination() {
     if (this.totalItem > 0) {
       this.totalItem = this.totalItem - limitArticle;
-      this.currentPage = ++this.currentPage
+      this.currentPage = --this.currentPage
       this.pagination(this.totalItem)
     }
     else this.totalItem = 0
@@ -100,7 +108,7 @@ export class ProfileComponent implements OnInit {
   nextPagination() {
     if (this.totalItem + limitArticle < this.articlesCount) {
       this.totalItem = this.totalItem + limitArticle;
-      this.currentPage = --this.currentPage;
+      this.currentPage = ++this.currentPage;
       this.pagination(this.totalItem)
     }
   }
