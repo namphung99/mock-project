@@ -1,6 +1,6 @@
 import { NgModule } from '@angular/core';
 import { RouterModule, Routes } from '@angular/router';
-import { AuthGuard } from './guards/auth.guard';
+import { AuthGuard, NotLoginGuard } from './guards/auth.guard';
 
 const routes: Routes = [
   {
@@ -34,6 +34,7 @@ const routes: Routes = [
   },
   {
     path: 'setting',
+    canActivate: [NotLoginGuard],
     loadChildren: () =>
       import(
         './feature-modules/profile-manage/edit-profile/edit-profile.module'
@@ -46,6 +47,18 @@ const routes: Routes = [
         (response) => response.HomeModule
       ),
   },
+  {
+    path: '**',
+    loadChildren: () => import("./share-modules/error/error.module").then(
+      (response) => response.ErrorModule
+    )
+  },
+  {
+    path: 'error',
+    loadChildren: () => import("./share-modules/error/error.module").then(
+      (response) => response.ErrorModule
+    )
+  }
 ];
 
 @NgModule({

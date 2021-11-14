@@ -12,7 +12,7 @@ import { UserService } from '../../../services/user.service';
 })
 export class ProfileComponent implements OnInit {
   public imgBackgroundUrl: string =
-    'https://www.solidbackgrounds.com/images/1920x1080/1920x1080-gray-solid-color-background.jpg';
+    'https://simplepage.vn/blog/wp-content/uploads/2021/06/huong-dan-tao-blog-website.png';
   public currentUser: UserProfile = {
     bio: "",
     following: false,
@@ -40,10 +40,18 @@ export class ProfileComponent implements OnInit {
       JSON.parse(localStorage.getItem('currentUser') || '').username : "";
 
     this.activatedRoute.paramMap.subscribe(paramMap => {
-      this.userService.getProfilesUser(paramMap.get('username')).subscribe((res: any) => {
-        this.currentUser = res.profile
-        this.handelArticle()
-      })
+      this.userService.getProfilesUser(paramMap.get('username')).subscribe(
+        (res: any) => {
+          this.currentUser = res.profile
+          this.handelArticle()
+        },
+        err => {
+          this.router.navigate(['error']);
+          if (err.status === 404) {
+            console.log('Not found');
+          }
+        }
+      )
     })
 
     this.articleService.emitArticle.subscribe((res: ArticleGet[]) => this.articles = res)

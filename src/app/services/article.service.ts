@@ -1,3 +1,4 @@
+import { Router } from '@angular/router';
 import { HttpClient, HttpHeaders } from '@angular/common/http';
 import { EventEmitter, Injectable } from '@angular/core';
 import { Observable } from 'rxjs';
@@ -24,7 +25,7 @@ export class ArticleService {
   public emitTag: EventEmitter<string[]> = new EventEmitter();
   public emitArticlesCount: EventEmitter<number> = new EventEmitter();
   public emitArticleDetail: EventEmitter<ArticleDetail> = new EventEmitter();
-  constructor(private http: HttpClient) { }
+  constructor(private http: HttpClient, private router: Router) { }
 
   getArticles(offset: number): void {
     this.http.get(`${baseUrl}/api/articles/?limit=${limitArticle}&offset=${offset}`)
@@ -100,6 +101,12 @@ export class ArticleService {
       )
       .subscribe(response => {
         this.emitArticleDetail.emit(response)
+      },
+      err => {
+        this.router.navigate(['error']);
+        if (err.status === 404) {
+          console.log('Not found');
+        }
       })
   }
 

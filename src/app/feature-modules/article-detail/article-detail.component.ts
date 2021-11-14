@@ -73,10 +73,14 @@ export class ArticleDetailComponent implements OnInit {
                   let dateB = new Date(b.createdAt) as any
                   return dateB - dateA
                 })
-
               })
+          },
+          err => {
+            console.log('Error 1');
+            
           })
-      })
+        }
+      )
 
   }
 

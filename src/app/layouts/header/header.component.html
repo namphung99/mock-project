@@ -27,7 +27,7 @@
         <li data-toggle="dropdown" ngbDropdown placement="bottom-right">
           <div id="dropdownMenuButton" ngbDropdownToggle>
             <img src="{{getAvatarFromLocalStorage()}}" type="button" class="mr-2" onError="this.src='https://static.productionready.io/images/smiley-cyrus.jpg'; localStorage.setItem('avatar', 'https://static.productionready.io/images/smiley-cyrus.jpg')">
-            <span>{{getUsernameFromLocalStorage()}}</span>
+            <span class="username">{{getUsernameFromLocalStorage()}}</span>
           </div>
           <div ngbDropdownMenu class="dropdown" aria-labelledby="dropdownMenuButton">
             <a ngbDropdownItem class="dropdown-item" [routerLink]="['setting']">Setting</a>

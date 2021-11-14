@@ -47,6 +47,9 @@ textarea {
   padding: 6px 10px;
 
   .comment__user{
+    .comment__user--text{
+      width: 300px;
+    }
 
     display: flex;
     justify-content:space-between;
