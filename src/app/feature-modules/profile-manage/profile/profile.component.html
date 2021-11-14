@@ -22,7 +22,7 @@
         {{currentUser.username !== username? '':'My'}} Articles</li>
       <li [ngClass]="tabActive==2 ? 'active':''" (click)="onChangeArticle(2)"
         routerLink="/profile/{{currentUser.username}}/favorite-article">
-        Favorited Articles</li>
+        Favorite Articles</li>
     </ul>
     <ng-container *ngIf="(currentUser.username !== username)">
       <button class="btn follow-button"
