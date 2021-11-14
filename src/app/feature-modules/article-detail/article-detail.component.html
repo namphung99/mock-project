@@ -20,11 +20,6 @@
           </div>
         </ng-container>
 
-        <!-- <button class="btn btn-like py-0" [ngClass]="item.favorited?'isLike':'' "
-          (click)="username? handleLike(item.slug,item.favorited):openModal()" title="Like article">
-          <i class="fas fa-heart"></i> {{item.favoritesCount}}
-        </button> -->
-
         <ng-template #isCurrentUser>
           <div class="control-article">
             <button type="button" class="btn btn-outline-danger" mwlConfirmationPopover [popoverTitle]="'Alert'"
