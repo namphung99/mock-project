@@ -34,7 +34,6 @@ const routes: Routes = [
   },
   {
     path: 'setting',
-    canActivate: [AuthGuard],
     loadChildren: () =>
       import(
         './feature-modules/profile-manage/edit-profile/edit-profile.module'

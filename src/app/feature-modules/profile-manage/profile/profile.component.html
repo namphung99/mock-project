@@ -17,18 +17,17 @@
 
     <div class="navigate-article">
       <ul class="control">
-        <ng-container *ngIf="(currentUser.username !== username); else yourArticle">
-          <li [ngClass]="tabActive==1 ? 'active':''" (click)="onChangeArticle(1)">Her Articles</li>
-        </ng-container>
-        <ng-template #yourArticle>
-          <li [ngClass]="tabActive==1 ? 'active':''" (click)="onChangeArticle(1)">My Articles</li>
-        </ng-template>
-        <li [ngClass]="tabActive==2 ? 'active':''" (click)="onChangeArticle(2)">Favorited Articles</li>
+        <li [ngClass]="tabActive==1 ? 'active':''" (click)="onChangeArticle(1)"
+          routerLink="/profile/{{currentUser.username}}">
+          {{currentUser.username !== username? 'Her':'My'}} Articles</li>
+        <li [ngClass]="tabActive==2 ? 'active':''" (click)="onChangeArticle(2)"
+          routerLink="/profile/{{currentUser.username}}/favorite-article">
+          Favorited Articles</li>
       </ul>
       <ng-container *ngIf="(currentUser.username !== username)">
         <button class="btn follow-button"
           [ngClass]="currentUser.following === false ? 'following-user' : 'remove-following-user'"
-          (click)="checkIsFollow(currentUser.following, currentUser.username)">{{currentUser.following
+          (click)="changFollow()">{{currentUser.following
           === false ? 'Follow +' : 'Following'}}</button>
       </ng-container>
     </div>
@@ -46,9 +45,18 @@
             <span aria-hidden="true">&laquo;</span>
           </a>
         </li>
-        <li class="page-item"><a class="page-link" (click)="onPagination(0)">1</a></li>
-        <li class="page-item"><a class="page-link" (click)="onPagination(5)">2</a></li>
-        <li class="page-item"><a class="page-link" (click)="onPagination(10)">3</a></li>
+        <li class="page-item">
+          <a class="page-link" (click)="onPagination(0,1)"
+            [ngClass]="this.currentPage == 1 ? 'bg-primary text-light':''">1</a>
+        </li>
+        <li class="page-item">
+          <a class="page-link" (click)="onPagination(5,2)"
+            [ngClass]="this.currentPage == 2 ? 'bg-primary text-light':''">2</a>
+        </li>
+        <li class="page-item">
+          <a class="page-link" (click)="onPagination(10,3)"
+            [ngClass]="this.currentPage == 3 ? 'bg-primary text-light':''">3</a>
+        </li>
         <li class="page-item" [ngClass]="totalItem + 5 >= articlesCount ? 'disabled':''">
           <a class="page-link" (click)="nextPagination()" aria-label="Next">
             <span aria-hidden="true">&raquo;</span>

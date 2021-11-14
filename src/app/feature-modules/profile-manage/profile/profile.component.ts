@@ -1,11 +1,10 @@
-import { UserService } from '../../../services/user.service';
 import { Component, OnInit } from '@angular/core';
-import { ActivatedRoute, ParamMap } from '@angular/router';
-import { switchMap } from 'rxjs/operators';
-import { ArticleGet } from 'src/app/shares/interfaces/article.interface';
+import { ActivatedRoute, Router } from '@angular/router';
 import { ArticleService } from 'src/app/services/article.service';
+import { ArticleGet } from 'src/app/shares/interfaces/article.interface';
 import { UserProfile } from 'src/app/shares/interfaces/user.interface';
-import { limitArticle } from "../../../constants/index.constant"
+import { limitArticle } from "../../../constants/index.constant";
+import { UserService } from '../../../services/user.service';
 @Component({
   selector: 'app-profile',
   templateUrl: './profile.component.html',
@@ -27,21 +26,23 @@ export class ProfileComponent implements OnInit {
   public username: string = ""
   public articlesCount: number = 0;
   public totalItem: number = 0;
+  public currentPage: number = 1;
 
   constructor(
-    private route: ActivatedRoute,
-    private service: UserService,
+    private activatedRoute: ActivatedRoute,
+    private userService: UserService,
     private articleService: ArticleService,
+    private router: Router,
   ) { }
 
   ngOnInit(): void {
     this.username = localStorage.getItem('currentUser') ?
       JSON.parse(localStorage.getItem('currentUser') || '').username : "";
 
-    this.route.paramMap.subscribe(paramMap => {
-      this.service.getProfilesUser(paramMap.get('username')).subscribe((res: any) => {
-        this.articleService.getArticlesByUsername(0, res.profile.username);
+    this.activatedRoute.paramMap.subscribe(paramMap => {
+      this.userService.getProfilesUser(paramMap.get('username')).subscribe((res: any) => {
         this.currentUser = res.profile
+        this.handelArticle()
       })
     })
 
@@ -50,16 +51,24 @@ export class ProfileComponent implements OnInit {
 
   }
 
-  checkIsFollow(isFollow: boolean, username: string) {
-    // this.service.editFollow(isFollow, username).subscribe(m => console.log(m));
-    if (isFollow) {
-      return this.currentUser.following = false;
+  handelArticle() {
+    if (this.isActive(`/profile/${this.currentUser.username}/favorite-article`)) {
+      this.tabActive = 2;
     }
-    return this.currentUser.following = true;
+    else this.tabActive = 1;
+    this.pagination(0)
+  }
+
+  isActive(route: string): boolean {
+    return this.router.isActive(route, true);
+  }
+
+  changFollow() {
+    this.userService.editFollow(!this.currentUser.following, this.currentUser.username)
+      .subscribe((res: any) => this.currentUser = res.profile);
   }
 
   onChangeTag(tag: string) {
-    console.log("abc");
   }
 
   onChangeArticle(tab: number) {
@@ -73,14 +82,16 @@ export class ProfileComponent implements OnInit {
       : this.articleService.getArticlesByFavorite(this.currentUser.username, offset)
   }
 
-  onPagination(offset: number) {
+  onPagination(offset: number, page: number) {
     this.totalItem = offset;
+    this.currentPage = page
     this.pagination(this.totalItem)
   }
 
   previousPagination() {
     if (this.totalItem > 0) {
       this.totalItem = this.totalItem - limitArticle;
+      this.currentPage = ++this.currentPage
       this.pagination(this.totalItem)
     }
     else this.totalItem = 0
@@ -89,6 +100,7 @@ export class ProfileComponent implements OnInit {
   nextPagination() {
     if (this.totalItem + limitArticle < this.articlesCount) {
       this.totalItem = this.totalItem + limitArticle;
+      this.currentPage = --this.currentPage;
       this.pagination(this.totalItem)
     }
   }

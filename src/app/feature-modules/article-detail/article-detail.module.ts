@@ -1,5 +1,4 @@
 import { MarkdownModule } from 'ngx-markdown';
-import { ModalDeleteArticleModule } from './../../share-modules/modal-delete-article/modal-delete-article.module';
 import { RouterModule } from '@angular/router';
 import { NgModule, CUSTOM_ELEMENTS_SCHEMA, NO_ERRORS_SCHEMA } from '@angular/core';
 import { ArticleDetailComponent } from './article-detail.component';
@@ -15,7 +14,6 @@ import {  ReactiveFormsModule } from '@angular/forms';
   ],
   imports: [
     CommonModule,
-    ModalDeleteArticleModule,
     RouterModule.forChild([
       {
         path: '',

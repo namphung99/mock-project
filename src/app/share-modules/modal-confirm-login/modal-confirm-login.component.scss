@@ -1,0 +1,9 @@
+@import "../../styles/color";
+
+.btn-submit {
+  background-color: $primary-color;
+  color: white;
+}
+.btn-submit:hover {
+  background-color: $primary-color-hover;
+}

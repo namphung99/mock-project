@@ -13,8 +13,7 @@
 
         <ng-container *ngIf = "!isMyArticle; else isCurrentUser">
           <div  class="control-article">
-            <button class="btn btn-follow"><i class="fas fa-plus"></i> Follow {{articleDetail?.author?.username}}</button>
-            <button class="btn btn-outline-info"><i class="fas fa-heart"></i> Favorite Articles ({{articleDetail?.favoritesCount}})</button>
+            <button class="btn btn-outline-info"><i class="fas fa-heart"></i></button>
           </div>
         </ng-container>
         <ng-template #isCurrentUser>
@@ -47,7 +46,7 @@
   <hr>
   </div>
 
-  <div class="container comment-wrapper" *ngIf="getIsLogin()">
+  <div class="container comment-wrapper" *ngIf="getIsLogin(); else mustBeLogin">
     <div class="">
       <div class="textarea-container">
         <textarea rows="3" class="p-3" placeholder="Write comments" #comment></textarea>
@@ -64,14 +63,14 @@
               <p>{{comment?.author?.username}}</p>
               <p class="text-muted">{{comment.createdAt | date}}</p>
             </div>
-            <div
+            <div *ngIf="comment?.author?.username === currentUserName"
               class="delete-comment"
             ><i class="fas fa-trash"
-            mwlConfirmationPopover
+              mwlConfirmationPopover
               [popoverTitle]="'Alert'"
               [popoverMessage]="'Are you sure to delete this comment?'"
               placement="left"
-              (confirm)="onDeleteComment(comment.id)"
+              (confirm)="onDeleteComment(comment?._id)"
               (cancel)="true"></i></div>
           </div>
           <p class="comment__description">{{comment.body}}</p>
@@ -81,5 +80,9 @@
       </div>
     </ng-container>
   </div>
+
+  <ng-template #mustBeLogin>
+   <p class="login-notice"> You must login to be able to comment! <a routerLink = "/login"> Click here</a></p>
+  </ng-template>
 
 </main>
