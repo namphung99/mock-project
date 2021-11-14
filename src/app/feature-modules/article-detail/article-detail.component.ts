@@ -73,15 +73,12 @@ export class ArticleDetailComponent implements OnInit {
                   let dateB = new Date(b.createdAt) as any
                   return dateB - dateA
                 })
-
-            },err => {
-              this.router.navigate(['error']);
-            })
-          },err => {
-            this.router.navigate(['error']);
+              })
+          },
+          err => {
+            console.log('Error 1');
+            
           })
-        },err => {
-          this.router.navigate(['error']);
         }
       )
 
