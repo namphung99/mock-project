@@ -11,28 +11,28 @@
           </div>
         </div>
 
-        <ng-container *ngIf = "!isMyArticle; else isCurrentUser">
-          <div  class="control-article">
-            <button class="btn btn-outline-info"><i class="fas fa-heart"></i></button>
+        <ng-container *ngIf="!isMyArticle; else isCurrentUser">
+          <div class="control-article">
+            <button class="btn btn-outline-info"
+            [ngClass]="articleDetail?.favorited?'isLike':'' "
+              (click)="username? handleLike(articleDetail.slug,articleDetail.favorited):openModal()"
+              title="Like article"><i class="fas fa-heart"></i> {{articleDetail?.favoritesCount}}</button>
           </div>
         </ng-container>
+
+        <!-- <button class="btn btn-like py-0" [ngClass]="item.favorited?'isLike':'' "
+          (click)="username? handleLike(item.slug,item.favorited):openModal()" title="Like article">
+          <i class="fas fa-heart"></i> {{item.favoritesCount}}
+        </button> -->
+
         <ng-template #isCurrentUser>
           <div class="control-article">
-            <button
-              type="button"
-              class="btn btn-outline-danger"
-              mwlConfirmationPopover
-              [popoverTitle]="'Alert'"
-              [popoverMessage]="'Are you sure to delete this article?'"
-              placement="bottom"
-              (confirm)="onDeleteArticle(articleDetail.slug)"
-              (cancel)="true">
-            <i class="fas fa-trash"></i> Delete article</button>
-            <button
-              type="button"
-              class="btn btn-outline-info"
-              (click)="openArticleModal(articleDetail.slug)"
-            ><i class="fas fa-edit"></i> Edit article</button>
+            <button type="button" class="btn btn-outline-danger" mwlConfirmationPopover [popoverTitle]="'Alert'"
+              [popoverMessage]="'Are you sure to delete this article?'" placement="bottom"
+              (confirm)="onDeleteArticle(articleDetail.slug)" (cancel)="true">
+              <i class="fas fa-trash"></i> Delete article</button>
+            <button type="button" class="btn btn-outline-info" (click)="openArticleModal(articleDetail.slug)"><i
+                class="fas fa-edit"></i> Edit article</button>
           </div>
         </ng-template>
 
@@ -40,10 +40,8 @@
     </div>
   </div>
   <div class="article-body container py-3">
-      <markdown
-        [data]="articleDetail?.body"
-      ></markdown>
-  <hr>
+    <markdown [data]="articleDetail?.body"></markdown>
+    <hr>
   </div>
 
   <div class="container comment-wrapper" *ngIf="getIsLogin(); else mustBeLogin">
@@ -63,15 +61,10 @@
               <p>{{comment?.author?.username}}</p>
               <p class="text-muted">{{comment.createdAt | date}}</p>
             </div>
-            <div *ngIf="comment?.author?.username === currentUserName"
-              class="delete-comment"
-            ><i class="fas fa-trash"
-              mwlConfirmationPopover
-              [popoverTitle]="'Alert'"
-              [popoverMessage]="'Are you sure to delete this comment?'"
-              placement="left"
-              (confirm)="onDeleteComment(comment?._id)"
-              (cancel)="true"></i></div>
+            <div *ngIf="comment?.author?.username === currentUserName" class="delete-comment"><i class="fas fa-trash"
+                mwlConfirmationPopover [popoverTitle]="'Alert'"
+                [popoverMessage]="'Are you sure to delete this comment?'" placement="left"
+                (confirm)="onDeleteComment(comment?._id)" (cancel)="true"></i></div>
           </div>
           <p class="comment__description">{{comment.body}}</p>
 
@@ -82,7 +75,7 @@
   </div>
 
   <ng-template #mustBeLogin>
-   <p class="login-notice"> You must login to be able to comment! <a routerLink = "/login"> Click here</a></p>
+    <p class="login-notice"> You must login to be able to comment! <a routerLink="/login"> Click here</a></p>
   </ng-template>
 
 </main>

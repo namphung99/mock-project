@@ -91,7 +91,7 @@ export class ProfileComponent implements OnInit {
   previousPagination() {
     if (this.totalItem > 0) {
       this.totalItem = this.totalItem - limitArticle;
-      this.currentPage = ++this.currentPage
+      this.currentPage = --this.currentPage
       this.pagination(this.totalItem)
     }
     else this.totalItem = 0
@@ -100,7 +100,7 @@ export class ProfileComponent implements OnInit {
   nextPagination() {
     if (this.totalItem + limitArticle < this.articlesCount) {
       this.totalItem = this.totalItem + limitArticle;
-      this.currentPage = --this.currentPage;
+      this.currentPage = ++this.currentPage;
       this.pagination(this.totalItem)
     }
   }
