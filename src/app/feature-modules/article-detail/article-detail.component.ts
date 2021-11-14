@@ -74,13 +74,13 @@ export class ArticleDetailComponent implements OnInit {
                   return dateB - dateA
                 })
 
-              },err => {
-                  this.router.navigate(['error']);
-              })
-          },err => {
+            },err => {
               this.router.navigate(['error']);
+            })
+          },err => {
+            this.router.navigate(['error']);
           })
-      },err => {
+        },err => {
           this.router.navigate(['error']);
         }
       )
