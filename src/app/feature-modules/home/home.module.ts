@@ -13,7 +13,7 @@ import { ModalArticleModule } from '../../share-modules/modal-article/modal-arti
     CommonModule,
     HomeRoutingModule,
     ListArticleModule,
-    ModalArticleModule
+    ModalArticleModule,
   ],
   schemas: [
     CUSTOM_ELEMENTS_SCHEMA,
