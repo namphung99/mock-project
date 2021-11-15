@@ -10,7 +10,6 @@ import { ToastrModule } from 'ngx-toastr';
 
 import { HeaderComponent } from './layouts/header/header.component';
 import { FooterComponent } from './layouts/footer/footer.component';
-import { FavoritesComponent } from './feature-modules/favorites/favorites.component';
 import { CommonModule } from '@angular/common';
 import { HttpClientModule, HTTP_INTERCEPTORS } from '@angular/common/http';
 import { AuthInterceptor } from './interceptors/auth.interceptor';
@@ -26,7 +25,6 @@ import { ModalConfirmLoginComponent } from './share-modules/modal-confirm-login/
     AppComponent,
     HeaderComponent,
     FooterComponent,
-    FavoritesComponent,
     SpinnerComponent,
     ModalConfirmLoginComponent
   ],
