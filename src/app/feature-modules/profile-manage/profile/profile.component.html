@@ -27,8 +27,9 @@
     <ng-container *ngIf="(currentUser.username !== username)">
       <button class="btn follow-button"
         [ngClass]="currentUser.following === false ? 'following-user' : 'remove-following-user'"
-        (click)="changFollow()">{{currentUser.following
-        === false ? 'Follow +' : 'Following'}}</button>
+        (click)="username? changFollow() : openModal()">{{currentUser.following
+        === false ? 'Follow +' : 'Following'}}
+      </button>  
     </ng-container>
   </div>
 
