@@ -35,9 +35,9 @@
           <markdown [data] = "covertedText"></markdown>
         </div>
       <div class="form-group">
-        <!-- <label for="exampleInputTagList">Tag List</label>
+        <label for="exampleInputTagList">Tag List</label>
         <input type="text" class="form-control" id="exampleInputTagList" formControlName="tagList" title="Each tag is separated by a ;"
-        placeholder="Ex: Tag 1, tag 2,..."> -->
+        placeholder="Ex: Tag 1, tag 2,...">
       </div>
       <ul class="text-danger" *ngIf="checkConditionInvalid('tagList', articleGroup)">
         <li *ngIf="checkRequired('tagList', articleGroup)">Tag List is required</li>
