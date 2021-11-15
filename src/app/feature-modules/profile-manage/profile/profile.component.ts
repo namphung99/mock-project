@@ -1,6 +1,8 @@
 import { Component, OnInit } from '@angular/core';
 import { ActivatedRoute, Router } from '@angular/router';
+import { NgbModal } from '@ng-bootstrap/ng-bootstrap';
 import { ArticleService } from 'src/app/services/article.service';
+import { ModalConfirmLoginComponent } from 'src/app/share-modules/modal-confirm-login/modal-confirm-login.component';
 import { ArticleGet } from 'src/app/shares/interfaces/article.interface';
 import { UserProfile } from 'src/app/shares/interfaces/user.interface';
 import { limitArticle } from "../../../constants/index.constant";
@@ -33,6 +35,7 @@ export class ProfileComponent implements OnInit {
     private userService: UserService,
     private articleService: ArticleService,
     private router: Router,
+    private modalService: NgbModal,
   ) { }
 
   ngOnInit(): void {
@@ -111,5 +114,10 @@ export class ProfileComponent implements OnInit {
       this.currentPage = ++this.currentPage;
       this.pagination(this.totalItem)
     }
+  }
+
+  openModal() {
+    const modalRef = this.modalService.open(ModalConfirmLoginComponent, { centered: true });
+    modalRef.componentInstance.name = 'Confirm Login';
   }
 }
