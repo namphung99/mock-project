@@ -79,22 +79,26 @@ export class ModalArticleComponent implements OnInit {
 
   onSubmit() {
     this.uiService.emitSpinner.emit(true);
+    let tags = this.articleGroup.value.tagList;
+    if(this.articleGroup.value.tagList.includes(',')){
+      tags = this.articleGroup.value.tagList.split(',');
+      tags = tags.filter((tag: any) => tag !== '');
+    }
+
     if(this.slug){
       this.article = {
         article: {
           ...this.articleGroup.value,
-          tagList: this.articleGroup.controls.tagList.value.split(",")
+          tagList: tags
         }
       }
-
       this.handleEditArticle(this.article)
-
     }
     else{
       this.article = {
         article: {
           ...this.articleGroup.value,
-          tagList: this.articleGroup.controls.tagList.value.split(",")
+          tagList: tags
         }
       }
 
